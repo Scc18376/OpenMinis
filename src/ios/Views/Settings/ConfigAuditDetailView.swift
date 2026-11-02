@@ -51,7 +51,7 @@ struct ConfigAuditDetailView: View {
                     Label("This record predates readable descriptions, so only the raw change is shown.",
                           systemImage: "clock.arrow.circlepath")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
 
@@ -101,7 +101,7 @@ struct ConfigAuditDetailView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title)
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             Text(verbatim: value)
                 .font(.system(.footnote, design: .monospaced))
                 .textSelection(.enabled)

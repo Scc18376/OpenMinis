@@ -87,7 +87,7 @@ struct FolderPickerSheet: View {
     private var sessionCount: Int { sessionIds.count }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             List {
                 Section {
                     HStack {
@@ -152,7 +152,7 @@ struct FolderPickerSheet: View {
                                         .font(.subheadline)
                                     Text("Rename to something else, or tap to use it")
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                 }
                             } icon: {
                                 Image(systemName: "exclamationmark.triangle.fill")
@@ -207,7 +207,7 @@ struct FolderPickerSheet: View {
                                         .fill(Color(UIColor.tertiarySystemFill))
                                         .frame(width: 40, height: 40)
                                     Image(systemName: "folder.badge.minus")
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                 }
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text("No Group")

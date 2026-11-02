@@ -855,7 +855,7 @@ struct MinisLinkPreviewView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             ReusableWebView(webView: holder.webView)
                 // [T-webview-preview-swipe-dismiss] Arbitrate the sheet's
                 // interactive-dismiss pan against page content at the gesture
@@ -873,7 +873,7 @@ struct MinisLinkPreviewView: View {
                 }
                 .onAppear { holder.startIfNeeded() }
                 // Only ignore the keyboard inset — keeping the top safe area
-                // so the NavigationStack's navigation bar reliably pushes
+                // so the MinisNavStack's navigation bar reliably pushes
                 // page content down instead of floating over it. Used to be
                 // `.ignoresSafeArea()`: inside a `.sheet` that happened to
                 // work because the sheet chrome provided the inset anyway,

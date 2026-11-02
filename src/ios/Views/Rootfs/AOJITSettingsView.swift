@@ -666,32 +666,32 @@ struct AOJITSettingsSection: View {
                 Spacer()
                 stateBadge(image)
             }
-            Text(image.binaries).font(.caption.monospaced()).foregroundStyle(.secondary)
-            Text(image.affects).font(.caption).foregroundStyle(.secondary)
-            Text("Image recorded from \(image.build.package)").font(.caption2).foregroundStyle(.tertiary)
+            Text(image.binaries).font(.caption.monospaced()).foregroundStyle(Color.secondary)
+            Text(image.affects).font(.caption).foregroundStyle(Color.secondary)
+            Text("Image recorded from \(image.build.package)").font(.caption2).foregroundStyle(Color(UIColor.tertiaryLabel))
             // [T-aojit-family] What the installed file gets from the image.
             switch state {
             case .matched:
-                Text("Full speed: this is the recorded build.").font(.caption2).foregroundStyle(.secondary)
+                Text("Full speed: this is the recorded build.").font(.caption2).foregroundStyle(Color.secondary)
             case .family(let file):
                 Text("Another version is installed (\(file)): code unchanged since \(image.build.package) runs from the image, the rest is emulated.")
-                    .font(.caption2).foregroundStyle(.secondary)
+                    .font(.caption2).foregroundStyle(Color.secondary)
             case .mismatch:
                 Text("The installed file is not a version this image can serve, so it runs without AOJIT.")
-                    .font(.caption2).foregroundStyle(.secondary)
+                    .font(.caption2).foregroundStyle(Color.secondary)
             default:
                 EmptyView()
             }
             if let c = model.runtime.coverage(for: image), c.blocks > 0 {
-                Text("AOT coverage: \(Self.percent(c.hits, of: c.blocks)) of \(c.blocks) blocks").font(.caption2).foregroundStyle(.tertiary)
+                Text("AOT coverage: \(Self.percent(c.hits, of: c.blocks)) of \(c.blocks) blocks").font(.caption2).foregroundStyle(Color(UIColor.tertiaryLabel))
                 if c.moved > 0 {
-                    Text("\(c.moved) of them reused from another version by content").font(.caption2).foregroundStyle(.tertiary)
+                    Text("\(c.moved) of them reused from another version by content").font(.caption2).foregroundStyle(Color(UIColor.tertiaryLabel))
                 }
             }
             // Plan B only when the installed file is not in the family at all.
             if !image.restorePackages.isEmpty, case .mismatch = state {
                 Text("You can put back the build bundled with Minis.")
-                    .font(.caption2).foregroundStyle(.secondary)
+                    .font(.caption2).foregroundStyle(Color.secondary)
                 Button(role: .destructive) {
                     pendingRestore = image
                 } label: {

@@ -33,7 +33,7 @@ struct WebAppAddToHomeSheet: View {
     @State private var errorMessage: String?
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 if unsupportedScope {
                     unsupportedSection
@@ -46,12 +46,12 @@ struct WebAppAddToHomeSheet: View {
                        classification?.scope != .mount {
                         Section {
                             HStack {
-                                Image(systemName: "link").foregroundStyle(.secondary)
+                                Image(systemName: "link").foregroundStyle(Color.secondary)
                                 Text("Associated with session")
                                 Spacer()
                                 Text(sid.prefix(8))
                                     .font(.caption.monospaced())
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
                     }
@@ -67,7 +67,7 @@ struct WebAppAddToHomeSheet: View {
                             HStack {
                                 Spacer()
                                 if opening {
-                                    ProgressView().tint(.white)
+                                    ProgressView().accentColor(.white)
                                 } else {
                                     Text("Continue in Safari")
                                         .fontWeight(.semibold)
@@ -105,7 +105,7 @@ struct WebAppAddToHomeSheet: View {
                         .font(.subheadline.weight(.semibold))
                     Text("Only files inside a session, the shared folder, or a mounted folder can be added to the Home Screen.")
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             } icon: {
                 Image(systemName: "exclamationmark.triangle")
@@ -407,7 +407,7 @@ private struct LauncherTilePreview: View {
             .frame(width: tile, height: tile)
             Text(title.isEmpty ? category.label : title)
                 .font(.caption)
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.primary)
                 .lineLimit(1)
                 .truncationMode(.middle)
                 .frame(maxWidth: tile + 30)

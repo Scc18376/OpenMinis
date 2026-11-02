@@ -296,7 +296,7 @@ struct AudioPiPCapsule: View {
             } label: {
                 Image(systemName: "waveform")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .frame(width: 36, height: 40)
             }
             .buttonStyle(.plain)
@@ -308,7 +308,7 @@ struct AudioPiPCapsule: View {
             } label: {
                 Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
                     .font(.title3.weight(.semibold))
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(Color.primary)
                     .frame(width: 36, height: 40)
             }
             .buttonStyle(.plain)
@@ -320,7 +320,7 @@ struct AudioPiPCapsule: View {
             } label: {
                 Image(systemName: "xmark")
                     .font(.caption.weight(.bold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .frame(width: 36, height: 40)
             }
             .buttonStyle(.plain)
@@ -417,7 +417,7 @@ struct MinisAudioPlayerView: View {
                         ),
                         in: 0...max(player.duration, 0.01)
                     )
-                    .tint(.accentColor)
+                    .accentColor(.accentColor)
 
                     Text(formatTime(player.duration))
                         .font(.caption2)
@@ -426,7 +426,7 @@ struct MinisAudioPlayerView: View {
                 } else {
                     // Idle state — show empty slider
                     Slider(value: .constant(0), in: 0...1)
-                        .tint(.accentColor)
+                        .accentColor(.accentColor)
                         .disabled(true)
 
                     Text(formatTime(0))

@@ -80,7 +80,7 @@ struct RcloneAddServerView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 if connectedRemote == nil {
                     typeSection
@@ -190,10 +190,10 @@ struct RcloneAddServerView: View {
                             .background(backend?.type == b.type ? Color.blue : Color.gray,
                                         in: Circle())
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(b.title).foregroundStyle(.primary)
+                            Text(b.title).foregroundStyle(Color.primary)
                             Text(b.subtitle)
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                         Spacer()
                         if backend?.type == b.type {
@@ -235,11 +235,11 @@ struct RcloneAddServerView: View {
                         HStack(spacing: 6) {
                             Text(f.label)
                                 .font(.footnote.weight(.medium))
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                             if f.isOptional {
                                 Text("Optional")
                                     .font(.caption2)
-                                    .foregroundStyle(.tertiary)
+                                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                             }
                         }
                         if f.isSecret {
@@ -256,7 +256,7 @@ struct RcloneAddServerView: View {
                         if !f.hint.isEmpty {
                             Text(f.hint)
                                 .font(.caption)
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(Color(UIColor.tertiaryLabel))
                         }
                     }
                     .padding(.vertical, 2)
@@ -307,7 +307,7 @@ struct RcloneAddServerView: View {
             if !requiredFieldsFilled && !isConnecting {
                 Text("Fill in the required fields to continue.")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
 
             // Shown only after the server's certificate was actually
@@ -321,7 +321,7 @@ struct RcloneAddServerView: View {
                         Text("Trust this certificate")
                         Text("The server's certificate isn't signed by a known authority — usual for a NAS using its own certificate.")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
                 if allowInsecureTLS {
@@ -347,9 +347,9 @@ struct RcloneAddServerView: View {
                 }
             }
             if isListing {
-                HStack { ProgressView(); Text("Loading…").foregroundStyle(.secondary) }
+                HStack { ProgressView(); Text("Loading…").foregroundStyle(Color.secondary) }
             } else if folderEntries.isEmpty {
-                Text("No folders here.").foregroundStyle(.secondary)
+                Text("No folders here.").foregroundStyle(Color.secondary)
             } else {
                 // Folders only. This step picks a DESTINATION, and the files
                 // already in a backups directory — often hundreds of them —
@@ -364,7 +364,7 @@ struct RcloneAddServerView: View {
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .font(.caption2)
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(Color(UIColor.tertiaryLabel))
                         }
                     }
                 }
@@ -387,7 +387,7 @@ struct RcloneAddServerView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         Text(displayPath)
                             .font(.footnote.weight(.medium))
-                            .foregroundStyle(.primary)
+                            .foregroundStyle(Color.primary)
                             .lineLimit(1)
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)

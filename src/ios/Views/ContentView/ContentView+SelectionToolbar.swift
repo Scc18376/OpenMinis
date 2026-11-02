@@ -96,7 +96,7 @@ extension ContentView {
             .disabled(selectedIds.isEmpty)
         }
         .padding(.vertical, 10)
-        .background(.ultraThinMaterial)
+        .background(Color(UIColor.secondarySystemBackground))
     }
 
     /// Force-sync the given sessions: bumps each session, its messages,

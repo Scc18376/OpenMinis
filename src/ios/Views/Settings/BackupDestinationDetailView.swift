@@ -241,9 +241,9 @@ struct BackupDestinationDetailView: View {
             } label: {
                 LabeledContent("Name") {
                     HStack(spacing: 6) {
-                        Text(current.name).foregroundStyle(.secondary)
+                        Text(current.name).foregroundStyle(Color.secondary)
                         Image(systemName: "chevron.right")
-                            .font(.caption2).foregroundStyle(.tertiary)
+                            .font(.caption2).foregroundStyle(Color(UIColor.tertiaryLabel))
                     }
                 }
             }
@@ -255,11 +255,11 @@ struct BackupDestinationDetailView: View {
                 LabeledContent("Backup folder") {
                     HStack(spacing: 6) {
                         Text(current.path.isEmpty ? "/" : "/\(current.path)")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .lineLimit(1)
                             .truncationMode(.head)
                         Image(systemName: "chevron.right")
-                            .font(.caption2).foregroundStyle(.tertiary)
+                            .font(.caption2).foregroundStyle(Color(UIColor.tertiaryLabel))
                     }
                 }
             }
@@ -368,9 +368,9 @@ struct BackupDestinationDetailView: View {
 
         Section {
             if isLoadingPackages {
-                HStack { ProgressView(); Text("Loading…").foregroundStyle(.secondary) }
+                HStack { ProgressView(); Text("Loading…").foregroundStyle(Color.secondary) }
             } else if packages.isEmpty {
-                Text("No backups found here yet.").foregroundStyle(.secondary)
+                Text("No backups found here yet.").foregroundStyle(Color.secondary)
             } else {
                 ForEach(packages) { p in
                     VStack(alignment: .leading, spacing: 2) {
@@ -379,7 +379,7 @@ struct BackupDestinationDetailView: View {
                             .truncationMode(.middle)
                         Text(detail(for: p))
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                     // [T-backup-remote-delete] Swipe to delete the file ON THE
                     // SERVER. Confirmed rather than immediate: unlike deleting
@@ -452,7 +452,7 @@ struct BackupDestinationDetailView: View {
 
         Section {
             if folderPackages.isEmpty {
-                Text("No backups found here yet.").foregroundStyle(.secondary)
+                Text("No backups found here yet.").foregroundStyle(Color.secondary)
             } else {
                 ForEach(folderPackages) { p in
                     VStack(alignment: .leading, spacing: 2) {
@@ -461,7 +461,7 @@ struct BackupDestinationDetailView: View {
                             .truncationMode(.middle)
                         Text("\(ByteCountFormatter.string(fromByteCount: p.size, countStyle: .file)) · \(p.modified.formatted(date: .abbreviated, time: .shortened))")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                     // [T-backup-folder-delete] Swipe to delete the file in the
                     // folder, matching the server list above — a user who has
@@ -587,7 +587,7 @@ struct RcloneFolderBrowser: View {
     }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 Section {
                     if !currentDir.isEmpty {
@@ -599,11 +599,11 @@ struct RcloneFolderBrowser: View {
                         }
                     }
                     if isListing {
-                        HStack { ProgressView(); Text("Loading…").foregroundStyle(.secondary) }
+                        HStack { ProgressView(); Text("Loading…").foregroundStyle(Color.secondary) }
                     } else if visibleEntries.isEmpty {
                         Text(showsFiles ? "This folder is empty."
                                         : "No folders here.")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     } else {
                         ForEach(visibleEntries) { e in
                             if e.isDir {
@@ -614,12 +614,12 @@ struct RcloneFolderBrowser: View {
                                         Label(e.name, systemImage: "folder.fill")
                                         Spacer()
                                         Image(systemName: "chevron.right")
-                                            .font(.caption2).foregroundStyle(.tertiary)
+                                            .font(.caption2).foregroundStyle(Color(UIColor.tertiaryLabel))
                                     }
                                 }
                             } else {
                                 Label(e.name, systemImage: "doc")
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
                     }
@@ -628,7 +628,7 @@ struct RcloneFolderBrowser: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             Text(currentDir.isEmpty ? "/" : "/\(currentDir)")
                                 .font(.footnote.weight(.medium))
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(Color.primary)
                                 .lineLimit(1)
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 5)
@@ -766,7 +766,7 @@ struct RcloneConnectionEditor: View {
     }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 if let b = backend {
                     Section {
@@ -775,11 +775,11 @@ struct RcloneConnectionEditor: View {
                                 HStack(spacing: 6) {
                                     Text(f.label)
                                         .font(.footnote.weight(.medium))
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                     if f.isOptional {
                                         Text("Optional")
                                             .font(.caption2)
-                                            .foregroundStyle(.tertiary)
+                                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                                     }
                                 }
                                 TextField(f.placeholder.isEmpty ? f.label : f.placeholder,
@@ -790,7 +790,7 @@ struct RcloneConnectionEditor: View {
                                 if !f.hint.isEmpty {
                                     Text(f.hint)
                                         .font(.caption)
-                                        .foregroundStyle(.tertiary)
+                                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                                 }
                             }
                             .padding(.vertical, 2)

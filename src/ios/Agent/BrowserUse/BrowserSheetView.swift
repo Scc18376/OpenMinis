@@ -14,7 +14,7 @@ struct BrowserSheetView: View {
     private var manager: BrowserUseManager? { pool.activeManager }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             VStack(spacing: 0) {
                 if !isFullscreen {
                     // Tab bar
@@ -44,7 +44,7 @@ struct BrowserSheetView: View {
                             Button { manager?.webView.stopLoading() } label: {
                                 Image(systemName: "xmark")
                                     .font(.system(size: 12, weight: .medium))
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                             .transition(.identity)
                         }
@@ -162,7 +162,7 @@ struct BrowserSheetView: View {
                             activeTab: pool.activeManager?.currentProfile,
                             globalDefault: pool.userAgentProfile).icon)
                             .font(.system(size: 12))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         Text(navigationTitle)
                             .font(.headline)
                             .lineLimit(1)
@@ -254,7 +254,7 @@ struct BrowserSheetView: View {
                 // Tab count badge
                 Text("\(pool.tabs.count)/\(BrowserTabPool.maxTabs)")
                     .font(.system(size: 10, weight: .medium, design: .monospaced))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                     .padding(.leading, 4)
             }
             .padding(.horizontal, 12)
@@ -280,7 +280,7 @@ struct BrowserSheetView: View {
                     } label: {
                         Image(systemName: "xmark")
                             .font(.system(size: 9, weight: .bold))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                     .buttonStyle(.plain)
                 }
@@ -507,7 +507,7 @@ struct BrowserDownloadPanelSheet: View {
     let onLocate: (String) -> Void
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Group {
                 let items = center.downloads(for: sessionId)
                     .sorted { $0.startedAt > $1.startedAt }
@@ -515,9 +515,9 @@ struct BrowserDownloadPanelSheet: View {
                     VStack(spacing: 12) {
                         Image(systemName: "arrow.down.circle")
                             .font(.system(size: 42))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         Text("No downloads", comment: "Empty downloads panel")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
@@ -603,14 +603,14 @@ private struct BrowserDownloadPanelRow: View {
                         ? " / \(ByteCountFormatter.string(fromByteCount: progress.total, countStyle: .file))" : ""
                     Text("\(pctText)\(done)\(totalText)")
                         .font(.system(size: 12))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     ProgressView(value: progress.fraction)
                         .progressViewStyle(.linear)
-                        .tint(Color.accentColor)
+                        .accentColor(Color.accentColor)
                 case .completed(let sizeText):
                     Text("\(sizeText) · \(AppLocalized("Show in Files", comment: "Completed download row hint"))")
                         .font(.system(size: 12))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 case .failed(let reason):
                     Text(reason)
                         .font(.system(size: 12))
@@ -625,18 +625,18 @@ private struct BrowserDownloadPanelRow: View {
                 Button(action: onCancel) {
                     Image(systemName: "xmark.circle.fill")
                         .font(.system(size: 20))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .buttonStyle(.plain)
             case .completed:
                 Image(systemName: "chevron.right")
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
             case .failed:
                 Button(action: onClear) {
                     Image(systemName: "trash")
                         .font(.system(size: 15))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .buttonStyle(.plain)
             }
@@ -704,7 +704,7 @@ struct BrowserDownloadCardRow: View {
                 if case .downloading = entry.state {
                     ProgressView(value: progress.fraction)
                         .progressViewStyle(.linear)
-                        .tint(Color.accentColor)
+                        .accentColor(Color.accentColor)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -713,7 +713,7 @@ struct BrowserDownloadCardRow: View {
                 Button(action: onDismiss) {
                     Image(systemName: "xmark")
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .padding(6)
                 }
                 .buttonStyle(.plain)
@@ -751,11 +751,11 @@ struct BrowserDownloadCardRow: View {
                 ? " / \(ByteCountFormatter.string(fromByteCount: progress.total, countStyle: .file))" : ""
             Text("\(pctText)\(done)\(totalText)")
                 .font(.system(size: 11))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         case .completed(let sizeText):
             Text("\(sizeText) · \(AppLocalized("Tap to view", comment: "Completed download card"))")
                 .font(.system(size: 11))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         case .failed(let reason):
             Text(reason)
                 .font(.system(size: 11))

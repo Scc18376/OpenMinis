@@ -45,7 +45,7 @@ struct CloudSyncSettingsV2View: View {
                         SyncMigrationDetailView()
                     } label: {
                         LabeledContent("Status") {
-                            Text(statusText).foregroundStyle(.secondary)
+                            Text(statusText).foregroundStyle(Color.secondary)
                         }
                     }
                 }
@@ -62,8 +62,8 @@ struct CloudSyncSettingsV2View: View {
                     } label: {
                         LabeledContent("Name") {
                             HStack(spacing: 6) {
-                                Text(deviceName).foregroundStyle(.secondary)
-                                Image(systemName: "chevron.right").font(.caption2).foregroundStyle(.tertiary)
+                                Text(deviceName).foregroundStyle(Color.secondary)
+                                Image(systemName: "chevron.right").font(.caption2).foregroundStyle(Color(UIColor.tertiaryLabel))
                             }
                         }
                     }
@@ -126,7 +126,7 @@ struct CloudSyncSettingsV2View: View {
                     if remoteDevices.isEmpty {
                         Text("No other devices found yet. Devices appear here once they enable iCloud Sync.")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .padding(.vertical, 4)
                     } else {
                         ForEach(remoteDevices, id: \.id) { d in
@@ -134,12 +134,12 @@ struct CloudSyncSettingsV2View: View {
                                 HStack {
                                     Text(d.deviceName).font(.body)
                                     Spacer()
-                                    Text(relativeDate(d.lastSeen)).font(.caption2).foregroundStyle(.secondary)
+                                    Text(relativeDate(d.lastSeen)).font(.caption2).foregroundStyle(Color.secondary)
                                 }
                                 if !d.uploadTypes.isEmpty {
                                     Text(uploadTypesSummary(d.uploadTypes))
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                         .lineLimit(2)
                                 }
                             }

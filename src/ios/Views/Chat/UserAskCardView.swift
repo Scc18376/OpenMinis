@@ -1374,11 +1374,11 @@ private struct UserAskInputSheet: View {
     @State private var savedVoiceExpanded: Bool?
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             VStack(alignment: .leading, spacing: 12) {
                 Text(question)
                     .font(.system(size: t.resolvedDetail))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(3)
                 // [T-user-ask-dictation-below] The text box stays in place in both
                 // modes: the voice panel mirrors its transcript into `text`, so
@@ -1421,7 +1421,7 @@ private struct UserAskInputSheet: View {
                     Spacer()
                     Text("\(text.count)/\(UserAskParser.maxInputLength)")
                         .font(.caption.monospacedDigit())
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 if voiceActive {
                     // [T-user-ask-dictation-below] The composer's own voice panel,

@@ -49,7 +49,7 @@ struct OnboardingModelSelectionView: View {
                             if fetchError != AppLocalized("Could not fetch the model list automatically.") {
                                 Text(fetchError)
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                             HStack(spacing: 12) {
                                 Button {
@@ -73,7 +73,7 @@ struct OnboardingModelSelectionView: View {
                                 ProgressView()
                                 Text("Loading models...")
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                             Spacer()
                         }

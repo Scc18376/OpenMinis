@@ -465,7 +465,7 @@ struct ImagePreviewView: View {
                                     .offset(y: -1)
                             case .saving:
                                 ProgressView()
-                                    .tint(ChatColors.primaryText)
+                                    .accentColor(ChatColors.primaryText)
                             case .saved:
                                 Image(systemName: "checkmark")
                                     .foregroundStyle(.green)
@@ -554,7 +554,7 @@ struct AsyncImagePreviewView: View {
             ZStack {
                 Color.black.ignoresSafeArea()
                 ProgressView()
-                    .tint(.white)
+                    .accentColor(.white)
             }
             .overlay(alignment: .topLeading) {
                 Button {

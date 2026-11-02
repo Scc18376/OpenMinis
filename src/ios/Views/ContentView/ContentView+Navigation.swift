@@ -170,7 +170,7 @@ extension ContentView {
     ///      root WITHOUT animation — animated transitions race the
     ///      subsequent `openSession()` and the new chat sometimes never
     ///      appears (push coalesced into the running pop).
-    ///   2. Once the unwind has settled (NavigationStack path empty on
+    ///   2. Once the unwind has settled (MinisNavStack path empty on
     ///      iPhone, `selectedSessionId == nil` on iPad), open the new
     ///      draft session.
     ///   3. AIChatView's onAppear then consumes any
@@ -324,7 +324,7 @@ extension ContentView {
         NavDiag.write(event: "commit", target: target, before: navigationPath, after: newPath,
                       animated: animated, outcome: "committed", caller: caller)
         if animated {
-            // A plain assignment: NavigationStack animates a push of a new
+            // A plain assignment: MinisNavStack animates a push of a new
             // element by default, the same push the row's old NavigationLink
             // performed.
             navigationPath = newPath

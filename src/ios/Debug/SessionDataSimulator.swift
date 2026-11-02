@@ -705,7 +705,7 @@ final class SessionDataSimulator: ObservableObject {
                                 .font(.headline)
                             Text(item.subtitle)
                                 .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                         .padding()
                     }

@@ -25,10 +25,10 @@ struct ModelGroupsView: View {
                             .foregroundStyle(.quaternary)
                         Text("No model groups")
                             .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         Text("Groups let you combine models for fallback or load balancing.")
                             .font(.caption)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                             .multilineTextAlignment(.center)
                     }
                     .frame(maxWidth: .infinity)
@@ -64,7 +64,7 @@ struct ModelGroupsView: View {
                             } label: {
                                 Label("Edit", systemImage: "pencil")
                             }
-                            .tint(.blue)
+                            .accentColor(.blue)
                         }
                     }
                     .onMove(perform: moveGroups)
@@ -138,12 +138,12 @@ struct ModelGroupsView: View {
         .navigationTitle("Model Groups")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showAddAgentModels) {
-            NavigationStack {
+            MinisNavStack {
                 UnifiedModelPicker(config: .agentLoopAddModels())
             }
         }
         .sheet(isPresented: $showAddAgentGroups) {
-            NavigationStack {
+            MinisNavStack {
                 AddAgentLoopGroupsSheet()
             }
         }
@@ -322,35 +322,35 @@ private struct GroupRow: View {
         switch modality {
         case .videoOutput:
             Image(systemName: "video.badge.plus")
-                .font(.caption).foregroundStyle(.tint)
+                .font(.caption).foregroundStyle(Color.accentColor)
                 .accessibilityLabel(AppLocalized("Video generation"))
         case .imageOutput:
             Image(systemName: "photo.badge.plus")
-                .font(.caption).foregroundStyle(.tint)
+                .font(.caption).foregroundStyle(Color.accentColor)
                 .accessibilityLabel(AppLocalized("Image generation"))
         case .audioOutput:
             Image(systemName: "speaker.wave.2")
-                .font(.caption).foregroundStyle(.tint)
+                .font(.caption).foregroundStyle(Color.accentColor)
                 .accessibilityLabel(AppLocalized("Speech output"))
         case .audioInput:
             Image(systemName: "waveform.badge.mic")
-                .font(.caption).foregroundStyle(.secondary)
+                .font(.caption).foregroundStyle(Color.secondary)
                 .accessibilityLabel(AppLocalized("Speech transcription"))
         case .videoInput:
             Image(systemName: "video")
-                .font(.caption).foregroundStyle(.secondary)
+                .font(.caption).foregroundStyle(Color.secondary)
                 .accessibilityLabel(AppLocalized("Video input"))
         case .imageInput:
             Image(systemName: "photo")
-                .font(.caption).foregroundStyle(.secondary)
+                .font(.caption).foregroundStyle(Color.secondary)
                 .accessibilityLabel(AppLocalized("Image input"))
         case .pdfInput:
             Image(systemName: "doc")
-                .font(.caption).foregroundStyle(.secondary)
+                .font(.caption).foregroundStyle(Color.secondary)
                 .accessibilityLabel(AppLocalized("PDF input"))
         case .textOutput:
             Image(systemName: "text.alignleft")
-                .font(.caption).foregroundStyle(.secondary)
+                .font(.caption).foregroundStyle(Color.secondary)
                 .accessibilityLabel(AppLocalized("Text generation"))
         default:
             EmptyView()
@@ -385,10 +385,10 @@ private struct GroupRow: View {
             HStack(spacing: 6) {
                 Image(systemName: group.strategy == .fallback ? "arrow.down.circle" : "arrow.triangle.branch")
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Text(group.strategy == .fallback ? "Fallback" : "Load Balance")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 if group.strategy == .fallback {
                     Text("·")
                         .font(.caption)
@@ -402,12 +402,12 @@ private struct GroupRow: View {
                     .foregroundStyle(.quaternary)
                 Text(AppLocalized("\(group.memberEntryIds.count) models"))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
 
             Text(memberSummary)
                 .font(.caption2)
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(Color(UIColor.tertiaryLabel))
                 .lineLimit(1)
         }
         .padding(.vertical, 2)

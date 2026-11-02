@@ -488,7 +488,7 @@ struct MessageListTestView: View {
             controlsPanel
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
-                .background(.ultraThinMaterial)
+                .background(Color(UIColor.secondarySystemBackground))
         }
         .navigationTitle("Message List V3 Test")
         .navigationBarTitleDisplayMode(.inline)
@@ -559,7 +559,7 @@ struct MessageListTestView: View {
             if !jitterMonitor.actionDesc.isEmpty {
                 Text(jitterMonitor.actionDesc)
                     .font(.system(.caption, design: .monospaced))
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(Color.primary)
                     .lineLimit(2)
                     .minimumScaleFactor(0.8)
             }
@@ -610,7 +610,7 @@ struct MessageListTestView: View {
                 if !fpsMonitor.samples.isEmpty {
                     Text("avg=\(fpsMonitor.avgFPS) min=\(fpsMonitor.minFPS)")
                         .font(.system(.caption2, design: .monospaced))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
         }
@@ -634,7 +634,7 @@ struct MessageListTestView: View {
                     .frame(width: 8, height: 8)
                 Text(simulator.progress)
                     .font(.caption.monospaced())
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(1)
                 Spacer()
                 Text(simulator.state == .playing ? "PLAYING" :
@@ -649,7 +649,7 @@ struct MessageListTestView: View {
             HStack(spacing: 12) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Speed: \(simulator.charsPerTick) ch/tick")
-                        .font(.caption2).foregroundStyle(.secondary)
+                        .font(.caption2).foregroundStyle(Color.secondary)
                     Slider(value: Binding(
                         get: { Double(simulator.charsPerTick) },
                         set: { simulator.charsPerTick = Int($0) }
@@ -658,7 +658,7 @@ struct MessageListTestView: View {
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Interval: \(String(format: "%.0f", simulator.tickInterval * 1000))ms")
-                        .font(.caption2).foregroundStyle(.secondary)
+                        .font(.caption2).foregroundStyle(Color.secondary)
                     Slider(value: $simulator.tickInterval, in: 0.01...0.2, step: 0.01)
                 }
             }
@@ -765,11 +765,11 @@ struct MessageListTestView: View {
     // MARK: - Paste Sheet
 
     private var pasteSheet: some View {
-        NavigationStack {
+        MinisNavStack {
             VStack(spacing: 12) {
                 Text("Paste session JSON from \"Copy Session Data\"")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
 
                 TextEditor(text: $pastedJSON)
                     .font(.system(.caption, design: .monospaced))

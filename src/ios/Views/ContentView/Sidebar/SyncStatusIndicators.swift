@@ -25,7 +25,7 @@ struct PulseRotateIcon: View {
     var body: some View {
         Image(systemName: "arrow.triangle.2.circlepath")
             .font(.system(size: 11, weight: .semibold))
-            .foregroundStyle(.primary)
+            .foregroundStyle(Color.primary)
             .rotationEffect(.degrees(rotation))
             .task { await pulseLoop() }
     }

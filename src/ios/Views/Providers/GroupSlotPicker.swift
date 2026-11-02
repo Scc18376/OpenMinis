@@ -76,14 +76,14 @@ struct GroupSlotPicker: View {
                     .foregroundStyle(Color(UIColor.label))
                 Spacer()
                 Text(selectedName)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Image(systemName: "chevron.up.chevron.down")
                     .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
             }
         }
         .sheet(isPresented: $showCreate) {
-            NavigationStack {
+            MinisNavStack {
                 UnifiedModelPicker(config: createGroupConfig())
             }
         }

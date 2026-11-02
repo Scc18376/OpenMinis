@@ -594,7 +594,7 @@ struct InlineVoiceInputView: View {
             viewModel.refreshInputProvider()
         }
         .sheet(isPresented: $showModelSelector) {
-            NavigationStack {
+            MinisNavStack {
                 UnifiedModelPicker(config: .voiceInput())
             }
         }
@@ -617,7 +617,7 @@ struct InlineVoiceInputView: View {
             if !viewModel.transcript.isEmpty {
                 Text("… \(viewModel.transcript.count) chars …", comment: "Compact voice buffered char count")
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(1)
             }
             micButtonWithSwitch
@@ -640,7 +640,7 @@ struct InlineVoiceInputView: View {
             HStack(spacing: 8) {
                 statusLineText
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(1)
                 if viewModel.isEditingTranscript {
                     Button {
@@ -648,7 +648,7 @@ struct InlineVoiceInputView: View {
                     } label: {
                         Text("Exit", comment: "Exit transcript editing")
                             .font(.caption.weight(.semibold))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .padding(.horizontal, 10)
                             .padding(.vertical, 3)
                             .background(Capsule().fill(Color.secondary.opacity(0.15)))
@@ -705,7 +705,7 @@ struct InlineVoiceInputView: View {
                         .foregroundStyle(.orange)
                     Text(error)
                         .font(.caption2)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .lineLimit(2)
                         .multilineTextAlignment(.center)
                 }
@@ -913,16 +913,16 @@ struct InlineVoiceInputView: View {
                 if let g = activeGroupName {
                     Text(g)
                         .font(.caption2.weight(.medium))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Text("·").font(.caption2).foregroundStyle(.quaternary)
                 }
                 Text(activeModelLabel)
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(1)
                 Image(systemName: "chevron.up.chevron.down")
                     .font(.system(size: 9, weight: .semibold))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 4)

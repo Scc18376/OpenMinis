@@ -367,7 +367,7 @@ struct ChatMessageRow: View {
                     .buttonStyle(.plain)
                 }
             }
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color.secondary)
             .lineLimit(1)
             .fixedSize()
             VStack { Divider() }
@@ -398,7 +398,7 @@ struct ChatMessageRow: View {
                     .font(.system(size: 12, weight: .medium))
                     .multilineTextAlignment(.center)
             }
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color.secondary)
             // [T-browser-download-ux-v4] No .lineLimit(1).fixedSize() here:
             // fixedSize forced the text to its full ideal width, so a long
             // systemInfo line (e.g. pre-v3 "Downloaded … to /var/minis/… —
@@ -841,7 +841,7 @@ struct ChatMessageRow: View {
             if autoRetryAttempt > 0 {
                 Text("Retry in \(autoRetryCountdown)s (\(autoRetryAttempt)/\(AIChatViewModel.retryDelays.count))")
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)
                     .background(Color.secondary.opacity(0.12))
@@ -876,7 +876,7 @@ struct ChatMessageRow: View {
                     .foregroundStyle(.orange)
                 Text("Interrupted — tap Resume to continue")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
 
             Spacer()

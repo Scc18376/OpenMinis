@@ -84,10 +84,10 @@ struct ThinkingRulesSection: View {
         Section {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Image(systemName: "info.circle")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Text("This provider uses an official protocol, so its thinking parameters are maintained by Minis. Custom rules apply to OpenAI-compatible providers on the Chat Completions API.")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         } header: {
             Text("Thinking Rules")
@@ -122,14 +122,14 @@ struct ThinkingRulesSection: View {
                 HStack(spacing: 6) {
                     Image(systemName: "lock.fill")
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Text("Default rules")
                     Text("\(builtInRules.count)")
                         .font(.caption)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
                         .background(Color.secondary.opacity(0.15), in: Capsule())
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
 
@@ -157,7 +157,7 @@ struct ThinkingRulesSection: View {
                         .foregroundStyle(.blue)
                 }
                 Text("Default rules are built in and cannot be deleted. Add a rule above them to override one.")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             .font(.caption)
         }
@@ -184,26 +184,26 @@ struct ThinkingRulesSection: View {
                 HStack(spacing: 6) {
                     Text(rule.label)
                         .font(isBuiltIn ? .callout : .body)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(Color.primary)
                     if isBuiltIn {
                         Image(systemName: "lock.fill")
                             .font(.caption2)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                     }
                 }
                 Text(rule.scope.displayText)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 if let fmt = rule.wireFormat {
                     Text(fmt.displaySummary)
                         .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                 }
             }
             Spacer()
             Image(systemName: "chevron.right")
                 .font(.caption)
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(Color(UIColor.tertiaryLabel))
         }
         .contentShape(Rectangle())
     }

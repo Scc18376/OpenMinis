@@ -115,17 +115,17 @@ struct ProviderQuotaSection: View {
         case .unsupported(let reason):
             Text(Self.message(for: reason))
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         case .loading:
             HStack(spacing: 8) {
                 ProgressView().controlSize(.small)
                 Text("Checking balance…")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         case .empty:
             Text("The provider reported no balance or quota for this key.")
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         case .failed(let err):
             Label {
                 Text(Self.message(for: err))
@@ -144,7 +144,7 @@ struct ProviderQuotaSection: View {
                     Image(systemName: "person.2")
                 }
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             }
             ForEach(pools) { pool in
                 QuotaPoolRow(pool: pool, status: quota.poolStatus(pool))
@@ -333,7 +333,7 @@ struct QuotaWindowLine: View {
                 } else if let r = window.amounts?.remaining {
                     Text(String(format: String(localized: "%@ left"), QuotaFormat.amount(r, unit: pool.unit)))
                         .font(.caption.monospacedDigit())
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
             if let fraction {
@@ -342,7 +342,7 @@ struct QuotaWindowLine: View {
             if let reset = window.resetsAt {
                 Text(String(format: String(localized: "Resets %@"), ProviderQuotaSection.relative(reset)))
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         }
         .accessibilityElement(children: .combine)
@@ -377,7 +377,7 @@ struct QuotaPoolRow: View {
             if status.freshness == .expired {
                 Text("Data expired — refresh to update")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             } else {
                 details(tone: tone)
             }
@@ -396,12 +396,12 @@ struct QuotaPoolRow: View {
             if detailed, pool.kind == .prepaidBalance {
                 Text("Prepaid balance — no total cap, so no percentage is shown.")
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             if let parts = QuotaFormat.breakdown(amounts, unit: pool.unit) {
                 Text(parts)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         }
         if pool.verdict == .rejected {
@@ -415,7 +415,7 @@ struct QuotaPoolRow: View {
         if pool.unlimited {
             Text("No limit")
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
     }
 
@@ -440,7 +440,7 @@ struct QuotaPoolRow: View {
                             QuotaFormat.amount(used, unit: pool.unit), QuotaFormat.amount(total, unit: pool.unit))
                      + (util.map { " · " + QuotaFormat.percent($0.percent) } ?? ""))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         }
     }
@@ -464,12 +464,12 @@ struct QuotaConsoleLinkRow: View {
                         .foregroundStyle(Color(UIColor.label))
                     Text(url.host ?? url.absoluteString)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 Spacer()
                 Image(systemName: "arrow.up.right")
                     .font(.footnote.weight(.semibold))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
             }
         }
         .buttonStyle(.plain)

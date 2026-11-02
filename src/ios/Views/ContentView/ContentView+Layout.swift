@@ -3,7 +3,7 @@
 //  Minis - home screen (session list, navigation, settings entry)
 //
 //  ContentView, layout: `splitLayout` (NavigationSplitView for iPad / wide
-//  windows), `stackLayout` (NavigationStack for iPhone / narrow windows) and
+//  windows), `stackLayout` (MinisNavStack for iPhone / narrow windows) and
 //  the split view's `detailView`. `body` picks one by width.
 //
 //  Map of the ContentView files: ContentView/ContentView.swift.
@@ -41,7 +41,7 @@ extension ContentView {
     // MARK: - Stack Layout (iPhone / narrow window)
 
     var stackLayout: some View {
-        NavigationStack(path: $navigationPath) {
+        MinisNavStackPath(path: $navigationPath) {
             sessionList(useNavigationLinks: true)
                 .navigationDestination(for: String.self) { id in
                     // `.id(id)` mirrors detailView (iPad): navigationDestination
@@ -113,12 +113,12 @@ extension ContentView {
             VStack(spacing: 12) {
                 Image(systemName: "bubble.left.and.bubble.right")
                     .font(.system(size: 48))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Text("No Conversation Selected")
                     .font(.title3.bold())
                 Text("Select a conversation or start a new one")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }

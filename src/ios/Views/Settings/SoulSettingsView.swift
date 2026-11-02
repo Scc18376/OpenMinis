@@ -233,7 +233,7 @@ struct SoulSettingsView: View {
                 if !style.trimmingCharacters(in: .whitespaces).isEmpty {
                     Text(style)
                         .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
             Spacer(minLength: 0)
@@ -254,7 +254,7 @@ struct SoulSettingsView: View {
             if bodyText.isEmpty {
                 Text(AppLocalized("Describe the personality and voice you want for your agent"))
                     .font(.system(.body, design: .monospaced))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                     .padding(.top, 8)
                     .padding(.leading, 5)
                     .allowsHitTesting(false)
@@ -275,7 +275,7 @@ struct SoulSettingsView: View {
             switch check {
             case .ok:
                 Text(soulBodyCountText(bodyText))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             case .overLimit(let count, let cap):
                 Text(AppLocalized("Over limit: \(count) / \(cap) tokens. Each CJK character and each Latin word counts as one."))
                     .foregroundStyle(.red)
@@ -423,7 +423,7 @@ private struct SoulEmojiPickerSheet: View {
     ]
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             VStack(spacing: 20) {
                 // Live preview at the size the chat header actually uses, so
                 // the user judges the glyph at its real scale rather than at
@@ -473,7 +473,7 @@ private struct SoulEmojiPickerSheet: View {
 
                 Text(AppLocalized("Tap a suggestion or type one emoji. These render the same on iOS and Android."))
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .multilineTextAlignment(.center)
 
                 Spacer(minLength: 0)

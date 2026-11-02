@@ -85,7 +85,7 @@ struct ThinkingRuleEditorView: View {
     @State private var customHighValue: String = ""
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 Section("Name") {
                     TextField("Rule name", text: $label)
@@ -118,7 +118,7 @@ struct ThinkingRuleEditorView: View {
                     }
                     Text(choice.explanation)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     formatFields
                 } header: {
                     Text("What to send")
@@ -163,7 +163,7 @@ struct ThinkingRuleEditorView: View {
                 // backend killed whole requests on MiMo (c5efeb1e).
                 Text("The field is omitted entirely when thinking is off.")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         case .booleanToggle:
             TextField("Field path", text: $togglePath)

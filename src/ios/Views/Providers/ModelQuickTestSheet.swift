@@ -44,7 +44,7 @@ struct ModelQuickTestSheet: View {
     }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     header
@@ -78,13 +78,13 @@ struct ModelQuickTestSheet: View {
         HStack(spacing: 10) {
             Image(systemName: "bolt.badge.checkmark")
                 .font(.title3)
-                .foregroundStyle(.tint)
+                .foregroundStyle(Color.accentColor)
                 .frame(width: 34, height: 34)
                 .background(Color.accentColor.opacity(0.12))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             VStack(alignment: .leading, spacing: 2) {
                 Text(entry.model.displayName).font(.headline)
-                Text(entry.model.id).font(.caption2).foregroundStyle(.secondary)
+                Text(entry.model.id).font(.caption2).foregroundStyle(Color.secondary)
             }
             Spacer()
         }
@@ -376,7 +376,7 @@ private struct TestCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {
-                Image(systemName: run.kind.icon).foregroundStyle(.tint)
+                Image(systemName: run.kind.icon).foregroundStyle(Color.accentColor)
                 Text(run.kind.title).font(.subheadline.weight(.semibold))
                 Spacer()
                 statusBadge
@@ -417,7 +417,7 @@ private struct TestCard: View {
                 Image(systemName: "checkmark.seal.fill").foregroundStyle(.green)
                 if run.elapsed > 0 {
                     Text(String(format: "%.1fs", run.elapsed))
-                        .font(.caption2).foregroundStyle(.tertiary)
+                        .font(.caption2).foregroundStyle(Color(UIColor.tertiaryLabel))
                 }
             }
         }
@@ -426,7 +426,7 @@ private struct TestCard: View {
     @ViewBuilder private var content: some View {
         switch run.state {
         case .running:
-            Text("Testing…").font(.caption).foregroundStyle(.secondary)
+            Text("Testing…").font(.caption).foregroundStyle(Color.secondary)
 
         case .text(let reply):
             Text(reply).font(.subheadline).textSelection(.enabled)
@@ -439,7 +439,7 @@ private struct TestCard: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             } else {
                 Text("Received \(data.count) bytes (couldn't decode preview)")
-                    .font(.caption).foregroundStyle(.secondary)
+                    .font(.caption).foregroundStyle(Color.secondary)
             }
 
         case .audio(let data):
@@ -455,13 +455,13 @@ private struct TestCard: View {
             labeled("Transcribed", heard)
 
         case .failure(let message):
-            Text(message).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+            Text(message).font(.caption).foregroundStyle(Color.secondary).textSelection(.enabled)
         }
     }
 
     private func labeled(_ title: LocalizedStringKey, _ text: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(title).font(.caption2.weight(.medium)).foregroundStyle(.secondary)
+            Text(title).font(.caption2.weight(.medium)).foregroundStyle(Color.secondary)
             Text(text).font(.subheadline).textSelection(.enabled)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }

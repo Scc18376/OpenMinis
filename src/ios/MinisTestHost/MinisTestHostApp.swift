@@ -29,7 +29,7 @@ struct MinisTestHostApp: App {
         WindowGroup {
             Text("MinisTestHost: unit-test host, no app code")
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
     }
 }

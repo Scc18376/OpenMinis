@@ -11,7 +11,7 @@ struct AIDataSharingConsentView: View {
     var onDecline: () -> Void
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     VStack(alignment: .leading, spacing: 8) {
@@ -19,7 +19,7 @@ struct AIDataSharingConsentView: View {
                             .font(.title2.bold())
                         Text("Please review how your data is handled before adding an AI provider.")
                             .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
 
                     GroupBox {
@@ -28,10 +28,10 @@ struct AIDataSharingConsentView: View {
                                 .font(.headline)
                             Text("Minis does not operate any server and does not collect, store, or process any of your personal data. All data stays on your device.")
                                 .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                             Text("However, when you add a third-party AI provider and use it for conversations, the following data may be sent directly from your device to that provider's servers:")
                                 .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
 
                             VStack(alignment: .leading, spacing: 6) {
                                 dataItem("Your chat messages and conversation history")
@@ -47,7 +47,7 @@ struct AIDataSharingConsentView: View {
                                 .font(.headline)
                             Text("Depending on which provider you configure, your data will be sent directly to one or more of the following third-party services:")
                                 .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
 
                             VStack(alignment: .leading, spacing: 8) {
                                 providerRow("Anthropic", description: "Claude models (anthropic.com)", color: .purple)
@@ -59,7 +59,7 @@ struct AIDataSharingConsentView: View {
 
                             Text("Each provider has its own privacy policy and terms of service that govern how they handle your data.")
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
 
@@ -111,7 +111,7 @@ struct AIDataSharingConsentView: View {
     private func dataItem(_ text: String) -> some View {
         HStack(alignment: .top, spacing: 8) {
             Text("•")
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             Text(text)
                 .font(.subheadline)
         }
@@ -127,7 +127,7 @@ struct AIDataSharingConsentView: View {
                     .font(.subheadline.weight(.medium))
                 Text(description)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         }
     }
@@ -497,14 +497,14 @@ struct AddProviderView: View {
                                 .foregroundStyle(Color(UIColor.label))
                             Text(type.pickerSubtitle)
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
 
                         Spacer()
 
                         Image(systemName: "chevron.right")
                             .font(.caption)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                     }
                 }
             }
@@ -539,7 +539,7 @@ struct AddProviderView: View {
 
                     Image(systemName: "chevron.right")
                         .font(.caption)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                 }
             }
         } footer: {
@@ -572,14 +572,14 @@ struct AddProviderView: View {
                                 .foregroundStyle(Color(UIColor.label))
                             Text(template.capability)
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
 
                         Spacer()
 
                         Image(systemName: "chevron.right")
                             .font(.caption)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                     }
                 }
             }
@@ -637,14 +637,14 @@ struct AddProviderView: View {
                                         .foregroundStyle(Color(UIColor.label))
                                     Text(credentialDescription(type: type, credential: cred))
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                 }
 
                                 Spacer()
 
                                 Image(systemName: "chevron.right")
                                     .font(.caption)
-                                    .foregroundStyle(.tertiary)
+                                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                             }
                         }
                     }
@@ -783,7 +783,7 @@ struct AddProviderView: View {
                             showApiKeyPlaintext.toggle()
                         } label: {
                             Image(systemName: showApiKeyPlaintext ? "eye.slash" : "eye")
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                         .buttonStyle(.plain)
                     }
@@ -847,10 +847,10 @@ struct AddProviderView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Token")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         Text(masked)
                             .font(.system(.caption, design: .monospaced))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
 
@@ -858,14 +858,14 @@ struct AddProviderView: View {
                     HStack {
                         Text("Authorized")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         Spacer()
                         Text(authTime, style: .date)
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         Text(authTime, style: .time)
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
             } else {
@@ -906,7 +906,7 @@ struct AddProviderView: View {
             Section {
                 TextField(defaultBaseURL, text: $customBaseURLInput)
                     .font(.system(.body, design: .monospaced))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                     .keyboardType(.URL)
@@ -959,7 +959,7 @@ struct AddProviderView: View {
         Section {
             TextField(defaultBaseURL, text: $customBaseURLInput)
                 .font(.system(.body, design: .monospaced))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .keyboardType(.URL)
@@ -1327,7 +1327,7 @@ struct AddProviderView: View {
                 .foregroundStyle(.indigo)
         case .githubCopilot:
             Image(systemName: "chevron.left.forwardslash.chevron.right")
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.primary)
         case .unsupported:
             Image(systemName: "questionmark.circle")
                 .foregroundStyle(.gray)

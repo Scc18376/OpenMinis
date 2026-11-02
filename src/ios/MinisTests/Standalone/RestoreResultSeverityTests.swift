@@ -77,7 +77,7 @@ do {
         check("restoreNotice wraps: \(l.prefix(48))", wrapped)
     }
     check("size-capped is no longer grey fine print",
-          !report.contains(".foregroundStyle(.secondary)"))
+          !report.contains(".foregroundStyle(Color.secondary)"))
 }
 
 print("\n▶️  3. the warning style is orange + an icon, not a string prefix")

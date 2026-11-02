@@ -94,7 +94,7 @@ struct SessionLockGateOverlay: View {
             VStack(spacing: 18) {
                 Image(systemName: "lock.fill")
                     .font(.system(size: 56, weight: .light))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
 
                 Text("This session is locked")
                     .font(.system(size: 18, weight: .semibold))
@@ -103,7 +103,7 @@ struct SessionLockGateOverlay: View {
                      ? "Authentication failed. Tap to try again."
                      : "Tap to unlock with \(BiometricAuth.biometryDisplayName)")
                     .font(.system(size: 14))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .multilineTextAlignment(.center)
 
                 Button {

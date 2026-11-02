@@ -146,7 +146,7 @@ struct ChatToolbarKey: Equatable {
 
 /// [T-ios-navbar-toolbar-host] Zero-footprint host that owns the navigation
 /// toolbar. Attached via .background on the chat content, so it sits inside
-/// the NavigationStack destination (toolbar registers from any descendant),
+/// the MinisNavStack destination (toolbar registers from any descendant),
 /// occupies no layout, and — being Equatable on the toolbar's displayed
 /// inputs — its body (the ToolbarContent builder) only re-runs when something
 /// the toolbar actually shows changes. Streaming ticks leave the key equal,

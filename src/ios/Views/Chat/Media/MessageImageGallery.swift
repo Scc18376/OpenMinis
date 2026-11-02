@@ -344,7 +344,7 @@ struct MessageImageGallery: View {
                     case .idle:
                         Image(systemName: "square.and.arrow.down").offset(y: -1)
                     case .saving:
-                        ProgressView().tint(ChatColors.primaryText)
+                        ProgressView().accentColor(ChatColors.primaryText)
                     case .saved:
                         Image(systemName: "checkmark").foregroundStyle(.green)
                     case .failed:
@@ -443,7 +443,7 @@ private struct GalleryPage: View {
                 )
             } else {
                 ProgressView()
-                    .tint(.white)
+                    .accentColor(.white)
             }
         }
     }

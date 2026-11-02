@@ -103,10 +103,10 @@ let providerEdit: String = {
 }()
 check("the Model Groups edit link is still caption text, tint, plain",
       groupsEdit.contains("Text(\"Edit\")\n                                .font(.caption)\n                                .textCase(nil)")
-      && groupsEdit.contains(".buttonStyle(.plain)\n                        .foregroundStyle(.tint)"))
+      && groupsEdit.contains(".buttonStyle(.plain)\n                        .foregroundStyle(Color.accentColor)"))
 check("the provider edit entry uses the same text, font, case, style and tint",
       providerEdit.contains("Text(\"Edit\")\n                            .font(.caption)\n                            .textCase(nil)")
-      && providerEdit.contains(".buttonStyle(.plain)\n                    .foregroundStyle(.tint)"))
+      && providerEdit.contains(".buttonStyle(.plain)\n                    .foregroundStyle(Color.accentColor)"))
 check("it is text, not an icon", !providerEdit.contains("Image(systemName:") && !header.contains("slider.horizontal.3"))
 check("the visible text stays one line and is not squeezed",
       providerEdit.contains(".lineLimit(1)") && providerEdit.contains(".fixedSize()"))
@@ -115,7 +115,7 @@ print("\n▶️  3. destination")
 check("the sheet opens ProviderInstanceDetailView for exactly that instance",
       picker.contains(".sheet(item: $editingProvider) { target in")
       && picker.contains("ProviderInstanceDetailView(instanceId: target.id)"))
-check("…inside its own NavigationStack with a Done button",
+check("…inside its own MinisNavStack with a Done button",
       picker.contains("Button(\"Done\") { editingProvider = nil }"))
 
 print("\n▶️  4. accessibility")

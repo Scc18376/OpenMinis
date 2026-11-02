@@ -487,7 +487,7 @@ struct ContentView: View {
     @State private var consumedQuickActionTrigger: Int = 0
 
     /// Set when `handleNewChatRequest()` had to pop the iPhone
-    /// NavigationStack before it could open the new draft session.
+    /// MinisNavStack before it could open the new draft session.
     /// `onChange(of: navigationPath.count == 0)` watches this and
     /// dispatches the new-draft open once the pop has fully settled.
     @State var pendingNewChatAfterPop: Bool = false
@@ -629,7 +629,7 @@ struct ContentView: View {
         .onAppear {
             if quickActionRouter.newChatTrigger != consumedQuickActionTrigger {
                 consumedQuickActionTrigger = quickActionRouter.newChatTrigger
-                // Defer one runloop so the NavigationStack body has a
+                // Defer one runloop so the MinisNavStack body has a
                 // chance to attach `$navigationPath` before we append to
                 // it — otherwise the append on a freshly-mounted stack
                 // can be lost.
@@ -655,7 +655,7 @@ struct ContentView: View {
             // `.id(appLanguage)` rebuild above) — would leave the push stranded
             // with no later transition to release it. Deferred one runloop for
             // the same reason the quick-action path above is: the
-            // NavigationStack must have attached `$navigationPath` first.
+            // MinisNavStack must have attached `$navigationPath` first.
             DispatchQueue.main.async {
                 flushPendingBackgroundNavigation()
             }
@@ -771,7 +771,7 @@ struct ContentView: View {
             }
         }
         .fullScreenCover(isPresented: $showTerminal) {
-            NavigationStack {
+            MinisNavStack {
                 ISHTerminalView(showCloseButton: true)
             }
         }
@@ -793,7 +793,7 @@ struct ContentView: View {
             case .settings:
                 SettingsSheet(showTerminal: $showTerminal)
             case .rootfsManagement:
-                NavigationStack {
+                MinisNavStack {
                     RootfsManagementView()
                         .toolbar {
                             ToolbarItem(placement: .topBarTrailing) {
@@ -804,11 +804,11 @@ struct ContentView: View {
             case .browser:
                 BrowserSheetView(pool: browserPool)
             case .browserManagement:
-                NavigationStack {
+                MinisNavStack {
                     BrowserManagementView(pool: browserPool)
                 }
             case .syncMigrationDetail:
-                NavigationStack {
+                MinisNavStack {
                     SyncMigrationDetailView()
                         .toolbar {
                             ToolbarItem(placement: .topBarTrailing) {
@@ -959,15 +959,15 @@ struct ContentView: View {
                         // how dark mode looks today.
                         ProgressView()
                             .controlSize(.large)
-                            .tint(ChatColors.primaryText)
+                            .accentColor(ChatColors.primaryText)
                         if let p = exportProgress, p.total > 0 {
                             Text(AppLocalized("Exporting… \(p.done) / \(p.total)"))
                                 .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         } else {
                             Text(AppLocalized("Exporting…"))
                                 .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                     .padding(24)

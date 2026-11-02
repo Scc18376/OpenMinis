@@ -558,7 +558,7 @@ struct PastedTextChipRow: View {
             .padding(.trailing, 4)
         }
         .sheet(item: $previewEntry) { entry in
-            NavigationStack {
+            MinisNavStack {
                 ScrollView {
                     // Read-only by construction: selectable text (copyable),
                     // deliberately NOT a TextEditor.
@@ -609,7 +609,7 @@ struct AttachmentPreviewSheet: View {
     var body: some View {
         let start = Self.previewStartIndex(of: initialID, in: attachments.map(\.id))
         let shown = index ?? start
-        NavigationStack {
+        MinisNavStack {
             AttachmentPreviewView(urls: attachments.map(\.cacheURL), initialIndex: start,
                                   onIndexChange: { index = $0 })
                 .navigationTitle(attachments.indices.contains(shown) ? attachments[shown].fileName : "")
@@ -1009,10 +1009,10 @@ struct QueuedAttachmentPreview: View {
         VStack(spacing: 4) {
             Image(systemName: icon)
                 .font(.title3)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             Text(fileName)
                 .font(.system(size: 8))
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(Color(UIColor.tertiaryLabel))
                 .lineLimit(1)
         }
         .frame(width: tileSize, height: tileSize)
@@ -2138,7 +2138,7 @@ struct PastableTextView: UIViewRepresentable {
     /// View-based on purpose. The first version walked
     /// `nearestViewController` → `parent` looking for the transition's `.from`
     /// controller; lldb on iOS 16.1 showed it returning false in the middle of
-    /// a back swipe (the SwiftUI NavigationStack page controller was not on
+    /// a back swipe (the SwiftUI MinisNavStack page controller was not on
     /// that chain), so the refocus went through. Asking every ancestor's
     /// navigation controller for its transition and testing whether this view
     /// sits inside the `.from` view does not depend on how SwiftUI nests its

@@ -971,7 +971,7 @@ struct ThinkingBlockView: View {
                 if isStreaming {
                     ProgressView()
                         .controlSize(.mini)
-                        .tint(.blue)
+                        .accentColor(.blue)
                 }
                 Spacer()
                 // [T-thinking-count-beside-chevron] The character count sits at
@@ -1048,7 +1048,7 @@ struct ThinkingBlockView: View {
                             if isTruncated {
                                 Text("Showing last \(displayContent.count / 1000)K of \(total / 1000)K characters", comment: "Thinking window truncation hint")
                                     .font(.system(size: 11))
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                                     .padding(.horizontal, 12)
                                     .padding(.bottom, 4)
                             }
@@ -1343,7 +1343,7 @@ struct ThinkingLevelSheetView: View {
     let onSelect: (ThinkingLevel) -> Void
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             List {
                 thinkingRow(level: .off, isSelected: !currentLevel.isEnabled)
                 Section {
@@ -1367,7 +1367,7 @@ struct ThinkingLevelSheetView: View {
                     .frame(width: 16, height: 16)
                     .opacity(level == .off ? 0.4 : 1.0)
                 Text(level.displayName)
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(Color.primary)
                 Spacer()
                 if isSelected {
                     Image(systemName: "checkmark")

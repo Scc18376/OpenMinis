@@ -192,7 +192,7 @@ struct BackupRestoreView: View {
                 Text(name)
                 Text(subtitle)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(1)
                     .truncationMode(.middle)
             }
@@ -259,13 +259,13 @@ struct BackupRestoreView: View {
                 ProgressView()
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Opening backup…")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     // Deliberately smaller and dimmer than the title: it is
                     // reassurance that work is happening, not information the
                     // user has to read.
                     Text(inspectStage)
                         .font(.caption)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                         .lineLimit(1)
                         // The stage text changes underneath a fixed layout, so
                         // the row must not resize as the wording changes.
@@ -304,7 +304,7 @@ struct BackupRestoreView: View {
                             .truncationMode(.middle)
                         Text(packageHeadline(m))
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
             }
@@ -453,7 +453,7 @@ struct BackupRestoreView: View {
                             if let stat = m.categories[category.rawValue] {
                                 Text(detailText(category, stat))
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
                     }
@@ -500,7 +500,7 @@ struct BackupRestoreView: View {
                         ProgressView()
                             .frame(width: 28, height: 28)
                         Text(statusText.isEmpty ? AppLocalized("Working…") : statusText)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     } else {
                         BackupActionIcon(systemName: "arrow.down.doc.fill", tint: .indigo)
                         Text("Start Restore")
@@ -879,23 +879,23 @@ struct FolderPackageListView: View {
             if loading {
                 HStack(spacing: 10) {
                     ProgressView()
-                    Text("Looking for backups…").foregroundStyle(.secondary)
+                    Text("Looking for backups…").foregroundStyle(Color.secondary)
                 }
             } else if packages.isEmpty {
                 // Distinguishes "nothing there" from "couldn't reach it" — an
                 // offline share contributes no rows, and the user needs to
                 // know that is a connectivity problem, not an empty NAS.
-                // Hand-rolled rather than ContentUnavailableView: the
+                // Hand-rolled rather than MinisContentUnavailableView: the
                 // deployment target is iOS 16 and that is iOS 17+.
                 VStack(spacing: 10) {
                     Image(systemName: "externaldrive.badge.questionmark")
                         .font(.system(size: 40))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Text("No .minisbak files in this folder.")
                         .font(.headline)
                     Text("If it's on a server, open it once in the Files app to reconnect, then pull down to refresh.")
                         .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .multilineTextAlignment(.center)
                 }
                 .frame(maxWidth: .infinity)
@@ -915,10 +915,10 @@ struct FolderPackageListView: View {
                         Text(pkg.url.lastPathComponent)
                             .lineLimit(1)
                             .truncationMode(.middle)
-                            .foregroundStyle(.primary)
+                            .foregroundStyle(Color.primary)
                         Text("\(ByteCountFormatter.string(fromByteCount: pkg.size, countStyle: .file)) · \(pkg.modified.formatted(date: .abbreviated, time: .shortened))")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
                 // [T-restore-list-swipe-delete] Same gesture and safeguards as
@@ -1015,7 +1015,7 @@ struct ServerRestorePickerSheet: View {
     @State private var showAddServer = false
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 if !remotes.isEmpty {
                     Section {
@@ -1027,7 +1027,7 @@ struct ServerRestorePickerSheet: View {
                                     Text(r.name)
                                     Text("\(r.backend.uppercased()) · /\(r.path)")
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                 }
                             }
                         }
@@ -1179,10 +1179,10 @@ struct ServerPackageListView: View {
                     if loading {
                         HStack(spacing: 10) {
                             ProgressView()
-                            Text("Contacting server…").foregroundStyle(.secondary)
+                            Text("Contacting server…").foregroundStyle(Color.secondary)
                         }
                     } else if entries.isEmpty, errorText == nil {
-                        Text("Nothing here.").foregroundStyle(.secondary)
+                        Text("Nothing here.").foregroundStyle(Color.secondary)
                     }
 
                     entryRows
@@ -1304,7 +1304,7 @@ struct ServerPackageListView: View {
                             ForEach(Array(crumbs.enumerated()), id: \.offset) { i, c in
                                 Image(systemName: "chevron.compact.right")
                                     .font(.caption2)
-                                    .foregroundStyle(.tertiary)
+                                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                                 crumb(title: c.name, target: c.path,
                                       isLast: i == crumbs.count - 1)
                             }
@@ -1355,7 +1355,7 @@ struct ServerPackageListView: View {
                     .padding(.vertical, 3)
             }
             .buttonStyle(.plain)
-            .foregroundStyle(.tint)
+            .foregroundStyle(Color.accentColor)
             .disabled(loading)
         }
     }
@@ -1393,10 +1393,10 @@ struct ServerPackageListView: View {
                         HStack {
                             Label {
                                 Text(e.name).lineLimit(1).truncationMode(.middle)
-                                    .foregroundStyle(.primary)
+                                    .foregroundStyle(Color.primary)
                             } icon: {
                                 Image(systemName: "folder.fill")
-                                    .foregroundStyle(.tint)
+                                    .foregroundStyle(Color.accentColor)
                             }
                             Spacer(minLength: 8)
                             // Kept so a folder still reads as "opens
@@ -1404,7 +1404,7 @@ struct ServerPackageListView: View {
                             // a NavigationLink drawing this for us.
                             Image(systemName: "chevron.right")
                                 .font(.footnote.weight(.semibold))
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(Color(UIColor.tertiaryLabel))
                         }
                     }
                     .disabled(downloadingKey != nil || loading)
@@ -1421,10 +1421,10 @@ struct ServerPackageListView: View {
                             Text(e.name)
                                 .lineLimit(1)
                                 .truncationMode(.middle)
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(Color.primary)
                             Text(subtitle(e.asPackage))
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                     .disabled(downloadingKey != nil)
@@ -1457,7 +1457,7 @@ struct ServerPackageListView: View {
                 .font(.headline)
             Text(downloadingName)
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .lineLimit(1)
                 .truncationMode(.middle)
 
@@ -1467,7 +1467,7 @@ struct ServerPackageListView: View {
                 .progressViewStyle(.linear)
             Text(progressText)
                 .font(.callout.monospacedDigit())
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             // [T-restore-download-speed] Rate and time left, on their own
             // line so the byte counts above stay easy to read. Empty until
             // there is a rate to show rather than displaying a placeholder
@@ -1475,7 +1475,7 @@ struct ServerPackageListView: View {
             if !speedText.isEmpty {
                 Text(speedText)
                     .font(.caption.monospacedDigit())
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
 
             Button(role: .cancel) {

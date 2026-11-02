@@ -124,7 +124,7 @@ struct SyncMigrationDetailView: View {
                 Section {
                     HStack {
                         ProgressView().controlSize(.small)
-                        Text("Loading…").foregroundStyle(.secondary)
+                        Text("Loading…").foregroundStyle(Color.secondary)
                     }
                 }
             }
@@ -140,19 +140,19 @@ struct SyncMigrationDetailView: View {
                         Text("Engine")
                         Spacer()
                         if let until = vm.pausedUntil {
-                            Text(pauseRemaining(until: until)).foregroundStyle(.secondary)
+                            Text(pauseRemaining(until: until)).foregroundStyle(Color.secondary)
                         } else if let until = vm.bootDelayUntil, until > Date() {
-                            Text(bootDelayRemaining(until: until)).foregroundStyle(.secondary)
+                            Text(bootDelayRemaining(until: until)).foregroundStyle(Color.secondary)
                         } else if !vm.isRunning {
                             // boot deadline passed but SyncCore.start() is still
                             // mid-flight (CKDatabase ensureZonesExist + initial
                             // sendChanges take a few seconds after the delay
                             // expires). Show 'Starting…' until isRunning flips.
-                            Text("Starting…").foregroundStyle(.secondary)
+                            Text("Starting…").foregroundStyle(Color.secondary)
                         } else if let until = vm.throttledUntil, until > Date() {
                             Text(throttleRemaining(until: until)).foregroundStyle(.orange)
                         } else {
-                            Text("Running").foregroundStyle(.primary)
+                            Text("Running").foregroundStyle(Color.primary)
                         }
                         if vm.isRunning {
                             Spacer().frame(width: 12)
@@ -199,21 +199,21 @@ struct SyncMigrationDetailView: View {
                         LabeledContent(AppLocalized("Pending push"), value: "\(vm.pendingPush)")
                         if vm.pendingPushNew > 0 {
                             LabeledContent {
-                                Text("\(vm.pendingPushNew)").foregroundStyle(.secondary)
+                                Text("\(vm.pendingPushNew)").foregroundStyle(Color.secondary)
                             } label: {
-                                Text("· New writes").foregroundStyle(.secondary).font(.callout)
+                                Text("· New writes").foregroundStyle(Color.secondary).font(.callout)
                             }
                         }
                         if vm.pendingPushMigration > 0 {
                             LabeledContent {
-                                Text("\(vm.pendingPushMigration)").foregroundStyle(.secondary)
+                                Text("\(vm.pendingPushMigration)").foregroundStyle(Color.secondary)
                             } label: {
-                                Text("· Migration backlog").foregroundStyle(.secondary).font(.callout)
+                                Text("· Migration backlog").foregroundStyle(Color.secondary).font(.callout)
                             }
                         }
                     } else {
                         LabeledContent(AppLocalized("Pending push")) {
-                            Text("Up to date").foregroundStyle(.secondary)
+                            Text("Up to date").foregroundStyle(Color.secondary)
                         }
                     }
                     LabeledContent(AppLocalized("Sent this session"), value: "\(vm.totalSent)")
@@ -242,7 +242,7 @@ struct SyncMigrationDetailView: View {
                 Section {
                     LabeledContent {
                         Text("\(vm.unmigratedHistoryCount)")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     } label: {
                         Text("Eligible records")
                     }
@@ -274,12 +274,12 @@ struct SyncMigrationDetailView: View {
                                 .foregroundStyle(.red)
                             Text(err)
                                 .font(.caption.monospaced())
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     } else if vm.isCanceledByUser {
                         Text("Migration canceled. Tap to resume backfilling local history.")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                     Button {
                         showRequestMigrationConfirm = true
@@ -318,7 +318,7 @@ struct SyncMigrationDetailView: View {
                                 .foregroundStyle(.orange)
                             Text("Paused — no progress for 30 minutes. Minis continues automatically when you come back to the app.")
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                         Button {
                             Task { await MigrationEngine.shared.resumeIfSuspended(trigger: "continueButton", force: true) }
@@ -374,10 +374,10 @@ struct SyncMigrationDetailView: View {
                                 .foregroundStyle(.green)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("V1 zone deleted")
-                                    .foregroundStyle(.primary)
+                                    .foregroundStyle(Color.primary)
                                 Text(AppLocalized("Deleted \(deletedAtRelativeString())"))
                                     .font(.caption2)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
                     } else {
@@ -604,12 +604,12 @@ struct SyncMigrationDetailView: View {
             if zonesLoading && zonesList.isEmpty {
                 HStack {
                     ProgressView().controlSize(.small)
-                    Text("Loading zones…").foregroundStyle(.secondary)
+                    Text("Loading zones…").foregroundStyle(Color.secondary)
                 }
             } else if let err = zonesLoadError {
                 Text(err).font(.caption).foregroundStyle(.red)
             } else if zonesList.isEmpty {
-                Text("No zones found.").foregroundStyle(.secondary)
+                Text("No zones found.").foregroundStyle(Color.secondary)
             } else {
                 ForEach(zonesList) { row in
                     zoneRowView(row)
@@ -626,7 +626,7 @@ struct SyncMigrationDetailView: View {
                         .foregroundStyle(.orange)
                     Text(zoneDeleteError)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -678,7 +678,7 @@ struct SyncMigrationDetailView: View {
                 }
                 Text(zoneDescription(for: row))
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(2)
             }
             Spacer(minLength: 8)
@@ -886,7 +886,7 @@ struct SyncMigrationDetailView: View {
                     .font(.caption.weight(.semibold))
                 Text("To improve sync experience and reduce iCloud storage, we've upgraded the sync engine. Historical data is being migrated automatically — this may consume some extra battery or cellular data. You can cancel migration any time below.")
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             Spacer(minLength: 0)
@@ -895,7 +895,7 @@ struct SyncMigrationDetailView: View {
             } label: {
                 Image(systemName: "xmark")
                     .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .frame(width: 20, height: 20)
             }
             .buttonStyle(.plain)
@@ -935,9 +935,9 @@ struct SyncMigrationDetailView: View {
                 Spacer()
                 if total > 0 {
                     let pct = Int(Double(min(done, total)) * 100 / Double(total))
-                    Text("\(done) / \(total) (\(pct)%)").foregroundStyle(.secondary)
+                    Text("\(done) / \(total) (\(pct)%)").foregroundStyle(Color.secondary)
                 } else {
-                    Text("\(done)").foregroundStyle(.secondary)
+                    Text("\(done)").foregroundStyle(Color.secondary)
                 }
             }
             if total > 0 {
@@ -1127,7 +1127,7 @@ private struct PauseSyncSheet: View {
     private let hoursOptions = [1, 3, 6, 12, 24]
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             List {
                 Section {
                     ForEach(hoursOptions, id: \.self) { hours in
@@ -1136,11 +1136,11 @@ private struct PauseSyncSheet: View {
                         } label: {
                             HStack {
                                 Text(pauseLabel(hours))
-                                    .foregroundStyle(.primary)
+                                    .foregroundStyle(Color.primary)
                                 Spacer()
                                 Image(systemName: "chevron.right")
                                     .font(.caption)
-                                    .foregroundStyle(.tertiary)
+                                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                             }
                         }
                     }

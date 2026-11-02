@@ -146,7 +146,7 @@ struct PaginatedMarkdownView: View {
                     ProgressView()
                     Text("Preparing large document…")
                         .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }

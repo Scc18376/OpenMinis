@@ -98,14 +98,14 @@ private struct ProviderImportSheet: View {
             VStack(spacing: 8) {
                 Image(systemName: "doc.badge.gearshape")
                     .font(.system(size: 40))
-                    .foregroundStyle(.tint)
+                    .foregroundStyle(Color.accentColor)
                     .padding(.top, 8)
                 Text(AppLocalized("Provider Configuration Detected"))
                     .font(.headline)
                     .multilineTextAlignment(.center)
                 Text(AppLocalized("This JSON file looks like an exported provider configuration. Import it as a new provider, or add it to the chat as a file attachment?"))
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
             }

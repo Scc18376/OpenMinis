@@ -71,7 +71,7 @@ struct BackupSkippedFilesView: View {
                             Text(ByteCountFormatter.string(fromByteCount: e.size,
                                                            countStyle: .file))
                                 .font(.caption.monospacedDigit())
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 } header: {

@@ -39,7 +39,7 @@ extension ContentView {
             // App icon / hero
             Image(systemName: "sparkles")
                 .font(.system(size: 56))
-                .foregroundStyle(.tint)
+                .foregroundStyle(Color.accentColor)
                 .padding(.bottom, 4)
 
             VStack(spacing: 8) {
@@ -47,7 +47,7 @@ extension ContentView {
                     .font(.title2.bold())
                 Text("Your first On-Device Agent is almost ready.")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .multilineTextAlignment(.center)
             }
 
@@ -114,7 +114,7 @@ extension ContentView {
                 } label: {
                     Label("Have a backup? Restore from it", systemImage: "clock.arrow.circlepath")
                         .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .buttonStyle(.plain)
                 .padding(.bottom, 12)
@@ -124,12 +124,12 @@ extension ContentView {
         .frame(maxHeight: .infinity)
         .padding(.horizontal, 32)
         .sheet(isPresented: $showAddProvider) {
-            NavigationStack {
+            MinisNavStack {
                 AddProviderView()
             }
         }
         .sheet(isPresented: $showSelectModels) {
-            NavigationStack {
+            MinisNavStack {
                 OnboardingModelSelectionView()
             }
         }
@@ -138,7 +138,7 @@ extension ContentView {
             // the Restore tab. Not auto-dismissed on success — the result
             // report is worth reading; the steps above refresh on their own
             // (restore reloads ProviderConfigStore and the session list).
-            NavigationStack {
+            MinisNavStack {
                 BackupAndRestoreView(initialTab: .restore)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
@@ -187,7 +187,7 @@ extension ContentView {
                         .foregroundStyle(isDone ? .secondary : .primary)
                     Text(subtitle)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
 
                 Spacer()
@@ -195,7 +195,7 @@ extension ContentView {
                 if !isDone {
                     Image(systemName: "chevron.right")
                         .font(.caption.weight(.semibold))
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                 }
             }
             .padding(14)

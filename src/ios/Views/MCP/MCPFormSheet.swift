@@ -94,7 +94,7 @@ struct MCPFormSheet: View {
     }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 Section {
                     TextField(AppLocalized("Server name"), text: $name)
@@ -267,7 +267,7 @@ struct MCPFormSheet: View {
                             .font(.subheadline)
                     } else {
                         Label(AppLocalized("Not authorized"), systemImage: "xmark.seal")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .font(.subheadline)
                     }
                     Spacer()
@@ -323,13 +323,13 @@ struct MCPFormSheet: View {
                 // the system sheet takes over the screen.
                 Text(outcome.issuer)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(2)
                     .truncationMode(.middle)
                 if outcome.reusedCachedClient {
                     Text(AppLocalized("Reusing this app's existing registration."))
                         .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                 }
                 Button {
                     Task { await continueBrowserAuthorize(outcome) }
@@ -348,7 +348,7 @@ struct MCPFormSheet: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(AppLocalized("Minis will find this service's sign-in page automatically. No Client ID needed."))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Button {
                     Task { await runDiscovery() }
                 } label: {
@@ -366,7 +366,7 @@ struct MCPFormSheet: View {
         if let discoveryNote {
             Text(discoveryNote)
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
     }
 
@@ -647,7 +647,7 @@ struct MCPFormSheet: View {
             }
         } label: {
             Image(systemName: "curlybraces")
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
         .accessibilityLabel(Text("Insert App environment variable reference"))
     }

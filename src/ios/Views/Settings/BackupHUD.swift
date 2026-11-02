@@ -22,7 +22,7 @@ struct BackupHUD: View {
                 .foregroundStyle(isError ? .orange : .green)
             Text(text)
                 .font(.footnote)
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.primary)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.horizontal, 14)

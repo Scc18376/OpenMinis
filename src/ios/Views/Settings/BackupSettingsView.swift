@@ -347,28 +347,28 @@ struct BackupSettingsView: View {
                         // already selected.
                         Text("Add a storage destination to continue.")
                             .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
                             .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     } else if selected.isEmpty {
                         Text("Choose at least one thing to include.")
                             .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
                             .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     } else if encryptBackup && passphrase.isEmpty {
                         Text("Set a passphrase to encrypt this backup.")
                             .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
                             .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     } else if encryptBackup && passphrase != confirmPassphrase {
                         Text("Confirm the passphrase to continue.")
                             .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
                             .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
@@ -449,7 +449,7 @@ struct BackupSettingsView: View {
                                 if let error = r.error {
                                     Text(error)
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                 }
                             }
                         }
@@ -656,7 +656,7 @@ struct BackupSettingsView: View {
                     Spacer()
                     Text("\(Int(d.fraction * 100))%")
                         .font(.caption.monospacedDigit())
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 if d.error == nil {
                     ProgressView(value: d.fraction)
@@ -668,7 +668,7 @@ struct BackupSettingsView: View {
                 } else {
                     Text(transferDetail(d))
                         .font(.caption.monospacedDigit())
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
             .padding(.vertical, 2)
@@ -680,7 +680,7 @@ struct BackupSettingsView: View {
             } icon: {
                 Image(systemName: "sparkles").foregroundStyle(.green)
             }
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color.secondary)
         }
 
     }
@@ -803,7 +803,7 @@ struct BackupSettingsView: View {
                             } label: {
                                 Label("Resume", systemImage: "play.circle")
                             }
-                            .tint(.blue)
+                            .accentColor(.blue)
                         }
                     }
                 }
@@ -856,7 +856,7 @@ struct BackupSettingsView: View {
                         Text(r.name)
                         Text("\(r.backend.uppercased()) · /\(r.path)")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                     // Claims the gap between the text and the switch, so the
                     // whole left side of the row opens the details.
@@ -896,7 +896,7 @@ struct BackupSettingsView: View {
                 // working fallback invited the user to consider themselves
                 // backed up when nothing had left the device.
                 Text("No destinations yet — add one to back up.")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             } else if !eligible.isEmpty {
                 // Same badge treatment as the category rows above, so the two
                 // lists read as one screen rather than two styles.
@@ -914,7 +914,7 @@ struct BackupSettingsView: View {
                             Text(folder.name)
                             Text(folder.sourceDisplayName)
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                         Spacer(minLength: 8)
                             .contentShape(Rectangle())

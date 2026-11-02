@@ -133,7 +133,7 @@ extension ContentView {
         case .waiting:
             Image(systemName: "clock")
                 .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
     }
 
@@ -144,24 +144,24 @@ extension ContentView {
             case .paused:
                 Image(systemName: "pause.circle.fill")
                     .font(.system(size: 9, weight: .semibold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Text("Sync paused")
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             case .migrating(let pct, let byType):
                 Image(systemName: "arrow.triangle.2.circlepath")
                     .font(.system(size: 9, weight: .semibold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Text("\(pct)%")
                     .font(.caption2.weight(.semibold).monospacedDigit())
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 ForEach(byType.indices, id: \.self) { i in
                     syncTypeChip(label: byType[i].label, count: byType[i].count)
                 }
             case .syncing(let byType):
                 Image(systemName: "arrow.triangle.2.circlepath")
                     .font(.system(size: 9, weight: .semibold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 ForEach(byType.indices, id: \.self) { i in
                     syncTypeChip(label: byType[i].label, count: byType[i].count)
                 }
@@ -171,14 +171,14 @@ extension ContentView {
                     .foregroundStyle(.green)
                 Text("Up to date")
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             case .waiting:
                 Image(systemName: "clock")
                     .font(.system(size: 9, weight: .semibold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Text("Waiting")
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         }
         .lineLimit(1)
@@ -192,10 +192,10 @@ extension ContentView {
         HStack(spacing: 3) {
             Text(label)
                 .font(.system(size: 9, weight: .semibold))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             Text(formatCompact(count))
                 .font(.caption2.monospacedDigit())
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
     }
 
@@ -268,7 +268,7 @@ extension ContentView {
                 // This Text now only READS `soulName`.
                 let titleLabel = Text(soulName)
                     .font(.system(size: 18.5, weight: .semibold))
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(Color.primary)
                     // A custom SOUL name can be long, and the width claim below
                     // hands this label the whole column — without a limit a long
                     // name would wrap to two lines inside an inline bar or push

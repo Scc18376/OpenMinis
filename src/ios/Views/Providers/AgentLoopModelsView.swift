@@ -21,7 +21,7 @@ struct AgentLoopModelsSection: View {
             if currentGroups.isEmpty && currentEntries.isEmpty {
                 Text("No models or groups added")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
 
             if !currentGroups.isEmpty {
@@ -86,14 +86,14 @@ struct AgentLoopModelsSection: View {
                 let count = group.memberEntryIds.count
                 Text(AppLocalized("\(count) models") + " · \(group.strategy == .fallback ? AppLocalized("Fallback") : AppLocalized("Load Balance"))")
                     .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
             }
 
             Spacer()
 
             Text("Group")
                 .font(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
     }
 
@@ -111,7 +111,7 @@ struct AgentLoopModelsSection: View {
                     if let instance = store.instance(for: entry.providerInstanceId) {
                         Text(instance.label)
                             .font(.caption2)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                     }
                     let badges = modalityBadges(entry.model)
                     if !badges.isEmpty {
@@ -121,7 +121,7 @@ struct AgentLoopModelsSection: View {
                         ForEach(badges, id: \.self) { badge in
                             Text(badge)
                                 .font(.system(size: 9, weight: .medium))
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                                 .padding(.horizontal, 4)
                                 .padding(.vertical, 1)
                                 .background(Color(UIColor.tertiarySystemFill))
@@ -135,7 +135,7 @@ struct AgentLoopModelsSection: View {
 
             Text(entry.model.provider)
                 .font(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
     }
 
@@ -223,7 +223,7 @@ struct AddAgentLoopGroupsSheet: View {
                 Section {
                     Text("All groups are already added.")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
                 }
@@ -247,7 +247,7 @@ struct AddAgentLoopGroupsSheet: View {
                             let suffix = entries.count > 3 ? " +\(entries.count - 3)" : ""
                             Text(names.joined(separator: ", ") + suffix)
                                 .font(.caption2)
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(Color(UIColor.tertiaryLabel))
                                 .lineLimit(1)
                         }
 
@@ -255,7 +255,7 @@ struct AddAgentLoopGroupsSheet: View {
 
                         Text("\(group.memberEntryIds.count) models")
                             .font(.caption2)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
             }

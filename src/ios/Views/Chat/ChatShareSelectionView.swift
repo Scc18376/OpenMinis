@@ -111,7 +111,7 @@ struct ChatShareSelectionView: View {
 
     var body: some View {
         let messages = byId
-        NavigationStack {
+        MinisNavStack {
             ScrollViewReader { proxy in
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 0) {
@@ -347,7 +347,7 @@ struct ChatShareSelectionView: View {
                 }
                 .foregroundStyle(Color.accentColor)
             Text(title)
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.primary)
         }
         .font(.caption.weight(.medium))
         .lineLimit(1)
@@ -426,7 +426,7 @@ private struct ChatSharePreviewSheet: View {
     /// the scene is active (ChatShareAppearance) - not by background snapshot passes.
     @State private var followedDark: Bool?
     /// [T-share-link-anchor-crash] The last finished render the ShareLink offered; keeps
-    /// the ShareLink (a presented share sheet's anchor) in place while a new one is made.
+    /// the MinisShareLink(a presented share sheet's anchor) in place while a new one is made.
     @State private var lastShareURL: URL?
     @State private var rendered: [RenderKey: Rendered] = [:]
     @State private var progress: (done: Int, total: Int)?
@@ -563,7 +563,7 @@ private struct ChatSharePreviewSheet: View {
     }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             VStack(spacing: 0) {
                 ZStack {
                     if let result = rendered[key] {
@@ -578,7 +578,7 @@ private struct ChatSharePreviewSheet: View {
                             ProgressView()
                             Text("\(AppLocalized("Creating…")) \(progress.done)/\(progress.total)")
                                 .font(.footnote.monospacedDigit())
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                         .padding(20)
                         .background(RoundedRectangle(cornerRadius: 14).fill(.regularMaterial))
@@ -613,7 +613,7 @@ private struct ChatSharePreviewSheet: View {
                     // anything is rendered: removing it under a presented share sheet traps
                     // in SwiftUI when the sheet re-anchors.
                     if let target = ChatShareLinkTarget.resolve(current: rendered[key]?.url, last: lastShareURL) {
-                        ShareLink(item: target.url) { Image(systemName: "square.and.arrow.up") }
+                        MinisShareLink(item: target.url) { Image(systemName: "square.and.arrow.up") }
                             .disabled(!target.enabled)
                     }
                 }

@@ -84,7 +84,7 @@ struct SessionMCPsView: View {
         // Reference the version counter so SwiftUI refreshes on override changes.
         let _ = store.sessionOverrideVersion
 
-        NavigationStack {
+        MinisNavStack {
             List {
                 if store.servers.isEmpty {
                     Section {
@@ -95,7 +95,7 @@ struct SessionMCPsView: View {
                 } else if filteredServers.isEmpty {
                     Section {
                         Text(AppLocalized("No MCP servers match \"\(searchQuery)\"."))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .font(.subheadline)
                     }
                 } else {
@@ -112,7 +112,7 @@ struct SessionMCPsView: View {
                                         if let note = server.note, !note.isEmpty {
                                             Text(note)
                                                 .font(.caption)
-                                                .foregroundStyle(.secondary)
+                                                .foregroundStyle(Color.secondary)
                                                 .lineLimit(2)
                                         }
                                     }
@@ -265,7 +265,7 @@ private struct SessionMCPDetailView: View {
         VStack(alignment: .leading, spacing: 2) {
             Text(label)
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             if selectable {
                 Text(value).font(.system(.subheadline, design: .monospaced)).textSelection(.enabled)
             } else {

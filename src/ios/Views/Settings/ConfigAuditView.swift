@@ -22,7 +22,7 @@ struct ConfigAuditView: View {
                 HStack {
                     Text("\(usage.count) / \(usage.capacity) used")
                         .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Spacer()
                     if !entries.isEmpty {
                         Button("Clear All", role: .destructive) {
@@ -36,7 +36,7 @@ struct ConfigAuditView: View {
 
             if entries.isEmpty {
                 Text("No config changes recorded yet.")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             } else {
                 ForEach(entries) { entry in
                     // [T-config-readable] Tap a record for its details: the
@@ -86,11 +86,11 @@ struct ConfigAuditView: View {
                 ConfigAuditStatusBadge(status: entry.status)
                 Text(entry.actor.rawValue)
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Spacer()
                 Text(coarseRelativeTime(entry.at))
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             Text(entry.key)
                 .font(.system(.subheadline, design: .monospaced))
@@ -108,10 +108,10 @@ struct ConfigAuditView: View {
                 HStack(alignment: .top, spacing: 6) {
                     Text(displayJSON(entry.oldValueJSON))
                         .lineLimit(1)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Image(systemName: "arrow.right")
                         .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                     Text(displayJSON(entry.newValueJSON))
                         .lineLimit(1)
                         .foregroundStyle(entry.status == .applied ? .primary : .secondary)
@@ -123,12 +123,12 @@ struct ConfigAuditView: View {
                 Label {
                     Text(caption)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .lineLimit(3)
                 } icon: {
                     Image(systemName: "text.quote")
                         .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                 }
             }
 

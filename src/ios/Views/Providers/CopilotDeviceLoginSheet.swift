@@ -43,7 +43,7 @@ struct CopilotDeviceLoginSheet: View {
     @State private var loginTask: Task<Void, Never>?
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             VStack(spacing: 24) {
                 switch phase {
                 case .consent:
@@ -52,7 +52,7 @@ struct CopilotDeviceLoginSheet: View {
                 case .starting:
                     ProgressView()
                     Text(AppLocalized("Contacting GitHub…"))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
 
                 case let .awaitingUser(userCode, url):
                     awaitingBody(userCode: userCode, url: url)
@@ -70,7 +70,7 @@ struct CopilotDeviceLoginSheet: View {
                         .foregroundStyle(.orange)
                     Text(message)
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .multilineTextAlignment(.center)
                     Button(AppLocalized("Try Again")) { start() }
                         .buttonStyle(.borderedProminent)
@@ -161,7 +161,7 @@ struct CopilotDeviceLoginSheet: View {
                         comment: "Copilot disclaimer: as-is, user accepts the risk"))
                 }
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.bottom, 8)
@@ -175,7 +175,7 @@ struct CopilotDeviceLoginSheet: View {
                 .frame(maxWidth: .infinity)
         }
         .buttonStyle(.borderedProminent)
-        .tint(.orange)
+        .accentColor(.orange)
     }
 
     /// One bullet of the notice.
@@ -195,7 +195,7 @@ struct CopilotDeviceLoginSheet: View {
         // instruction. Tapping the code still works for anyone who wants it.
         Text(AppLocalized("1. Open the verification page — this copies the code\n2. Paste it to authorize Minis"))
             .font(.subheadline)
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color.secondary)
             .multilineTextAlignment(.center)
 
         // Tap to copy — the code is long enough that retyping it in a browser
@@ -209,7 +209,7 @@ struct CopilotDeviceLoginSheet: View {
                     .font(.system(.title, design: .monospaced).weight(.semibold))
                 Image(systemName: copied ? "checkmark" : "doc.on.doc")
                     .font(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 20)
@@ -237,7 +237,7 @@ struct CopilotDeviceLoginSheet: View {
             ProgressView().controlSize(.small)
             Text(AppLocalized("Waiting for authorization…"))
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
         .padding(.top, 4)
     }

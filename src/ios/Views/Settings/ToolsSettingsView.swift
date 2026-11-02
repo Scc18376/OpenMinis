@@ -197,7 +197,7 @@ struct ToolsSettingsView: View {
                     .frame(width: Self.toolIconColumn)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
-                    Text(tool).font(.caption.monospaced()).foregroundStyle(.secondary)
+                    Text(tool).font(.caption.monospaced()).foregroundStyle(Color.secondary)
                 }
             }
         }

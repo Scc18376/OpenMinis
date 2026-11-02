@@ -49,7 +49,7 @@ struct ExportPreviewSheet: View {
     private let previewLimit = 10000
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             VStack(spacing: 0) {
                 // Preview — summary for multi-select, full content for single.
                 if let summary {
@@ -76,7 +76,7 @@ struct ExportPreviewSheet: View {
                 if !fileSize.isEmpty {
                     Text(fileSize)
                         .font(.caption)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                         .padding(.top, 6)
                 }
 
@@ -179,11 +179,11 @@ struct ExportPreviewSheet: View {
         HStack(alignment: .firstTextBaseline) {
             Text(key)
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             Spacer(minLength: 12)
             Text(value)
                 .font(.subheadline)
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.primary)
                 .multilineTextAlignment(.trailing)
         }
     }

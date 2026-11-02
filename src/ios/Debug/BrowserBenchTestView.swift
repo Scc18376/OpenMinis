@@ -118,7 +118,7 @@ struct BrowserBenchTestView: View {
     }()
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             ScrollViewReader { proxy in
                 List {
                     ForEach(vm.logs) { entry in
@@ -126,7 +126,7 @@ struct BrowserBenchTestView: View {
                             HStack {
                                 Text(timeFormatter.string(from: entry.timestamp))
                                     .font(.system(size: 12, design: .monospaced))
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                                 Spacer()
                                 Text(String(format: "%.0fms", entry.duration * 1000))
                                     .font(.system(size: 12, weight: .medium, design: .monospaced))

@@ -34,7 +34,7 @@ struct QuotaDetailSheet: View {
     @State private var consoleURL: URL?
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             List {
                 if let instance = ProviderConfigStore.shared.instance(for: instanceId) {
                     let display = quota.display(for: instance)
@@ -56,19 +56,19 @@ struct QuotaDetailSheet: View {
                         Section {
                             HStack(spacing: 8) {
                                 ProgressView().controlSize(.small)
-                                Text("Checking balance…").foregroundStyle(.secondary)
+                                Text("Checking balance…").foregroundStyle(Color.secondary)
                             }
                         }
                     case .unsupported(let reason):
-                        Section { Text(ProviderQuotaSection.message(for: reason)).foregroundStyle(.secondary) }
+                        Section { Text(ProviderQuotaSection.message(for: reason)).foregroundStyle(Color.secondary) }
                     case .failed(let err):
                         Section { Text(ProviderQuotaSection.message(for: err)).foregroundStyle(.orange) }
                     case .empty:
                         Section {
-                            Text("The provider reported no balance or quota for this key.").foregroundStyle(.secondary)
+                            Text("The provider reported no balance or quota for this key.").foregroundStyle(Color.secondary)
                         }
                     case .hidden:
-                        Section { Text("Add an API key to see the balance.").foregroundStyle(.secondary) }
+                        Section { Text("Add an API key to see the balance.").foregroundStyle(Color.secondary) }
                     }
                 }
             }
@@ -112,7 +112,7 @@ struct QuotaDetailSheet: View {
                         Text(detection.text)
                         Text(String(format: String(localized: "detected %@"), ProviderQuotaSection.relative(detection.at)))
                             .font(.caption2)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
             }
@@ -127,7 +127,7 @@ struct QuotaDetailSheet: View {
                 Text(String(format: String(localized: "Same account as “%@” — the same balance, don't add them up"),
                             sharing.joined(separator: "”, “")))
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             if let err = subject?.lastRefresh?.error {
                 Text(String(format: String(localized: "Last refresh failed: %@"), ProviderQuotaSection.message(for: err)))
@@ -137,7 +137,7 @@ struct QuotaDetailSheet: View {
             if let blockedMessage {
                 Text(blockedMessage)
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             if let instance = ProviderConfigStore.shared.instance(for: instanceId),
                let url = QuotaConsoleLink.url(for: QuotaStore.descriptor(for: instance)) {
@@ -168,7 +168,7 @@ struct QuotaDetailSheet: View {
                         if binding.evidence == .assumedSubjectWide {
                             Text("The provider didn't state the scope; treated as shared by the account.")
                                 .font(.caption2)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 } icon: {

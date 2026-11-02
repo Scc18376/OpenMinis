@@ -111,7 +111,7 @@ struct LogManagementView: View {
             Section("Log Files") {
                 if vm.runningFiles.isEmpty {
                     Text("No log files")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 } else {
                     ForEach(vm.runningFiles) { file in
                         NavigationLink {
@@ -122,7 +122,7 @@ struct LogManagementView: View {
                                     .lineLimit(1)
                                 Spacer()
                                 Text(vm.format(file.size))
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
                     }
@@ -147,7 +147,7 @@ struct LogManagementView: View {
                                     .lineLimit(1)
                                 Spacer()
                                 Text(vm.format(file.size))
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
                     }
@@ -180,7 +180,7 @@ struct LogManagementView: View {
                             Label("iCloud Sync Logs", systemImage: "icloud.fill")
                             Spacer()
                             Text("\(SyncLogStore.shared.entries.count)")
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 }
@@ -195,7 +195,7 @@ struct LogManagementView: View {
                             Label("Delete All Logs", systemImage: "trash")
                             Spacer()
                             Text(vm.format(vm.totalSize))
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 } footer: {
@@ -249,7 +249,7 @@ struct LogDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                ShareLink(item: url)
+                MinisShareLink(item: url)
             }
         }
         .task {

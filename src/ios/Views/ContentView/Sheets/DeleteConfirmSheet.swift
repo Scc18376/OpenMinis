@@ -19,7 +19,7 @@ struct DeleteConfirmSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             VStack(spacing: 0) {
                 if isLoading || info == nil {
                     Spacer()
@@ -44,21 +44,21 @@ struct DeleteConfirmSheet: View {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text("Associated Files")
                                         .font(.subheadline.bold())
-                                        .foregroundStyle(.primary)
+                                        .foregroundStyle(Color.primary)
                                     ForEach(info.fileNames, id: \.self) { name in
                                         HStack(spacing: 6) {
                                             Image(systemName: "doc")
                                                 .font(.caption)
-                                                .foregroundStyle(.secondary)
+                                                .foregroundStyle(Color.secondary)
                                             Text(name)
                                                 .font(.subheadline)
-                                                .foregroundStyle(.secondary)
+                                                .foregroundStyle(Color.secondary)
                                         }
                                     }
                                     if info.totalFileCount > info.fileNames.count {
                                         Text("and \(info.totalFileCount - info.fileNames.count) more file\(info.totalFileCount - info.fileNames.count == 1 ? "" : "s")")
                                             .font(.caption)
-                                            .foregroundStyle(.tertiary)
+                                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                                     }
                                 }
                             }
@@ -84,7 +84,7 @@ struct DeleteConfirmSheet: View {
                                 .padding(.vertical, 12)
                         }
                         .buttonStyle(.borderedProminent)
-                        .tint(.red)
+                        .accentColor(.red)
 
                         Button {
                             dismiss()
@@ -108,10 +108,10 @@ struct DeleteConfirmSheet: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title)
                 .font(.subheadline.bold())
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.primary)
             Text(value)
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
     }
 }

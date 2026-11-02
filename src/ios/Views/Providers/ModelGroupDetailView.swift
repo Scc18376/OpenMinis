@@ -78,7 +78,7 @@ struct ModelGroupDetailView: View {
                 groupContent(group)
             } else {
                 Text("Group not found")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         }
         .navigationTitle(group?.name ?? "Group")
@@ -198,7 +198,7 @@ struct ModelGroupDetailView: View {
                 if group.memberEntryIds.isEmpty {
                     Text("No models in this group")
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 } else {
                     ForEach(group.memberEntryIds, id: \.self) { entryId in
                         // System engine member ids ("__builtin_system_speech__/…")
@@ -360,7 +360,7 @@ struct ModelGroupDetailView: View {
         .scrollDismissesKeyboard(.immediately)
         .environment(\.editMode, $editMode)
         .sheet(isPresented: $showAddModels) {
-            NavigationStack {
+            MinisNavStack {
                 UnifiedModelPicker(config: addModelsConfig())
             }
         }
@@ -441,7 +441,7 @@ struct ModelGroupDetailView: View {
                         }
                     }
                     .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                 }
             }
 
@@ -460,7 +460,7 @@ struct ModelGroupDetailView: View {
                 return entry.model.provider
             }())
                 .font(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .opacity(providerDisabled ? 0.5 : 1)
         }
     }
@@ -484,14 +484,14 @@ struct ModelGroupDetailView: View {
                     .foregroundStyle(Color(UIColor.label))
                 Text("iOS built-in, works offline")
                     .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
             }
 
             Spacer()
 
             Text("System")
                 .font(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
     }
 
@@ -506,10 +506,10 @@ struct ModelGroupDetailView: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text("Model no longer available")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Text(entryId)
                     .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                     .lineLimit(1)
                     .truncationMode(.middle)
             }
@@ -663,11 +663,11 @@ private struct ContextLimitSlider: View {
             HStack {
                 Text(steps.first?.label ?? "32K")
                     .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                 Spacer()
                 Text("Unlimited")
                     .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
             }
         }
         .padding(.vertical, 4)

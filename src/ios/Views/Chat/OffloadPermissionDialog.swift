@@ -41,7 +41,7 @@ private struct OffloadPermissionDialogContent: View {
 
                         Text("The agent wants to use **\(request.commandName)**")
                             .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .multilineTextAlignment(.center)
                     }
                     .padding(.top, 24)
@@ -51,7 +51,7 @@ private struct OffloadPermissionDialogContent: View {
                     if !request.description.isEmpty {
                         Text(request.description)
                             .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 20)
                             .padding(.bottom, 12)
@@ -65,7 +65,7 @@ private struct OffloadPermissionDialogContent: View {
                                 HStack {
                                     Text(arg.key)
                                         .font(.footnote.bold())
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                         .frame(width: 80, alignment: .trailing)
                                     Text(arg.value)
                                         .font(.footnote.monospaced())
@@ -99,7 +99,7 @@ private struct OffloadPermissionDialogContent: View {
                         .padding(.vertical, 12)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.blue)
+                .accentColor(.blue)
 
                 Button {
                     OffloadPermissionManager.shared.respond(to: request.id, allowed: false)
@@ -110,7 +110,7 @@ private struct OffloadPermissionDialogContent: View {
                         .padding(.vertical, 12)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.red)
+                .accentColor(.red)
             }
             .padding(.horizontal, 20)
             .padding(.top, 12)

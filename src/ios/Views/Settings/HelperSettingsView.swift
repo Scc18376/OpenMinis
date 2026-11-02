@@ -36,7 +36,7 @@ struct HelperSettingsView: View {
                         Text(AppLocalized("Sub Agents"))
                         Text(SubAgentDefinition.toolName)
                             .font(.caption.monospaced())
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
             } footer: {
@@ -76,7 +76,7 @@ struct HelperSettingsView: View {
                     Text(AppLocalized("The assistant picks a sub agent by its description, so write the description as “when to use this”. Order is the order it sees them in."))
                     if !store.canAddSubAgent {
                         Text(String(format: AppLocalized("You can define up to %d sub agents."), SubAgentLimits.maxCount))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
                 .font(.caption)
@@ -105,23 +105,23 @@ struct HelperSettingsView: View {
                             .font(.caption2)
                             .padding(.horizontal, 5).padding(.vertical, 1)
                             .background(Color.secondary.opacity(0.15), in: Capsule())
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
                 if !def.displayDescription.isEmpty {
                     Text(def.displayDescription)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .lineLimit(1)
                 }
                 Text(modelLabel(def))
                     .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
             }
             Spacer()
             Image(systemName: "chevron.right")
                 .font(.caption)
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(Color(UIColor.tertiaryLabel))
         }
         .contentShape(Rectangle())
     }
@@ -186,7 +186,7 @@ struct SubAgentEditorView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 // [T-sub-agents-v1] The built-in's name and description are
                 // fixed. They are what the delegating model reads to decide
@@ -197,7 +197,7 @@ struct SubAgentEditorView: View {
                 // editable: those are genuinely the user's call.
                 Section {
                     if isBuiltIn {
-                        Text(existing?.displayName ?? name).foregroundStyle(.secondary)
+                        Text(existing?.displayName ?? name).foregroundStyle(Color.secondary)
                     } else {
                         TextField(AppLocalized("Name"), text: $name)
                             .autocorrectionDisabled()
@@ -214,7 +214,7 @@ struct SubAgentEditorView: View {
 
                 Section {
                     if isBuiltIn {
-                        Text(existing?.displayDescription ?? descriptionText).foregroundStyle(.secondary)
+                        Text(existing?.displayDescription ?? descriptionText).foregroundStyle(Color.secondary)
                     } else {
                         TextField(AppLocalized("Description"), text: $descriptionText, axis: .vertical)
                             .lineLimit(2...4)

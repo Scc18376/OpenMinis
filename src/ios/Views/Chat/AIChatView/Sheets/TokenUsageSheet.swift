@@ -26,7 +26,7 @@ struct TokenUsageSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             List {
                 let s = vm.sessionTokenStats
 
@@ -117,7 +117,7 @@ private struct StatRow: View {
             }
             Spacer()
             Text(value)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .monospacedDigit()
         }
     }

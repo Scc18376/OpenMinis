@@ -64,7 +64,7 @@ extension ContentView {
             Button { dismissSearch() } label: {
                 Image(systemName: "xmark")
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     // [T-ios-search-bar-glass-hit-hole] The frame alone was not
                     // a tap target: with `.buttonStyle(.plain)` and no fill,
                     // hit-testing follows the DRAWN GLYPH, so only the ~13pt
@@ -80,7 +80,7 @@ extension ContentView {
         } else {
             Button { dismissSearch() } label: {
                 Image(systemName: "xmark.circle.fill")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .frame(width: 32, height: 44)
                     .contentShape(Rectangle())
             }
@@ -163,7 +163,7 @@ extension ContentView {
             icon()
                 .frame(width: 56, height: 56)
                 .glassEffect(
-                    tint.map { Glass.regular.tint($0) } ?? Glass.regular,
+                    tint.map { Glass.regular.accentColor($0) } ?? Glass.regular,
                     in: .circle
                 )
                 // [T-fab-glass-contextmenu-regression] Without this the long-press
@@ -290,7 +290,7 @@ extension ContentView {
                         HStack(spacing: 8) {
                             Image(systemName: "magnifyingglass")
                                 .font(.system(size: 15, weight: .medium))
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                             TextField("Search chats...", text: $searchText)
                                 .textFieldStyle(.plain)
                                 .autocorrectionDisabled()

@@ -30,7 +30,7 @@ struct BackupDestinationPicker: View {
     @State private var errorText: String?
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 if !remotes.isEmpty || !folders.isEmpty {
                     savedSection
@@ -99,7 +99,7 @@ struct BackupDestinationPicker: View {
                                 Text(r.name)
                                 Text("\(r.backend.uppercased()) · /\(r.path)")
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
                     }
@@ -136,7 +136,7 @@ struct BackupDestinationPicker: View {
                                 Text(f.name)
                                 Text(f.sourceDisplayName)
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
                     }
@@ -171,10 +171,10 @@ struct BackupDestinationPicker: View {
                 HStack(spacing: 12) {
                     icon("network", .blue)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Add Server…").foregroundStyle(.primary)
+                        Text("Add Server…").foregroundStyle(Color.primary)
                         Text("SMB, WebDAV, SFTP, S3, FTP")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
             }
@@ -185,12 +185,12 @@ struct BackupDestinationPicker: View {
                 HStack(spacing: 12) {
                     icon("folder.badge.plus", .indigo)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Add Folder…").foregroundStyle(.primary)
+                        Text("Add Folder…").foregroundStyle(Color.primary)
                         // Names both cases, because "folder" alone reads as
                         // on-device only and hides the more useful half.
                         Text("On this iPhone, iCloud Drive, or a server connected in Files")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
             }

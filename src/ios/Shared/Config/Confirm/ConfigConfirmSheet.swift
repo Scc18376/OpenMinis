@@ -37,12 +37,12 @@ struct ConfigConfirmSheet: View {
 
     @ViewBuilder
     private func sheetBody(change: PendingConfigChange) -> some View {
-        NavigationStack {
+        MinisNavStack {
             VStack(spacing: 0) {
                 if let caption = change.caption, !caption.isEmpty {
                     Text(caption)
                         .font(.system(.footnote, design: .monospaced))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                         .padding(.top, 8)
@@ -61,7 +61,7 @@ struct ConfigConfirmSheet: View {
                             ForEach(Array(summaryLines.enumerated()), id: \.offset) { _, line in
                                 HStack(alignment: .firstTextBaseline, spacing: 8) {
                                     Text(verbatim: "•")
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                     Text(verbatim: line)
                                         .font(.subheadline)
                                         .fixedSize(horizontal: false, vertical: true)
@@ -144,7 +144,7 @@ private struct ConfigConfirmRow: View {
                     .background(verbBackground, in: Capsule())
                 Text(item.displayName)
                     .font(.system(.body, design: .default))
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(Color.primary)
                 Spacer()
                 Toggle("", isOn: $item.isApproved)
                     .labelsHidden()
@@ -152,16 +152,16 @@ private struct ConfigConfirmRow: View {
             }
             Text(item.path)
                 .font(.system(.caption2, design: .monospaced))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             HStack(alignment: .top, spacing: 6) {
                 if !item.oldDisplay.isEmpty {
                     Text(item.oldDisplay)
                         .lineLimit(2)
                         .truncationMode(.middle)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Image(systemName: "arrow.right")
                         .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                 }
                 if !item.newDisplay.isEmpty {
                     Text(item.newDisplay)
@@ -183,10 +183,10 @@ private struct ConfigConfirmRow: View {
                 HStack(alignment: .firstTextBaseline, spacing: 6) {
                     Image(systemName: "text.bubble")
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Text(verbatim: readable.displayText)
                         .font(.subheadline)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(Color.primary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(.top, 2)

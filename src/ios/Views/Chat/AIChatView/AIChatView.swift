@@ -133,7 +133,7 @@ final class CachedViewModel: ObservableObject {
         cancellable = vm.objectWillChange
             .sink { [weak self] _ in self?.objectWillChange.send() }
 
-        // iOS 16 fix: When NavigationStack recreates the @StateObject, the new
+        // iOS 16 fix: When MinisNavStack recreates the @StateObject, the new
         // CachedViewModel may wrap a VM that already has messages loaded. Force
         // a re-render so SwiftUI picks up the current state, since objectWillChange
         // events between the old and new subscription may have been lost.
@@ -863,13 +863,13 @@ struct AIChatView: View {
             }
         }
         .sheet(item: $browseMinisFolder) { target in
-            NavigationStack {
+            MinisNavStack {
                 FileBrowserView(rootPath: target.root, initialPath: target.folder, rootLabel: target.label)
             }
         }
         .sheet(item: $locateDownloadTarget) { target in
             if let sid = vm.sessionId {
-                NavigationStack {
+                MinisNavStack {
                     FileBrowserView(
                         rootPath: AIChatViewModel.minisWorkspacePersistentDir(for: sid),
                         rootLabel: "/var/minis/workspace",
@@ -1097,7 +1097,7 @@ struct AIChatView: View {
             })
         }
         .sheet(isPresented: $showFileBrowser) {
-            NavigationStack {
+            MinisNavStack {
                 let base = RootfsManager.shared.dataPath
                 FileBrowserView(rootPath: base, initialPath: base.appendingPathComponent("var/minis"), rootLabel: "/")
             }
@@ -1108,7 +1108,7 @@ struct AIChatView: View {
             })
         }
         .sheet(isPresented: $showModelPicker) {
-            NavigationStack {
+            MinisNavStack {
                 SessionModelPicker(sessionId: vm.sessionId) {
                     await vm.ensureSessionReturningId()
                 }
@@ -1211,7 +1211,7 @@ struct AIChatView: View {
         .fullScreenCover(isPresented: $showTerminal) {
             terminalInitCommand = nil
         } content: {
-            NavigationStack {
+            MinisNavStack {
                 ISHTerminalView(sessionId: vm.sessionId, showCloseButton: true, initCommand: terminalInitCommand)
                     .onAppear {
                         if let sid = vm.sessionId {
@@ -1396,7 +1396,7 @@ struct AIChatView: View {
             if let sessionId {
                 if cached.isNew || (vm.messages.isEmpty && !vm.isLoadingSession) {
                     // Load session if: (a) VM is freshly created, or (b) cache hit but messages
-                    // are empty — this can happen on iOS 16 where NavigationStack may recreate
+                    // are empty — this can happen on iOS 16 where MinisNavStack may recreate
                     // @StateObject unexpectedly, causing isNew=false but an empty VM.
                     minisLogger.info("🔄SESSION AIChatView.onAppear loading session \(sessionId) isNew=\(cached.isNew) msgs=\(vm.messages.count)")
                     // [T-ios-session-coldload-listsessions-block] .userInitiated

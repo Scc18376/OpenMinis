@@ -52,7 +52,7 @@ struct MCPIntegrationsView: View {
                         } label: {
                             Label(AppLocalized("Tools"), systemImage: "arrow.clockwise")
                         }
-                        .tint(.blue)
+                        .accentColor(.blue)
                     }
                 }
                 .onDelete { offsets in
@@ -118,12 +118,12 @@ struct MCPIntegrationsView: View {
         VStack(spacing: 12) {
             Image(systemName: "puzzlepiece.extension")
                 .font(.system(size: 44))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             Text("No MCP Servers")
                 .font(.headline)
             Text("Add an MCP server to give the agent extra tools. Tap + to add one manually or import a JSON config.")
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity)
@@ -139,14 +139,14 @@ struct MCPIntegrationsView: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text(server.id)
                     .font(.body)
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(Color.primary)
                 HStack(spacing: 4) {
                     Text(server.isHTTP ? "HTTP" : (server.isSTDIO ? "STDIO" : "—"))
                         .font(.caption2.weight(.semibold))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Text(server.transportSummary)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .lineLimit(1)
                         .truncationMode(.middle)
                 }
@@ -154,7 +154,7 @@ struct MCPIntegrationsView: View {
             Spacer()
             Image(systemName: "chevron.right")
                 .font(.caption)
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(Color(UIColor.tertiaryLabel))
         }
         .contentShape(Rectangle())
     }
@@ -174,13 +174,13 @@ struct MCPToolsSheet: View {
     @State private var errorText: String?
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             List {
                 if isLoading {
                     HStack(spacing: 10) {
                         ProgressView()
                         Text("Reconnecting and fetching tools…")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 } else if let errorText {
                     Section {
@@ -194,7 +194,7 @@ struct MCPToolsSheet: View {
                     }
                 } else if tools.isEmpty {
                     Text("The server reported no tools.")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 } else {
                     Section(footer: Text("Fetched live from the server just now.")) {
                         ForEach(tools) { tool in
@@ -204,7 +204,7 @@ struct MCPToolsSheet: View {
                                 if !tool.description.isEmpty {
                                     Text(tool.description)
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                         .lineLimit(3)
                                 }
                             }

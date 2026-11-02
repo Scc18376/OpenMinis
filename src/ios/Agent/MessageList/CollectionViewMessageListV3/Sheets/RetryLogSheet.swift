@@ -55,11 +55,11 @@ struct RetryLogSheet: View {
     private var runEnded: Bool { live.isEmpty && !lastSeen.isEmpty }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             List {
                 if shown.isEmpty {
                     Text("No retries so far in this run.")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 } else {
                     Section {
                         ForEach(shown) { event in
@@ -99,18 +99,18 @@ struct RetryLogSheet: View {
                 outcomeChip(e.outcome)
                 Text(Self.timeFormatter.string(from: e.time))
                     .font(.system(size: 11, design: .monospaced))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             if let n = e.attempt, let total = e.maxAttempts {
                 let attempt = String(format: AppLocalized("Attempt %lld of %lld"), n, total)
                 let wait = e.delaySeconds.map { " · " + String(format: AppLocalized("Waited %lld s"), $0) } ?? ""
-                Text(attempt + wait).font(.caption).foregroundStyle(.secondary)
+                Text(attempt + wait).font(.caption).foregroundStyle(Color.secondary)
             }
             Text(String(format: AppLocalized("Model: %@"), e.model))
-                .font(.caption).foregroundStyle(.secondary)
+                .font(.caption).foregroundStyle(Color.secondary)
             if let to = e.switchedTo {
                 Text(String(format: AppLocalized("Switched to: %@"), to))
-                    .font(.caption).foregroundStyle(.secondary)
+                    .font(.caption).foregroundStyle(Color.secondary)
             }
             if !e.reason.isEmpty {
                 Text(e.reason)

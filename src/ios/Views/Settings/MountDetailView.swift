@@ -142,7 +142,7 @@ struct MountDetailView: View {
             }
         }
         .sheet(isPresented: $showingBrowser) {
-            NavigationStack {
+            MinisNavStack {
                 FileBrowserView(
                     rootPath: context.hostURL,
                     rootLabel: context.linuxPath
@@ -188,19 +188,19 @@ struct MountDetailView: View {
                         .font(.headline)
                     Text(context.linuxPath)
                         .font(.caption.monospaced())
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .lineLimit(1)
                         .truncationMode(.middle)
                     if let source = context.sourceDisplayName {
                         Text(verbatim: "← \(source)")
                             .font(.caption2)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                             .lineLimit(1)
                     }
                     if let subtitle = context.subtitle {
                         Text(subtitle)
                             .font(.caption2)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                     }
                 }
                 Spacer()
@@ -235,7 +235,7 @@ struct MountDetailView: View {
                          ? AppLocalized("AI, shell, and Files browser can modify files in this mount.")
                          : AppLocalized("This mount is exposed as read-only to protect it from accidental edits."))
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
         } header: {
@@ -254,13 +254,13 @@ struct MountDetailView: View {
                          ? AppLocalized("This folder appears in Files → On My iPhone → Minis.")
                          : AppLocalized("This folder is hidden from the iOS Files app."))
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
             if context.isReadOnlyFromFiles {
                 Text("Read-only from the Files app. The app itself can always read and write.")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         } header: {
             Text("Files app")

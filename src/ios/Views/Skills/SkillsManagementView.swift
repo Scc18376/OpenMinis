@@ -62,13 +62,13 @@ struct SkillsManagementView: View {
             if store.skills.isEmpty {
                 Section {
                     Text(AppLocalized("No skills installed. Tap + to import a SKILL.md from GitHub or paste one manually."))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .font(.subheadline)
                 }
             } else if filteredSkills.isEmpty {
                 Section {
                     Text(AppLocalized("No skills match \"\(searchQuery)\"."))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .font(.subheadline)
                 }
             }
@@ -86,7 +86,7 @@ struct SkillsManagementView: View {
                             if !skill.description.isEmpty {
                                 Text(skill.description)
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                                     .lineLimit(2)
                             }
                         }
@@ -271,7 +271,7 @@ private struct ImportSkillSheet: View {
     }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 Picker("Import Method", selection: $importMode) {
                     ForEach(ImportMode.allCases, id: \.self) { mode in
@@ -290,7 +290,7 @@ private struct ImportSkillSheet: View {
                             .textInputAutocapitalization(.never)
                             .autocorrectionDisabled()
                             .keyboardType(.URL)
-                            .tint(.primary)
+                            .accentColor(.primary)
                     }
 
                 case .paste:
@@ -545,7 +545,7 @@ private struct SkillDetailView: View {
                             } label: {
                                 Image(systemName: "pencil")
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                             .buttonStyle(.plain)
                         }
@@ -554,7 +554,7 @@ private struct SkillDetailView: View {
                     if let modDate = latestFileModDate {
                         LabeledContent("Last Modified") {
                             Text(Self.relativeTime(modDate))
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                     LabeledContent("Source") {
@@ -567,15 +567,15 @@ private struct SkillDetailView: View {
                             } else {
                                 Text(url)
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                                     .lineLimit(1)
                             }
                         case .file:
-                            Text(AppLocalized("File import")).foregroundStyle(.secondary)
+                            Text(AppLocalized("File import")).foregroundStyle(Color.secondary)
                         case .bundled:
-                            Text(AppLocalized("Built-in")).foregroundStyle(.secondary)
+                            Text(AppLocalized("Built-in")).foregroundStyle(Color.secondary)
                         case .session:
-                            Text(AppLocalized("Session created")).foregroundStyle(.secondary)
+                            Text(AppLocalized("Session created")).foregroundStyle(Color.secondary)
                         }
                     }
                     // [T-skill-copy-source-url] Long-press the Source row; the
@@ -605,7 +605,7 @@ private struct SkillDetailView: View {
                                     ProgressView()
                                 } else {
                                     Text(updatedAgoText)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                         .font(.caption)
                                 }
                             }
@@ -670,7 +670,7 @@ private struct SkillDetailView: View {
                     Section("Description") {
                         Text(bodyPreview)
                             .font(.system(.caption, design: .monospaced))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .lineLimit(nil)
                     }
                 }
@@ -686,7 +686,7 @@ private struct SkillDetailView: View {
                                     .font(.system(.subheadline, design: .monospaced))
                             } icon: {
                                 Image(systemName: fileIcon(for: relativePath))
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
                     }
@@ -711,7 +711,7 @@ private struct SkillDetailView: View {
                     }
                 }
             } else {
-                Text(AppLocalized("Skill not found.")).foregroundStyle(.secondary)
+                Text(AppLocalized("Skill not found.")).foregroundStyle(Color.secondary)
             }
         }
         .navigationTitle(skill?.name ?? "Skill")
@@ -970,7 +970,7 @@ struct MinisSkillsBrowserView: View {
     @StateObject private var coordinator = SkillBrowserCoordinator()
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             ZStack {
                 SkillBrowserWebView(coordinator: coordinator)
                     .ignoresSafeArea(edges: .bottom)
@@ -1016,7 +1016,7 @@ struct MinisSkillsBrowserView: View {
             switch coordinator.hudState {
             case .importing:
                 ProgressView()
-                    .tint(.white)
+                    .accentColor(.white)
                 Text(AppLocalized("Importing…"))
                     .foregroundStyle(.white)
             case .success(let name):

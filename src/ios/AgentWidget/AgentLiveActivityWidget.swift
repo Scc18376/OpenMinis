@@ -65,7 +65,7 @@ struct AgentLiveActivityWidget: Widget {
                                 if context.state.activeSessionCount > 1 {
                                     Text("\(context.state.carouselIndex + 1)/\(context.state.activeSessionCount)")
                                         .font(.caption.monospacedDigit())
-                                        .foregroundStyle(.tertiary)
+                                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                                         .padding(.leading, 4)
                                 }
                                 Spacer(minLength: 6)
@@ -91,7 +91,7 @@ struct AgentLiveActivityWidget: Widget {
                                     // the slot the live timer occupied.
                                     Text(totalRunTime(from: context.attributes.startDate, to: finishedAt))
                                         .font(.caption2.monospacedDigit())
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                         .padding(.horizontal, 6)
                                         .padding(.vertical, 2)
                                         .background(.white.opacity(0.12), in: Capsule())
@@ -105,7 +105,7 @@ struct AgentLiveActivityWidget: Widget {
                                     if !session.lastMessage.isEmpty {
                                         Text(session.lastMessage)
                                             .font(.caption)
-                                            .foregroundStyle(.secondary)
+                                            .foregroundStyle(Color.secondary)
                                             .lineLimit(1)
                                     }
                                     Spacer()
@@ -114,7 +114,7 @@ struct AgentLiveActivityWidget: Widget {
                                     if !context.state.privacyMode {
                                         Text("Loop \(session.loopIteration)")
                                             .font(.caption2.monospacedDigit())
-                                            .foregroundStyle(.tertiary)
+                                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                                     }
                                 }
                             } else {
@@ -126,14 +126,14 @@ struct AgentLiveActivityWidget: Widget {
                                         .transition(.opacity.animation(.easeInOut(duration: 0.35)))
                                     Text(session.toolStatus)
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                         .lineLimit(1)
                                         .contentTransition(.interpolate)
                                     Spacer()
                                     if !context.state.privacyMode, !session.isScheduledWait {
                                         Text("Loop \(session.loopIteration)")
                                             .font(.caption2.monospacedDigit())
-                                            .foregroundStyle(.tertiary)
+                                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                                     }
                                 }
                             }
@@ -269,7 +269,7 @@ struct AgentLockScreenView: View {
                         if state.activeSessionCount > 1 {
                             Text("\(state.carouselIndex + 1)/\(state.activeSessionCount)")
                                 .font(.caption2.monospacedDigit())
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(Color(UIColor.tertiaryLabel))
                         }
                         Spacer(minLength: 6)
                         if !session.isCompleted, session.showsRunClock {
@@ -287,7 +287,7 @@ struct AgentLockScreenView: View {
                             // total run time in the resting state.
                             Text(totalRunTime(from: attributes.startDate, to: finishedAt))
                                 .font(.caption2.monospacedDigit())
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
                                 .background(.white.opacity(0.12), in: Capsule())
@@ -301,7 +301,7 @@ struct AgentLockScreenView: View {
                             if !session.lastMessage.isEmpty {
                                 Text(session.lastMessage)
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                                     .lineLimit(1)
                             }
                         }
@@ -314,7 +314,7 @@ struct AgentLockScreenView: View {
                                 .transition(.opacity.animation(.easeInOut(duration: 0.35)))
                             Text(session.toolStatus)
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                                 .lineLimit(1)
                                 .contentTransition(.interpolate)
                             Spacer()
@@ -323,7 +323,7 @@ struct AgentLockScreenView: View {
                             if !state.privacyMode, !session.isScheduledWait {
                                 Text("Loop \(session.loopIteration)")
                                     .font(.caption2.monospacedDigit())
-                                    .foregroundStyle(.tertiary)
+                                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                             }
                         }
                     }
@@ -403,7 +403,7 @@ struct RunClock: View {
             Text(startDate, style: .timer)
                 .font(.caption2.monospacedDigit())
                 .multilineTextAlignment(.center)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
     }
 }

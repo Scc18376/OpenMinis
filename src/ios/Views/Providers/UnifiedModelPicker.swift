@@ -583,10 +583,10 @@ struct UnifiedModelPicker: View {
                     HStack(alignment: .top, spacing: 8) {
                         Image(systemName: "info.circle")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         Text(note)
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
             }
@@ -614,7 +614,7 @@ struct UnifiedModelPicker: View {
                                 .textCase(nil)
                         }
                         .buttonStyle(.plain)
-                        .foregroundStyle(.tint)
+                        .foregroundStyle(Color.accentColor)
                     }
                 } footer: {
                     if searchText.isEmpty {
@@ -643,7 +643,7 @@ struct UnifiedModelPicker: View {
                     Text(String(format: AppLocalized("Showing the %d best matches of %d. Type more to narrow the search."),
                                 Self.maxSearchResults, totalSearchMatches))
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
             }
@@ -658,7 +658,7 @@ struct UnifiedModelPicker: View {
                             ProgressView()
                             Text("Loading models...")
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                         Spacer()
                     }
@@ -719,12 +719,12 @@ struct UnifiedModelPicker: View {
         }
         .toolbar { toolbarContent }
         .sheet(isPresented: $showCreateGroupSheet) {
-            NavigationStack {
+            MinisNavStack {
                 UnifiedModelPicker(config: createGroupConfig())
             }
         }
         .sheet(isPresented: $showGroupsManager) {
-            NavigationStack {
+            MinisNavStack {
                 ModelGroupsView()
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
@@ -738,7 +738,7 @@ struct UnifiedModelPicker: View {
             // the picker (same pattern as the Model Groups "Edit" sheet), so the
             // user returns to the picker with their place kept. Edits land in the
             // store and the picker rebuilds from `configRevision`.
-            NavigationStack {
+            MinisNavStack {
                 ProviderInstanceDetailView(instanceId: target.id)
                     .toolbar {
                         // Leading: the detail page's own action owns the trailing slot.
@@ -794,7 +794,7 @@ struct UnifiedModelPicker: View {
         } label: {
             Image(systemName: "bolt.badge.checkmark")
                 .font(.system(size: 15, weight: .medium))
-                .foregroundStyle(.tint)
+                .foregroundStyle(Color.accentColor)
                 .frame(width: 32, height: 32)
                 .contentShape(Rectangle())
         }
@@ -941,7 +941,7 @@ struct UnifiedModelPicker: View {
             } label: {
                 Image(systemName: expandedGroupIds.contains(group.id) ? "chevron.up" : "chevron.down")
                     .font(.system(size: 11, weight: .medium))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .frame(width: 28, height: 28)
                     .background(Color(UIColor.tertiarySystemFill))
                     .clipShape(Circle())
@@ -972,20 +972,20 @@ struct UnifiedModelPicker: View {
         if group.memberEntryIds.isEmpty {
             Text(AppLocalized("No models"))
                 .font(.caption)
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(Color(UIColor.tertiaryLabel))
         } else if isGroupSelected(group),
                   let eid = config.currentEntryId?(),
                   let entry = store.entry(for: eid) {
             Text("→ \(entry.model.displayName)")
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         } else {
             let available = availableMemberEntryIds(group).count
             let total = group.memberEntryIds.count
             if available == total {
                 Text(AppLocalized("\(total) models"))
                     .font(.caption)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
             } else if available == 0 {
                 Text(AppLocalized("\(total) models · all unavailable"))
                     .font(.caption)
@@ -1005,7 +1005,7 @@ struct UnifiedModelPicker: View {
             Text(strategy == .fallback ? "FB" : "LB")
                 .font(.system(size: 9, weight: .medium, design: .rounded))
         }
-        .foregroundStyle(.secondary)
+        .foregroundStyle(Color.secondary)
         .padding(.horizontal, 4)
         .padding(.vertical, 1)
         .background(Color(UIColor.quaternarySystemFill))
@@ -1107,7 +1107,7 @@ struct UnifiedModelPicker: View {
         if group.memberEntryIds.isEmpty {
             Text("No models in this group")
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .padding(.leading, 30)
                 .padding(.vertical, 4)
         } else {
@@ -1171,14 +1171,14 @@ struct UnifiedModelPicker: View {
                     if let instanceLabel = store.instance(for: entry.providerInstanceId)?.label {
                         Text(instanceLabel)
                             .font(.caption2.weight(.medium))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         Text("·")
                             .font(.caption2)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                     }
                     Text(entry.model.id)
                         .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                 }
             }
             // [T-model-row-premature-wrap] The column takes the free width
@@ -1288,7 +1288,7 @@ struct UnifiedModelPicker: View {
                         if let instanceLabel = store.instance(for: entry.providerInstanceId)?.label {
                             Text(instanceLabel)
                                 .font(.caption2.weight(.medium))
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(Color(UIColor.tertiaryLabel))
                         }
                         Text("·")
                             .font(.caption2)
@@ -1373,7 +1373,7 @@ struct UnifiedModelPicker: View {
                         Text(AppLocalized("Show \(item.entries.count) models"))
                             .font(.caption)
                     }
-                    .foregroundStyle(.tint)
+                    .foregroundStyle(Color.accentColor)
                 }
             }
         } header: {
@@ -1407,7 +1407,7 @@ struct UnifiedModelPicker: View {
                             .lineLimit(1)
                     }
                     .buttonStyle(.plain)
-                    .foregroundStyle(.tint)
+                    .foregroundStyle(Color.accentColor)
                     .fixedSize()
                     .accessibilityLabel(Text("Edit \(item.instance.label)"))
                 }
@@ -1424,7 +1424,7 @@ struct UnifiedModelPicker: View {
                     } label: {
                         Image(systemName: collapsed ? "chevron.down" : "chevron.up")
                             .font(.system(size: 11, weight: .medium))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .frame(width: 28, height: 28)
                             .background(Color(UIColor.tertiarySystemFill))
                             .clipShape(Circle())
@@ -1544,7 +1544,7 @@ struct UnifiedModelPicker: View {
             // for built-ins; the raw model id for cloud models.
             Text(traits.subtitle ?? entry.model.id)
                 .font(.caption2)
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(Color(UIColor.tertiaryLabel))
         }
     }
 
@@ -1554,7 +1554,7 @@ struct UnifiedModelPicker: View {
         ForEach(badges, id: \.self) { badge in
             Text(badge)
                 .font(.system(size: 9, weight: .medium))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .padding(.horizontal, 4)
                 .padding(.vertical, 1)
                 .background(Color(UIColor.tertiarySystemFill))
@@ -1577,12 +1577,12 @@ struct UnifiedModelPicker: View {
                     .foregroundStyle(.quaternary)
                 Text(searchText.isEmpty ? "No models available" : "No results")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Text(searchText.isEmpty
                      ? "Configure providers in Settings to see models here."
                      : "Try a different search term.")
                     .font(.caption)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity)

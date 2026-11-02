@@ -23,7 +23,7 @@ struct RootfsManagementView: View {
                     Text("Status")
                     Spacer()
                     Text(viewModel.isInstalled ? "Installed" : "Not Installed")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Image(systemName: viewModel.isInstalled ? "checkmark.circle.fill" : "xmark.circle.fill")
                         .foregroundColor(viewModel.isInstalled ? .green : .red)
                 }
@@ -192,7 +192,7 @@ struct RootfsManagementView: View {
             Text("This will backup your /root directory, then reset the rootfs. You can restore the backup later.")
         }
         .sheet(isPresented: $showFileBrowser) {
-            NavigationStack {
+            MinisNavStack {
                 FileBrowserView(rootPath: RootfsManager.shared.dataPath, rootLabel: "/")
             }
         }
@@ -327,7 +327,7 @@ class RootfsManagementViewModel: ObservableObject {
 }
 
 #Preview {
-    NavigationStack {
+    MinisNavStack {
         RootfsManagementView()
     }
 }

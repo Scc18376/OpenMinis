@@ -172,7 +172,7 @@ struct BackupHistoryDetailView: View {
                     Spacer(minLength: 0)
                     Text(name)
                         .multilineTextAlignment(.trailing)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                         .layoutPriority(1)
                 }
@@ -329,7 +329,7 @@ struct BackupHistoryDetailView: View {
                 if let where_ = destinationSubtitle(d) {
                     Text(where_)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .lineLimit(1)
                         .truncationMode(.middle)
                 }
@@ -348,7 +348,7 @@ struct BackupHistoryDetailView: View {
     private var logSection: some View {
         Section {
             if record.log.isEmpty {
-                Text("No log for this run.").foregroundStyle(.secondary)
+                Text("No log for this run.").foregroundStyle(Color.secondary)
             } else {
                 // [T-backup-log-newest-first] Newest first. A finished run's
                 // log is long (one line per category, plus per-destination
@@ -358,7 +358,7 @@ struct BackupHistoryDetailView: View {
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
                         Text(e.at.formatted(date: .omitted, time: .standard))
                             .font(.caption.monospacedDigit())
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                         Text(e.message)
                             .font(.caption)
                             .foregroundStyle(e.isProblem ? .red : .secondary)

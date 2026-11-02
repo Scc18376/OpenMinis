@@ -84,7 +84,7 @@ private struct FontScaleRow: View {
                 } label: {
                     Text("A")
                         .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .buttonStyle(.plain)
 
@@ -103,7 +103,7 @@ private struct FontScaleRow: View {
                 } label: {
                     Text("A")
                         .font(.system(size: 22, weight: .medium))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .buttonStyle(.plain)
             }
@@ -439,10 +439,10 @@ struct AppearanceSettingsView: View {
                                     // Wrap in LocalizedStringKey so the catalog lookup kicks
                                     // in — Text(String) would render them verbatim.
                                     Text(LocalizedStringKey(option.title))
-                                        .foregroundStyle(.primary)
+                                        .foregroundStyle(Color.primary)
                                     Text(LocalizedStringKey(option.subtitle))
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(Color.secondary)
                                 }
                                 Spacer()
                                 if appIconMode == option.id {
@@ -491,11 +491,11 @@ struct AppearanceSettingsView: View {
                             } else {
                                 Image(systemName: "globe")
                                     .font(.title3)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                                     .frame(width: 28)
                             }
                             Text(lang.name)
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(Color.primary)
                             Spacer()
                             if appLanguage == lang.id {
                                 Image(systemName: "checkmark")

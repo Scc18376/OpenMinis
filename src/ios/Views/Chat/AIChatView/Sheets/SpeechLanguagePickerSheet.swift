@@ -43,7 +43,7 @@ private struct SpeechLanguagePickerSheet: View {
     }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             List {
                 let preferred = filteredLocales.filter { preferredCodes.contains($0.language.languageCode?.identifier ?? "") }
                 let others = filteredLocales.filter { !preferredCodes.contains($0.language.languageCode?.identifier ?? "") }
@@ -86,10 +86,10 @@ private struct SpeechLanguagePickerSheet: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(speechManager.displayName(for: loc))
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(Color.primary)
                     Text(loc.identifier)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 Spacer()
                 if loc.identifier == speechManager.locale.identifier {

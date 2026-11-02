@@ -34,7 +34,7 @@ struct CompactSummarySheet: View {
     @State private var showRevertConfirm = false
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             VStack(spacing: 0) {
                 SelectableTextView(text: summary)
                     .padding(.horizontal, 16)
@@ -62,7 +62,7 @@ struct CompactSummarySheet: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { dismiss() } label: {
                         Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                 }
                 ToolbarItem(placement: .topBarLeading) {

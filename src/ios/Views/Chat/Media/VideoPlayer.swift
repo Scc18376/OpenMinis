@@ -63,7 +63,7 @@ struct MinisVideoPlayerView: View {
                     VStack(spacing: 8) {
                         Image(systemName: "play.circle.fill")
                             .font(.system(size: 48))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         Text(url.lastPathComponent)
                             .lineLimit(1)
                             .font(.caption)
@@ -257,7 +257,7 @@ struct MinisVideoFullscreenPlayer: View {
                                         .offset(y: -1)
                                 case .saving:
                                     ProgressView()
-                                        .tint(ChatColors.primaryText)
+                                        .accentColor(ChatColors.primaryText)
                                 case .saved:
                                     Image(systemName: "checkmark")
                                         .foregroundStyle(.green)
@@ -338,7 +338,7 @@ struct MinisVideoFullscreenPlayer: View {
                                 }
                             }
                         )
-                        .tint(.white)
+                        .accentColor(.white)
 
                         // Duration
                         Text(formatTime(duration))

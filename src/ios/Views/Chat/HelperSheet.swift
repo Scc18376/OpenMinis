@@ -7,7 +7,7 @@ import SwiftUI
 //
 // This used to be a draggable half-sheet (HelperSheet). The user found it
 // easy to dismiss by accident and hard to scroll, so it is now a full-screen
-// page (fullScreenCover with its own NavigationStack) that looks like the
+// page (fullScreenCover with its own MinisNavStack) that looks like the
 // main chat — same CollectionViewMessageListV3 renderer — with a navigation
 // bar that says what it is: "Agent · <task>", tier badge, elapsed while
 // running, and a Stop button. It is reached from the agent's tool sheet
@@ -109,7 +109,7 @@ struct HelperTranscriptPage: View {
     private let clock = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             // [T-agent-transcript-navbar-lost] The ZStack is load-bearing, not
             // cosmetic: everything below — the nav bar style and, critically,
             // the `.background` toolbar host — must attach to a node whose
@@ -141,7 +141,7 @@ struct HelperTranscriptPage: View {
             .modifier(NavBarStyleModifier(topSafeAreaInset: $topSafeAreaInset, measuresSafeArea: false))
             .navigationBarTitleDisplayMode(.inline)
             // [T-agent-transcript-navbar-lost] Pin the bar visible. This page
-            // is the ROOT of its NavigationStack, and SwiftUI auto-hides a
+            // is the ROOT of its MinisNavStack, and SwiftUI auto-hides a
             // root's bar when it computes nothing to show there (a pushed
             // destination never auto-hides -- it needs its back button, which
             // is why the main chat is immune). Without this the bar exists
@@ -155,7 +155,7 @@ struct HelperTranscriptPage: View {
                 // `.background` host.
                 //
                 // Device evidence (iPhone 8 / iOS 16.1, debug.viewTree): in the
-                // failure state this NavigationStack's UILayoutContainerView has
+                // failure state this MinisNavStack's UILayoutContainerView has
                 // NO UIKitNavigationBar subview at all -- not hidden, not with
                 // emptied items; the bar view is absent, while the main chat's
                 // stack right behind it still has its own. SwiftUI drops the bar
@@ -371,7 +371,7 @@ struct HelperTranscriptPage: View {
 /// the ToolbarContent is never re-pushed to the UINavigationItem.
 ///
 /// That re-push is what the bar was being lost to -- dismissing a tool sheet
-/// hosted OUTSIDE this NavigationStack (SheetOverlayView, a child VC of the
+/// hosted OUTSIDE this MinisNavStack (SheetOverlayView, a child VC of the
 /// message list) raced the next tick's re-push, and on iOS 16-18 the bar lost
 /// that race with nothing left to restore it.
 private struct HelperElapsedLabel: View {

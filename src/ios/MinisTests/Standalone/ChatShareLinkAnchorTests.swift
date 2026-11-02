@@ -126,7 +126,7 @@ let view = source("Views/Chat/ChatShareSelectionView.swift")
 check("source readable", !view.isEmpty)
 check("the ShareLink is built from ChatShareLinkTarget",
       view.contains("if let target = ChatShareLinkTarget.resolve(current: rendered[key]?.url, last: lastShareURL) {")
-      && view.contains("ShareLink(item: target.url)") && view.contains(".disabled(!target.enabled)"))
+      && view.contains("MinisShareLink(item: target.url)") && view.contains(".disabled(!target.enabled)"))
 check("no ShareLink tied to the current render alone",
       !view.contains("if let url = rendered[key]?.url {\n                        ShareLink"))
 check("a finished render becomes the last shared file",

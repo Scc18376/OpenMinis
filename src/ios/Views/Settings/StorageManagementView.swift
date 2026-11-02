@@ -641,7 +641,7 @@ struct StorageManagementView: View {
                     }
                 } else if vm.sessions.isEmpty {
                     Text("No sessions")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 } else {
                     ForEach(vm.sessions) { session in
                         sessionRow(session)
@@ -776,7 +776,7 @@ struct StorageManagementView: View {
                 Label("Clean Up Orphaned Session Files", systemImage: "trash")
                 Spacer()
                 Text(vm.format(vm.orphanedSessionSize))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         }
     }
@@ -816,13 +816,13 @@ struct StorageManagementView: View {
                 } label: {
                     Label("Delete", systemImage: "trash")
                 }
-                .tint(.red)
+                .accentColor(.red)
                 Button {
                     confirm(.clearFiles, [session.id])
                 } label: {
                     Label("Clear Files", systemImage: "xmark.bin")
                 }
-                .tint(.orange)
+                .accentColor(.orange)
                 .disabled(session.totalSize == 0)
             }
         }
@@ -832,14 +832,14 @@ struct StorageManagementView: View {
         HStack {
             Text(session.title ?? "Untitled")
                 .lineLimit(1)
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.primary)
             Spacer()
             if busy {
                 ProgressView()
                     .controlSize(.small)
             } else {
                 Text(vm.format(session.totalSize))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         }
     }
@@ -874,7 +874,7 @@ struct StorageManagementView: View {
             if !selection.isEmpty {
                 Text("\(selection.count) selected · \(vm.format(selectedBytes))")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .padding(.bottom, 8)
             }
         }
@@ -969,7 +969,7 @@ struct StorageManagementView: View {
             Text(AppLocalized(String.LocalizationValue(label)))
             Spacer()
             Text(value)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
     }
 }
@@ -1018,12 +1018,12 @@ struct SessionStorageDetailView: View {
                             Label("Browse Files", systemImage: "folder")
                             Spacer()
                             Text(formatter.string(fromByteCount: currentMinisSize))
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 } else {
                     Text("No minis files")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
 
@@ -1042,7 +1042,7 @@ struct SessionStorageDetailView: View {
                         Spacer()
                         if !isClearing {
                             Text(formatter.string(fromByteCount: totalFileSize))
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 }

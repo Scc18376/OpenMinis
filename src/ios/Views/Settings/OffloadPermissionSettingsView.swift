@@ -112,7 +112,7 @@ private struct CommandPermissionRow: View {
                 Text(command.displayLabel)
                 Text(command.description)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             Spacer()
             Picker("", selection: $level) {

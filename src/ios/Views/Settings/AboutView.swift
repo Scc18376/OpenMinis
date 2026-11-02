@@ -87,10 +87,10 @@ struct AboutView: View {
                         .font(.title2.bold())
                     Text("Version \(appVersion)")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Text("Built \(buildDate)")
                         .font(.caption)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                         // Selectable so it can be copied into a bug report.
                         .textSelection(.enabled)
                     // [T-env-diagnostic-line] Sits with the build date because
@@ -98,11 +98,11 @@ struct AboutView: View {
                     // — and gets copied into the same bug reports.
                     Text(environmentLine)
                         .font(.caption)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                         .textSelection(.enabled)
                     Text("Minis is Your Fully Local, Fully Private On-Device Agent.")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
@@ -119,7 +119,7 @@ struct AboutView: View {
                             Spacer()
                             Image(systemName: "arrow.up.right.square")
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     } icon: {
                         Image(systemName: "link.circle.fill")
@@ -133,7 +133,7 @@ struct AboutView: View {
                             Spacer()
                             Image(systemName: "arrow.up.right.square")
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     } icon: {
                         Image(systemName: "exclamationmark.circle.fill")

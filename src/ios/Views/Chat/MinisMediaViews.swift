@@ -561,7 +561,7 @@ private func attachmentPlaceholderTile(icon: String, size: CGFloat) -> some View
     VStack(spacing: 4) {
         Image(systemName: icon)
             .font(.system(size: 22))
-            .foregroundStyle(.tertiary)
+            .foregroundStyle(Color(UIColor.tertiaryLabel))
     }
     .frame(width: size, height: size)
     .background(Color(.systemGray6))
@@ -609,7 +609,7 @@ struct AsyncCacheURLImageTile: View {
 /// Cell-level views (MessageRowView, MarkdownBlockView) live inside UICollectionView
 /// cells whose window hierarchy is unstable. Presenting a sheet from those views causes
 /// SwiftUI to drop the transition animation. To fix this, the actual sheet state and
-/// presentation lives on AIChatView (a stable NavigationStack root), and cell-level
+/// presentation lives on AIChatView (a stable MinisNavStack root), and cell-level
 /// views forward URL taps up through this environment action.
 struct OpenMinisURLAction {
     var handler: (URL) -> OpenURLAction.Result
@@ -686,7 +686,7 @@ private struct MinisImageView: View {
         } else if let url {
             // Fall through to default async loading for non-minis URLs
             let maxH = UIScreen.main.bounds.height / 2
-            AsyncImage(url: url) { phase in
+            MinisAsyncImage(url: url) { phase in
                 switch phase {
                 case .success(let image):
                     image
@@ -831,7 +831,7 @@ struct MinisImageFilePreviewView: View {
             ZStack {
                 Color.black.ignoresSafeArea()
                 ProgressView()
-                    .tint(.white)
+                    .accentColor(.white)
             }
             .overlay(alignment: .topLeading) {
                 Button { dismiss() } label: {

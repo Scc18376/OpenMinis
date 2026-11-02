@@ -544,7 +544,7 @@ struct ScheduledTaskDetailView: View {
                 Button { dismiss() } label: {
                     Image(systemName: "xmark")
                         .font(.body.weight(.semibold))
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(Color.primary)
                         .frame(width: 36, height: 36)
                         .background(Circle().fill(Color(.tertiarySystemFill)))
                 }
@@ -570,7 +570,7 @@ struct ScheduledTaskDetailView: View {
                     .lineLimit(2)
                 Text(Self.triggerText(store.trigger))
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(2)
             }
             Spacer(minLength: 8)
@@ -595,13 +595,13 @@ struct ScheduledTaskDetailView: View {
                 if let total {
                     Text(String(format: AppLocalized("of %d"), total))
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 Spacer()
             }
             if let total, total > 0 {
                 ProgressView(value: Double(min(fired, total)), total: Double(total))
-                    .tint(ScheduledAccent.color)
+                    .accentColor(ScheduledAccent.color)
             }
             Divider()
             row(AppLocalized("Next run"), value: nextRunText)
@@ -610,7 +610,7 @@ struct ScheduledTaskDetailView: View {
                 Text("Scheduled tasks only run while the app is running and don't resume after a relaunch.",
                      comment: "Scheduled task detail: why a task shows as stopped")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
@@ -633,7 +633,7 @@ struct ScheduledTaskDetailView: View {
             HStack(alignment: .firstTextBaseline) {
                 Text(AppLocalized("Task ID"))
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .frame(width: 88, alignment: .leading)
                 Button {
                     UIPasteboard.general.string = store.callback.jobId
@@ -644,7 +644,7 @@ struct ScheduledTaskDetailView: View {
                             .font(.subheadline.monospaced())
                         Image(systemName: "doc.on.doc").font(.caption)
                     }
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(Color.primary)
                 }
                 .buttonStyle(.plain)
                 Spacer()
@@ -665,7 +665,7 @@ struct ScheduledTaskDetailView: View {
                 } label: {
                     Image(systemName: "doc.on.doc")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .accessibilityLabel(Text(AppLocalized("Copy prompt")))
             }
@@ -704,7 +704,7 @@ struct ScheduledTaskDetailView: View {
             } else if store.history.isEmpty {
                 Text("No runs yet", comment: "Scheduled task detail: empty run history")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .padding(.vertical, 6)
             } else {
                 VStack(spacing: 0) {
@@ -736,14 +736,14 @@ struct ScheduledTaskDetailView: View {
                 }
                 Text(historySubtitle(r))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(1)
             }
             Spacer()
             if r.isOtherSession, r.sessionId != nil {
                 Image(systemName: "chevron.right")
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(UIColor.tertiaryLabel))
             }
         }
         .padding(.vertical, 8)
@@ -778,7 +778,7 @@ struct ScheduledTaskDetailView: View {
                     .padding(.vertical, 12)
                     .background(cardBackground)
             }
-            .foregroundStyle(.primary)
+            .foregroundStyle(Color.primary)
         }
     }
 
@@ -792,7 +792,7 @@ struct ScheduledTaskDetailView: View {
     private func sectionTitle(_ title: String, systemImage: String) -> some View {
         Label(title, systemImage: systemImage)
             .font(.subheadline.weight(.semibold))
-            .foregroundStyle(.primary)
+            .foregroundStyle(Color.primary)
             .labelStyle(.titleAndIcon)
     }
 
@@ -800,7 +800,7 @@ struct ScheduledTaskDetailView: View {
         HStack(alignment: .firstTextBaseline, spacing: 8) {
             Text(label)
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .frame(width: 88, alignment: .leading)
             Text(value)
                 .font(monospaced ? .subheadline.monospaced() : .subheadline)

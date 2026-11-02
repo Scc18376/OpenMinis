@@ -219,7 +219,7 @@ struct FileBrowserView: View {
         .sheet(item: $moveOrCopyItem) { item in
             let minisPath = viewModel.rootPath.appendingPathComponent("var/minis")
             let initial = FileManager.default.fileExists(atPath: minisPath.path) ? minisPath : nil
-            NavigationStack {
+            MinisNavStack {
                 DirectoryPickerView(
                     rootPath: viewModel.rootPath,
                     rootLabel: viewModel.rootLabel,
@@ -416,7 +416,7 @@ private struct FilePreviewSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             content
                 .navigationTitle(item.name)
                 .navigationBarTitleDisplayMode(.inline)
@@ -623,12 +623,12 @@ private struct FileLoadErrorView: View {
         VStack(spacing: 12) {
             Image(systemName: "exclamationmark.triangle")
                 .font(.system(size: 48))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             Text("Could not read file")
                 .font(.headline)
             Text(message)
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
         }
@@ -703,10 +703,10 @@ private struct FileInfoView: View {
                 VStack(spacing: 12) {
                     Image(systemName: item.iconName)
                         .font(.system(size: 48))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Text("Preview not available")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 24)
@@ -716,7 +716,7 @@ private struct FileInfoView: View {
                 ForEach(fileAttributes, id: \.0) { key, value in
                     HStack(alignment: .top) {
                         Text(key)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .frame(width: 80, alignment: .leading)
                         Text(value)
                             .textSelection(.enabled)
@@ -1743,7 +1743,7 @@ private struct DirectoryPickerView: View {
 }
 
 #Preview {
-    NavigationStack {
+    MinisNavStack {
         FileBrowserView()
     }
 }

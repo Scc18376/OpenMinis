@@ -89,7 +89,7 @@ struct SessionSkillsView: View {
         // Reference the version counter so SwiftUI refreshes on override changes.
         let _ = store.sessionOverrideVersion
 
-        NavigationStack {
+        MinisNavStack {
             List {
                 if store.skills.isEmpty {
                     Section {
@@ -100,7 +100,7 @@ struct SessionSkillsView: View {
                 } else if filteredSkills.isEmpty {
                     Section {
                         Text(AppLocalized("No skills match \"\(searchQuery)\"."))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .font(.subheadline)
                     }
                 } else {
@@ -115,7 +115,7 @@ struct SessionSkillsView: View {
                                         if !skill.description.isEmpty {
                                             Text(skill.description)
                                                 .font(.caption)
-                                                .foregroundStyle(.secondary)
+                                                .foregroundStyle(Color.secondary)
                                                 .lineLimit(2)
                                         }
                                     }
@@ -185,7 +185,7 @@ private struct SessionSkillDetailView: View {
                                     .font(.system(.subheadline, design: .monospaced))
                             } icon: {
                                 Image(systemName: iconName(for: relativePath))
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
                     }
@@ -238,7 +238,7 @@ private struct SkillFilePreviewView: View {
                     }
                 } else {
                     Text("Could not load image.")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             } else {
                 ScrollView {

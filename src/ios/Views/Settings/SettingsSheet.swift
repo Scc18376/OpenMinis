@@ -47,7 +47,7 @@ struct SettingsSheet: View {
     @State private var showFeedbackDialog = false
 
     var body: some View {
-        NavigationStack(path: $navPath) {
+        MinisNavStackPath(path: $navPath) {
             List {
                 Section {
                     NavigationLink {
@@ -361,7 +361,7 @@ struct SettingsSheet: View {
                                 .background(.indigo, in: Circle())
                         }
                     }
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(Color.primary)
                     .confirmationDialog("Feedback", isPresented: $showFeedbackDialog, titleVisibility: .visible) {
                         Button("Report a Bug (GitHub)") {
                             if let url = Self.makeBugReportURL() { UIApplication.shared.open(url) }
@@ -473,7 +473,7 @@ struct SettingsSheet: View {
     }
 
     /// Translate `DeepLinkCoordinator.pendingSettingsTarget` into a
-    /// NavigationStack push and clear the pending value. Called from
+    /// MinisNavStack push and clear the pending value. Called from
     /// `onAppear` (cold-start deep link) and `onChange` (deep link
     /// arriving while the sheet is already open).
     ///

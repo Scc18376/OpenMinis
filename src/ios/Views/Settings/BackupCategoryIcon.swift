@@ -47,7 +47,7 @@ struct BackupCategoryIcon: View {
             .font(.system(size: 13, weight: .semibold))
             .foregroundStyle(.white)
             .frame(width: 28, height: 28)
-            .background(Self.tint(for: category), in: Circle())
+            .background(Self.accentColor(for: category), in: Circle())
     }
 
     static func symbol(for c: BackupCategory) -> String {

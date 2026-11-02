@@ -93,7 +93,7 @@ struct BrowserManagementView: View {
                         .foregroundStyle(Color(UIColor.label))
                     Text(displayUA(for: profile))
                         .font(.system(size: 11, design: .monospaced))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .lineLimit(2)
                 }
                 Spacer()
@@ -133,7 +133,7 @@ struct BrowserManagementView: View {
             }
             TextField("Enter custom user agent...", text: $customUA, axis: .vertical)
                 .font(.system(size: 11, design: .monospaced))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .lineLimit(2...4)
                 .onSubmit {
                     pool.customUserAgentString = customUA
@@ -250,7 +250,7 @@ struct BrowserManagementView: View {
                     .multilineTextAlignment(.center)
                     .frame(width: 72)
                     .onSubmit { commitCustomViewport() }
-                Text("×").foregroundStyle(.secondary)
+                Text("×").foregroundStyle(Color.secondary)
                 TextField("Height", text: $viewportHeightText)
                     .keyboardType(.numberPad)
                     .font(.system(size: 13, design: .monospaced))
@@ -312,7 +312,7 @@ struct BrowserManagementView: View {
         VStack(alignment: .leading, spacing: 6) {
             Text("Quick Set")
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(Self.viewportPresets, id: \.label) { preset in
@@ -326,7 +326,7 @@ struct BrowserManagementView: View {
                                     .font(.system(size: 12, weight: .medium))
                                 Text("\(preset.width)×\(preset.height)")
                                     .font(.system(size: 10, design: .monospaced))
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                             .padding(.horizontal, 10)
                             .padding(.vertical, 6)
@@ -370,7 +370,7 @@ struct BrowserManagementView: View {
                 Text("Cookies")
                 Spacer()
                 Text("\(cookieCount)")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
 
             Button(role: .destructive) {
@@ -399,7 +399,7 @@ struct BrowserManagementView: View {
                                 .font(.system(size: 14, weight: .medium))
                             Text("\(group.cookies.count) cookie\(group.cookies.count == 1 ? "" : "s")")
                                 .font(.system(size: 12))
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                         Spacer()
                     }

@@ -13,14 +13,14 @@ struct AppLockOverlay: View {
                 VStack(spacing: 24) {
                     Image(systemName: BiometricAuth.biometryIconName)
                         .font(.system(size: 48))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
 
                     Text("Minis is Locked")
                         .font(.title2.bold())
 
                     Text("Tap to unlock with \(BiometricAuth.biometryDisplayName)")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
 
                     Button {
                         authenticate()

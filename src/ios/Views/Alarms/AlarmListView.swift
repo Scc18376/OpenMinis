@@ -230,16 +230,16 @@ struct AlarmListView: View {
     @State private var showClearConfirm = false
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Group {
                 if vm.alarms.isEmpty && !vm.isLoading {
                     VStack(spacing: 12) {
                         Image(systemName: "alarm")
                             .font(.system(size: 48, weight: .thin))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         Text("No Alarms")
                             .font(.title3)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
@@ -305,12 +305,12 @@ private struct AlarmRowView: View {
                 if !alarm.label.isEmpty {
                     Text(alarm.label)
                         .font(.subheadline)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(Color.primary)
                 }
                 if !alarm.subtitle.isEmpty {
                     Text(alarm.subtitle)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
             Spacer()
@@ -319,7 +319,7 @@ private struct AlarmRowView: View {
                 if let day = alarm.weekdayLabel {
                     Text(day)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
         }

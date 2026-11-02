@@ -287,7 +287,7 @@ struct SpeechPlayerControl: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) { showFailureFlash = false }
         }
         .sheet(isPresented: $showModelSelector, onDismiss: { refreshModelLabel(); bumpIdle() }) {
-            NavigationStack {
+            MinisNavStack {
                 UnifiedModelPicker(config: .voiceOutput())
             }
         }
@@ -529,7 +529,7 @@ struct SpeechPlayerControl: View {
         HStack(spacing: 8) {
             Image(systemName: state.readAloudVolume <= 0 ? "speaker.fill" : "speaker.wave.1.fill")
                 .font(.system(size: 12, weight: .semibold))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .frame(width: 16)
                 .accessibilityHidden(true)
             Slider(value: Binding(
@@ -541,7 +541,7 @@ struct SpeechPlayerControl: View {
             .accessibilityValue(Text(verbatim: "\(ReadAloudVolume.percent(state.readAloudVolume))%"))
             Text(verbatim: "\(ReadAloudVolume.percent(state.readAloudVolume))%")
                 .font(.caption2.weight(.semibold).monospacedDigit())
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
                 .lineLimit(1)
                 // Large Dynamic Type shrinks the digits instead of truncating
                 // them inside the fixed-width row.
@@ -575,14 +575,14 @@ struct SpeechPlayerControl: View {
                 HStack(spacing: 4) {
                     Image(systemName: "waveform")
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     Text(modelLabel.isEmpty ? "Voice" : modelLabel)
                         .font(.caption.weight(.medium))
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(Color.primary)
                         .lineLimit(1)
                     Image(systemName: "chevron.up.chevron.down")
                         .font(.system(size: 8, weight: .semibold))
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(Color(UIColor.tertiaryLabel))
                 }
                 .frame(maxWidth: 130)
             }
@@ -610,7 +610,7 @@ struct SpeechPlayerControl: View {
             } label: {
                 Image(systemName: "xmark")
                     .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .frame(width: 24, height: 24)
             }
             .buttonStyle(.plain)

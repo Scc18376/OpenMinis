@@ -184,7 +184,7 @@ struct ICloudBackupView: View {
             } label: {
                 Label("Restore", systemImage: "arrow.counterclockwise")
             }
-            .tint(.blue)
+            .accentColor(.blue)
         }
         .contextMenu {
             Button {

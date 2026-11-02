@@ -30,13 +30,13 @@ struct KimiDeviceLoginSheet: View {
     @State private var loginTask: Task<Void, Never>?
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             VStack(spacing: 24) {
                 switch phase {
                 case .starting:
                     ProgressView()
                     Text(AppLocalized("Contacting Kimi…"))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
 
                 case let .awaitingUser(userCode, url):
                     awaitingBody(userCode: userCode, url: url)
@@ -54,7 +54,7 @@ struct KimiDeviceLoginSheet: View {
                         .foregroundStyle(.orange)
                     Text(message)
                         .multilineTextAlignment(.center)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .padding(.horizontal)
                     Button(AppLocalized("Try Again")) { start() }
                         .buttonStyle(.borderedProminent)
@@ -89,7 +89,7 @@ struct KimiDeviceLoginSheet: View {
     private func awaitingBody(userCode: String, url: String) -> some View {
         Text(AppLocalized("1. Open the verification page\n2. Enter this code to authorize Minis"))
             .font(.subheadline)
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color.secondary)
             .multilineTextAlignment(.center)
 
         // The user code — tap to copy.
@@ -102,7 +102,7 @@ struct KimiDeviceLoginSheet: View {
                     .font(.system(.title, design: .monospaced).weight(.semibold))
                 Image(systemName: copied ? "checkmark" : "doc.on.doc")
                     .font(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 20)
@@ -121,7 +121,7 @@ struct KimiDeviceLoginSheet: View {
             ProgressView().controlSize(.small)
             Text(AppLocalized("Waiting for authorization…"))
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
         .padding(.top, 4)
     }

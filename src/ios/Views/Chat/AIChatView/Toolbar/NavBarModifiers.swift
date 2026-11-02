@@ -57,7 +57,7 @@ struct NavBarStyleModifier: ViewModifier {
     /// the safe-area measuring overlay entirely.
     ///
     /// That overlay writes `topSafeAreaInset` from an `onGeometryChange`
-    /// action. A tool sheet presented from OUTSIDE the page's NavigationStack
+    /// action. A tool sheet presented from OUTSIDE the page's MinisNavStack
     /// (SheetOverlayView, a child VC of the message list) changes the top inset
     /// as it presents and dismisses, so the action fires DURING the dismissal's
     /// view-graph update. On the agent transcript page that update ends with

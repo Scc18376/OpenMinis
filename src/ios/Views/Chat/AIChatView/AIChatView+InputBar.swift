@@ -81,10 +81,10 @@ extension AIChatView {
             if vm.isSuspended {
                 HStack(spacing: 8) {
                     ProgressView()
-                        .tint(.yellow)
+                        .accentColor(.yellow)
                     Text("Waiting for other tasks to complete...")
                         .font(.system(size: 13))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .padding(.vertical, 8)
                 .frame(maxWidth: .infinity)
@@ -162,7 +162,7 @@ extension AIChatView {
                             .foregroundStyle(ChatColors.secondaryText)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
-                            .background(.ultraThinMaterial)
+                            .background(Color(UIColor.secondarySystemBackground))
                             .clipShape(Capsule())
                     }
                     .padding(.top, 6)

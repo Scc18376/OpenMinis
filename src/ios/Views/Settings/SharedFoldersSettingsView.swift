@@ -22,7 +22,7 @@ struct SharedFoldersSettingsView: View {
                         .font(.subheadline.weight(.semibold))
                     Text("These directories appear in iOS Files under On My iPhone → Minis. Tap a row to see details, browse, or toggle visibility.")
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -90,7 +90,7 @@ private struct SharedFolderRow: View {
                     if !isVisible {
                         Text("Hidden")
                             .font(.caption2.weight(.semibold))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .padding(.horizontal, 5)
                             .padding(.vertical, 1)
                             .background(
@@ -100,7 +100,7 @@ private struct SharedFolderRow: View {
                 }
                 Text(entry.linuxPath)
                     .font(.caption.monospaced())
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(1)
                     .truncationMode(.middle)
             }

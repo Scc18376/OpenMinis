@@ -83,13 +83,13 @@ struct SessionOverrideEmptyCard: View {
         VStack(spacing: 8) {
             Image(systemName: systemImage)
                 .font(.system(size: 36))
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(Color(UIColor.tertiaryLabel))
             Text(title)
                 .font(.body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
             Text(subtitle)
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.secondary)
         }
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)

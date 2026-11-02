@@ -18,7 +18,7 @@ struct MCPJSONImportSheet: View {
     @State private var errorMessage: String?
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 Section(AppLocalized("Paste MCP JSON")) {
                     TextEditor(text: $text)
@@ -47,12 +47,12 @@ struct MCPJSONImportSheet: View {
                         ForEach(parsed) { server in
                             HStack(spacing: 8) {
                                 Image(systemName: server.isSTDIO ? "terminal" : "globe")
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                                 Text(server.id)
                                 Spacer()
                                 Text(server.isSTDIO ? "STDIO" : "HTTP")
                                     .font(.caption2.weight(.semibold))
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
                     }

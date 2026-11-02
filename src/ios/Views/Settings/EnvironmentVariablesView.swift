@@ -39,12 +39,12 @@ struct EnvironmentVariablesView: View {
                     VStack(spacing: 8) {
                         Image(systemName: "terminal")
                             .font(.largeTitle)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                         Text("No Environment Variables")
                             .font(.headline)
                         Text("Add variables like API keys or tokens that will be available in the shell environment.")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.secondary)
                             .multilineTextAlignment(.center)
                     }
                     .frame(maxWidth: .infinity)
@@ -149,14 +149,14 @@ struct EnvironmentVariablesView: View {
                 }
                 Text(isRevealed ? currentValue : String(repeating: "\u{2022}", count: min(currentValue.count, 20)))
                     .font(.system(.caption, design: .monospaced))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     // [T-shortcut-envvar] Shortcut-stored values can be long,
                     // multi-line text; keep the row compact when revealed.
                     .lineLimit(6)
                 if !entry.note.isEmpty {
                     Text(entry.note)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -173,7 +173,7 @@ struct EnvironmentVariablesView: View {
                 } label: {
                     Image(systemName: isRevealed ? "eye.slash" : "eye")
                         .font(.system(size: 14))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .buttonStyle(.plain)
 
@@ -212,7 +212,7 @@ struct EnvironmentVariablesView: View {
                 Label(isEnabled ? AppLocalized("Disable") : AppLocalized("Enable"),
                       systemImage: isEnabled ? "pause.circle" : "play.circle")
             }
-            .tint(isEnabled ? .gray : .green)
+            .accentColor(isEnabled ? .gray : .green)
         }
     }
 
@@ -256,7 +256,7 @@ private struct EnvVarFormSheet: View {
     }
 
     var body: some View {
-        NavigationStack {
+        MinisNavStack {
             Form {
                 Section {
                     TextField("NAME", text: Binding(
@@ -302,7 +302,7 @@ private struct EnvVarFormSheet: View {
                     ZStack(alignment: .topLeading) {
                         if note.isEmpty {
                             Text("Describe what this variable is for (optional)")
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                                 .padding(.horizontal, 4)
                                 .padding(.vertical, 8)
                                 .allowsHitTesting(false)

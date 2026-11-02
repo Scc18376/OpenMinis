@@ -177,7 +177,7 @@ struct CrashDiagnosticsView: View {
         let rows = items.filter { kinds.contains($0.kind) }
         Section(title) {
             if rows.isEmpty {
-                Text("None").foregroundStyle(.secondary)
+                Text("None").foregroundStyle(Color.secondary)
             } else {
                 ForEach(rows) { item in
                     NavigationLink {
@@ -187,7 +187,7 @@ struct CrashDiagnosticsView: View {
                             Text(item.title).lineLimit(1)
                             Spacer()
                             Text(ByteCountFormatter.string(fromByteCount: item.size, countStyle: .file))
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 }

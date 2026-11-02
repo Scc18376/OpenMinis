@@ -82,7 +82,7 @@ struct CloudSyncSettingsView: View {
                     Text("Last synced")
                     Spacer()
                     Text(date, format: .dateTime.month(.abbreviated).day().hour().minute())
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
         }
@@ -104,7 +104,7 @@ struct CloudSyncSettingsView: View {
                     .controlSize(.mini)
                 Text("Syncing...")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         case .error(let msg):
             HStack(spacing: 4) {
@@ -119,7 +119,7 @@ struct CloudSyncSettingsView: View {
                 Image(systemName: "minus.circle.fill")
                 Text("Disabled")
             }
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color.secondary)
             .font(.caption)
         }
     }
@@ -132,13 +132,13 @@ struct CloudSyncSettingsView: View {
                 Text("Name")
                 Spacer()
                 Text(DeviceIdentity.deviceName)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             HStack {
                 Text("Local Sessions")
                 Spacer()
                 Text("\(localSessionCount)")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
 
             Toggle(isOn: $engine.syncSessions) {
@@ -148,7 +148,7 @@ struct CloudSyncSettingsView: View {
                     Spacer()
                     Text(formatSize(sessionsSize))
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
             Picker(selection: Binding(
@@ -175,7 +175,7 @@ struct CloudSyncSettingsView: View {
                     Spacer()
                     Text(formatSize(skillsSize))
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
             Toggle(isOn: $engine.syncProviders) {
@@ -185,7 +185,7 @@ struct CloudSyncSettingsView: View {
                     Spacer()
                     Text(formatSize(providersSize))
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
             Toggle(isOn: $engine.syncEnvironments) {
@@ -195,7 +195,7 @@ struct CloudSyncSettingsView: View {
                     Spacer()
                     Text(formatSize(envVarsSize))
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
         } header: {
@@ -212,7 +212,7 @@ struct CloudSyncSettingsView: View {
         if devices.isEmpty {
             Section {
                 Text("No other devices found yet. Devices appear here after they enable iCloud Sync.")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .font(.callout)
             } header: {
                 Text("Synced Devices (Download)")
@@ -406,15 +406,15 @@ private struct DeviceSyncSection: View {
             )) {
                 HStack {
                     Image(systemName: deviceIcon)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                     VStack(alignment: .leading, spacing: 2) {
                         Text(device.deviceName)
                         HStack(spacing: 8) {
                             Text(device.osVersion)
                                 .font(.caption2)
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(Color(UIColor.tertiaryLabel))
                             Text("Last seen: \(Self.relativeTime(device.lastSeen))")
-                                .font(.caption2).foregroundStyle(.tertiary)
+                                .font(.caption2).foregroundStyle(Color(UIColor.tertiaryLabel))
                         }
                     }
                 }
@@ -455,7 +455,7 @@ struct RemoteDeviceSessionsView: View {
         List {
             if sessions.isEmpty {
                 Text("No sessions synced from this device yet.")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             } else {
                 ForEach(sessions) { session in
                     HStack {
@@ -465,15 +465,15 @@ struct RemoteDeviceSessionsView: View {
                             HStack(spacing: 8) {
                                 Text(session.modelId)
                                     .font(.caption2)
-                                    .foregroundStyle(.tertiary)
+                                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                                 Text(session.updatedAt, style: .relative)
                                     .font(.caption2)
-                                    .foregroundStyle(.tertiary)
+                                    .foregroundStyle(Color(UIColor.tertiaryLabel))
                             }
                             if let preview = session.lastMessage {
                                 Text(preview)
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                                     .lineLimit(2)
                             }
                         }
@@ -545,7 +545,7 @@ struct RemoteSkillsListView: View {
         List {
             if skills.isEmpty {
                 Text("No skills synced from this device.")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             } else {
                 ForEach(skills) { skill in
                     HStack {
@@ -555,12 +555,12 @@ struct RemoteSkillsListView: View {
                             if !skill.description.isEmpty {
                                 Text(skill.description)
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.secondary)
                                     .lineLimit(2)
                             }
                             Text("v\(skill.version)")
                                 .font(.caption2)
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(Color(UIColor.tertiaryLabel))
                         }
 
                         Spacer()
@@ -606,7 +606,7 @@ struct RemoteMemoriesListView: View {
         List {
             if memories.isEmpty {
                 Text("No memories synced from this device.")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             } else {
                 ForEach(memories) { memory in
                     HStack {
@@ -615,11 +615,11 @@ struct RemoteMemoriesListView: View {
                                 .font(.headline)
                             Text(memory.content.prefix(100))
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                                 .lineLimit(2)
                             Text(memory.updatedAt, style: .relative)
                                 .font(.caption2)
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(Color(UIColor.tertiaryLabel))
                         }
 
                         Spacer()
@@ -664,11 +664,11 @@ struct SyncLogView: View {
             Section {
                 Text("Sync events are recorded as iCloud sync sends and receives data. Up to 1,000 entries are kept.")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
             if store.entries.isEmpty {
                 Text("No sync events yet.")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .font(.callout)
             } else {
                 ForEach(store.entries) { entry in
@@ -680,17 +680,17 @@ struct SyncLogView: View {
                             Spacer()
                             Text(entry.timestamp, format: .dateTime.hour().minute().second())
                                 .font(.caption2)
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(Color(UIColor.tertiaryLabel))
                         }
                         if !entry.summary.isEmpty {
                             Text(entry.summary)
                                 .font(.caption)
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(Color.primary)
                                 .lineLimit(1)
                         }
                         Text(formatRecordName(entry.recordName))
                             .font(.caption2)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                             .lineLimit(1)
                         if let deviceName = entry.deviceName {
                             HStack(spacing: 4) {
@@ -699,7 +699,7 @@ struct SyncLogView: View {
                                 Text(deviceName)
                             }
                             .font(.caption2)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color(UIColor.tertiaryLabel))
                         }
                         if entry.direction == .error {
                             Text(entry.detail)

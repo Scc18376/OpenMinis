@@ -233,10 +233,10 @@ extension AIChatView {
             Divider()
             HStack {
                 Image(systemName: "eye")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Text("Read-only session from another device")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                 Spacer()
                 Button {
                     guard let sid = sessionId, let devId = remoteDeviceId else { return }
@@ -261,7 +261,7 @@ extension AIChatView {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
-            .background(.ultraThinMaterial)
+            .background(Color(UIColor.secondarySystemBackground))
         }
     }
     #endif
