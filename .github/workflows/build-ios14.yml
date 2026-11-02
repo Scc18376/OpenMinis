@@ -1,15 +1,10 @@
 name: Build iOS 14.3 IPA
 
-# 用法:
-#   1. fork 仓库后在根目录上传 ios14-migration.patch
-#   2. 把本文件放到 .github/workflows/build-ios14.yml
-#   3. Actions 页点 "Run workflow"
-
 on:
   workflow_dispatch:
     inputs:
       skip_deps:
-        description: '跳过 native deps 编译（先看主工程能否过编译）'
+        description: "跳过 native deps 编译"
         type: boolean
         default: true
 
@@ -27,7 +22,7 @@ jobs:
       - name: Apply iOS 14.3 migration patch
         run: |
           if [ ! -f ios14-migration.patch ]; then
-            echo "::error::缺失 ios14-migration.patch，请先上传到仓库根目录"
+            echo "::error::missing ios14-migration.patch"
             exit 1
           fi
           git apply -v ios14-migration.patch
@@ -38,9 +33,8 @@ jobs:
         run: |
           xcodebuild -version
           xcrun --sdk iphoneos --show-sdk-version
-          xcodebuild -downloadComponent MetalToolchain || true
 
-      - name: Build native deps (iSH / FFmpeg / LAME)
+      - name: Build native deps
         if: ${{ !inputs.skip_deps }}
         run: |
           cd deps
@@ -52,8 +46,7 @@ jobs:
 
       - name: Provider config
         run: |
-          cp src/ios/Configs/ProviderCustomization.xcconfig.example \
-             src/ios/Configs/ProviderCustomization.xcconfig || true
+          cp src/ios/Configs/ProviderCustomization.xcconfig.example src/ios/Configs/ProviderCustomization.xcconfig || true
 
       - name: Build (unsigned)
         run: |
@@ -80,37 +73,9 @@ jobs:
           echo "APP=$APP"
           mkdir -p Payload
           cp -a "$APP" Payload/
-          BIN="Payload/$(basename "$APP" .app)"
-          /usr/libexec/PlistBuddy -c "Set :MinimumOSVersion 14.3" "Payload/$(basename "$APP")/Info.plist" 2>/dev/null \
-            || /usr/libexec/PlistBuddy -c "Add :MinimumOSVersion string 14.3" "Payload/$(basename "$APP")/Info.plist"
-          # 降所有 Mach-O 的 minos，再 ldid 伪签
-          find Payload -type f | while read f; do
-            python3 - "$f" <<'PY' || true
-import sys, struct
-p = sys.argv[1]
-try:
-    d = bytearray(open(p,'rb').read())
-except Exception:
-    sys.exit(0)
-if len(d) < 32: sys.exit(0)
-m = struct.unpack('<I', d[:4])[0]
-if m not in (0xfeedface, 0xfeedfacf): sys.exit(0)
-is64 = m == 0xfeedfacf
-n = struct.unpack('<I', d[16:20])[0]
-off = 32 if is64 else 28
-TV = (14<<16)|(3<<8)
-for _ in range(n):
-    if off+8 > len(d): break
-    c, s = struct.unpack('<II', d[off:off+8])
-    if s == 0: break
-    if c == 0x32: d[off+12:off+16] = struct.pack('<I', TV)
-    elif c == 0x25: d[off+8:off+12] = struct.pack('<I', TV)
-    off += s
-open(p,'wb').write(d)
-PY
-          done
-          brew install ldid 2>/dev/null || true
-          find Payload -type f -exec sh -c 'file "$1" | grep -q Mach-O && ldid -S "$1"' _ {} \; 2>/dev/null || true
+          python3 scripts/lower_minos.py Payload 14.3
+          brew install ldid || true
+          find Payload -type f -exec sh -c 'file "$1" | grep -q Mach-O && ldid -S "$1"' _ {} \; || true
           zip -qry Minis-iOS14.3-unsigned.ipa Payload
           ls -lh Minis-iOS14.3-unsigned.ipa
 
