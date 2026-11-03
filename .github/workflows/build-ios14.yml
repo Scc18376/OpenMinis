@@ -60,6 +60,13 @@ jobs:
         run: |
           set -o pipefail
           xcrun swiftc -typecheck -sdk "$(xcrun --sdk iphoneos --show-sdk-path)" -target arm64-apple-ios14.3 -swift-version 5 src/ios/Compat/CompatCore.swift src/ios/Compat/CompatViews.swift 2>&1 | tee logs/compat.log
+      - name: Check legacy streaming transport
+        run: |
+          set -euo pipefail
+          xcrun swiftc -typecheck -sdk "$(xcrun --sdk iphoneos --show-sdk-path)" -target arm64-apple-ios14.3 -swift-version 5 scripts/ios14_stream.swift
+          cat scripts/ios14_stream.swift scripts/ios14_stream_test.swift > /tmp/minis-stream-check.swift
+          xcrun --sdk macosx swiftc -parse-as-library -swift-version 5 -sdk "$(xcrun --sdk macosx --show-sdk-path)" /tmp/minis-stream-check.swift -o /tmp/minis-stream-check
+          python3 -c "import subprocess; subprocess.run(['/tmp/minis-stream-check'], timeout=20, check=True)" 2>&1 | tee logs/stream-tests.log
       - uses: actions/cache/restore@v4
         id: media-cache
         with:
@@ -116,10 +123,39 @@ jobs:
         with:
           path: deps/frameworks/Rclone.xcframework
           key: ios14-rclone-intel-go1255-sdk18-v1
+      - uses: actions/cache/restore@v4
+        id: spm-cache
+        with:
+          path: build/SourcePackages
+          key: ios14-swiftpackages-sdk18-v1
+      - name: Resolve Swift packages and backport Claude streaming
+        run: |
+          set -euo pipefail
+          xcodebuild -resolvePackageDependencies -project src/ios/Minis.xcodeproj -scheme Minis -derivedDataPath build 2>&1 | tee logs/packages.log
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('build/SourcePackages/checkouts/SwiftAnthropic/Sources/Anthropic/Private/Networking/URLSessionHTTPClientAdapter.swift')
+          s = p.read_text()
+          start = s.index('  public func bytes(for request: HTTPRequest)')
+          end = s.index('\n  private let urlSession', start)
+          replacement = '''  public func bytes(for request: HTTPRequest) async throws -> (HTTPByteStream, HTTPResponse) {
+              let urlRequest = try createURLRequest(from: request)
+              let operation = MinisLegacyLineRequest(configuration: urlSession.configuration)
+              let (lines, httpResponse) = try await operation.start(urlRequest)
+              let response = HTTPResponse(statusCode: httpResponse.statusCode,
+                  headers: convertHeaders(httpResponse.allHeaderFields))
+              return (.lines(lines), response)
+            }
+          '''
+          s = s[:start] + replacement + s[end:]
+          if 'private final class MinisLegacyLineRequest:' not in s:
+              s += '\n' + Path('scripts/ios14_stream.swift').read_text()
+          p.write_text(s)
+          PY
       - name: Build original Minis for iOS 14.3
         run: |
           set -o pipefail
-          xcodebuild -project src/ios/Minis.xcodeproj -scheme Minis -configuration Release -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" IPHONEOS_DEPLOYMENT_TARGET=14.3 ARCHS=arm64 ONLY_ACTIVE_ARCH=NO ENABLE_BITCODE=NO build 2>&1 | tee logs/build.log
+          xcodebuild -project src/ios/Minis.xcodeproj -scheme Minis -configuration Release -disableAutomaticPackageResolution -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" IPHONEOS_DEPLOYMENT_TARGET=14.3 ARCHS=arm64 ONLY_ACTIVE_ARCH=NO ENABLE_BITCODE=NO build 2>&1 | tee logs/build.log
       - name: Package and verify unsigned IPA
         run: |
           set -euo pipefail
@@ -144,6 +180,11 @@ jobs:
         with:
           name: Minis-iOS14.3-unsigned
           path: Minis-iOS14.3-unsigned.ipa
+      - uses: actions/cache/save@v4
+        if: always() && steps.spm-cache.outcome == 'success' && steps.spm-cache.outputs.cache-hit != 'true'
+        with:
+          path: build/SourcePackages
+          key: ios14-swiftpackages-sdk18-v1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
