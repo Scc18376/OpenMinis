@@ -1,11 +1,20 @@
-name: diag
+name: iOS 14.3 compatibility diagnostics
 on: workflow_dispatch
+permissions:
+  contents: read
 jobs:
-  t:
-    runs-on: ubuntu-latest
+  compat:
+    runs-on: macos-15-intel
+    timeout-minutes: 15
     steps:
-      - run: echo hello && uname -a
-  m:
-    runs-on: macos-15
-    steps:
-      - run: sw_vers && xcodebuild -version
+      - uses: actions/checkout@v4
+      - name: Typecheck compatibility layer
+        run: |
+          set -o pipefail
+          xcodebuild -version
+          xcrun swiftc -typecheck -sdk "$(xcrun --sdk iphoneos --show-sdk-path)" -target arm64-apple-ios14.3 -swift-version 5 src/ios/Compat/CompatCore.swift src/ios/Compat/CompatViews.swift 2>&1 | tee compat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: compatibility-diagnostics
+          path: compat.log
