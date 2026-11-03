@@ -79,3 +79,36 @@ public extension View {
 '''
 p.write_text(s)
 print('Applied original-app iOS 14 presentation, search, localization and terminal backports')
+
+# The upstream binary requires iOS 15.6. Keep all other app features, but
+# exclude the optional automatic voice-segmentation engine from this build.
+p = root / 'Providers/Voice/VoiceActivityDetector.swift'
+s = p.read_text().replace('import RealTimeCutVADLibrary\n', '')
+a = s.index('final class VoiceActivityDetector: NSObject {')
+b = s.index('// MARK: - Microphone permission')
+s = s[:a] + '''final class VoiceActivityDetector: NSObject {
+    weak var delegate: VoiceActivityDelegate?
+    let isRunning = false
+    let isCapturing = false
+    let isSpeaking = false
+    var maxSegmentSeconds: Double = 60
+    var runningDuration: TimeInterval { 0 }
+    var hasRawFallbackAudio: Bool { false }
+    var currentSessionId: String? { nil }
+    func start() throws {
+        throw NSError(domain: "MinisLegacyVoice", code: 1,
+            userInfo: [NSLocalizedDescriptionKey: "Automatic voice segmentation is unavailable in this iOS 14 build. Please use text input."])
+    }
+    func stop() {}
+    func flush() {}
+    @discardableResult func flushRawFallback() -> Bool { false }
+}
+
+''' + s[b:]
+p.write_text(s)
+p = root / 'Minis.xcodeproj/project.pbxproj'
+s = p.read_text()
+s, n = re.subn(r'(?m)^\t{4}(?:891443CAA4679D09A6D32AE4 /\* RealTimeCutVADLibrary in Frameworks \*/|C42120806C66A2C804F89620 /\* RealTimeCutVADLibrary \*/),\n', '', s)
+assert n == 2, f'Expected two VAD product links, found {n}'
+p.write_text(s)
+print('Excluded iOS 15.6-only voice segmentation binary; text chat and sandbox unchanged')
