@@ -56,6 +56,8 @@ jobs:
           p.write_text(s)
           print('Chat, on-device Linux and in-app files remain in the original Minis target.')
           PY
+      - name: Backport original app APIs
+        run: python3 scripts/ios14_app_backports.py
       - name: Typecheck iOS 14.3 compatibility layer
         run: |
           set -o pipefail
