@@ -41,7 +41,14 @@ jobs:
       - name: LAME
         run: set -o pipefail; bash deps/build_lame.sh 2>&1 | tee logs/lame.log
       - name: FFmpeg
-        run: set -o pipefail; bash deps/build_ffmpeg.sh 2>&1 | tee logs/ffmpeg.log
+        run: |
+          set -euo pipefail
+          if [ ! -d deps/ffmpeg-6.1.2 ]; then
+            curl -fL --retry 3 --connect-timeout 20 --max-time 180 https://codeload.github.com/FFmpeg/FFmpeg/tar.gz/refs/tags/n6.1.2 -o /tmp/ffmpeg-source.tar.gz
+            mkdir -p deps/ffmpeg-6.1.2
+            tar -xzf /tmp/ffmpeg-source.tar.gz --strip-components=1 -C deps/ffmpeg-6.1.2
+          fi
+          bash deps/build_ffmpeg.sh 2>&1 | tee logs/ffmpeg.log
       - name: iSH
         run: set -o pipefail; bash deps/build_ish.sh 2>&1 | tee logs/ish.log
       - name: Alpine rootfs
