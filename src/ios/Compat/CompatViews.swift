@@ -181,7 +181,7 @@ public extension View {
 // MARK: - swipeActions (iOS 15+)
 
 public extension View {
-    func swipeActions<T: View>(edge: HorizontalEdge = .trailing, allowsFullSwipe: Bool = true,
+    func swipeActions<T: View>(edge: HorizontalEdgeCompat = .trailing, allowsFullSwipe: Bool = true,
                                @ViewBuilder content: () -> T) -> some View { self }
 }
 
@@ -247,3 +247,4 @@ public extension Date {
         return f.string(from: self)
     }
 }
+public enum HorizontalEdgeCompat { case leading, trailing }
