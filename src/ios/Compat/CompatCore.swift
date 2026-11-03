@@ -25,7 +25,7 @@ public struct MinisNavStack<Content: View>: View {
 }
 
 /// 带 path 的版本。iOS 14 上用隐藏 NavigationLink 驱动，语义等价。
-public struct MinisNavStackPath<Data: MutableCollection & RandomAccessCollection, Content: View>: View
+public struct MinisNavStackPath<Data: MutableCollection & RandomAccessCollection & RangeReplaceableCollection, Content: View>: View
 where Data.Element: Hashable, Data.Index == Int {
     @Binding private var path: Data
     private let content: Content
@@ -51,12 +51,10 @@ where Data.Element: Hashable, Data.Index == Int {
 
 /// iOS 14 上没有 ShapeStyle 的通用渲染，按实际类型降级。
 public extension View {
-    @inlinable
     func foregroundStyle<S: ShapeStyle>(_ style: S) -> some View {
         modifier(_MinisForegroundStyle(style: style))
     }
 
-    @inlinable
     func foregroundStyle<S1: ShapeStyle, S2: ShapeStyle>(_ primary: S1, _ secondary: S2) -> some View {
         modifier(_MinisForegroundStyle(style: primary))
     }
@@ -68,25 +66,16 @@ public struct _MinisForegroundStyle<S: ShapeStyle>: ViewModifier {
     @ViewBuilder
     public func body(content: Content) -> some View {
         if #available(iOS 15.0, *) {
-            content.foregroundStyle(style)
+            content.foregroundStyle(style, style, style)
         } else {
             content.foregroundColor(_resolve(style))
         }
     }
 
-    private func _resolve(_ s: S) -> Color {
-        if let c = s as? Color { return c }
-        if let g = s as? LinearGradient { return g.gradient.stops.first?.color ?? .primary }
-        if let g = s as? AngularGradient { return g.gradient.stops.first?.color ?? .primary }
-        if let g = s as? RadialGradient { return g.gradient.stops.first?.color ?? .primary }
-        if let m = s as? Material {
-            switch m {
-            case .ultraThinMaterial, .thinMaterial: return Color(UIColor.tertiarySystemFill)
-            case .regularMaterial, .thickMaterial: return Color(UIColor.secondarySystemFill)
-            default: return Color(UIColor.systemBackground)
-            }
-        }
-        return .primary
+    private func _resolve(_ style: S) -> Color {
+        // SwiftUI does not expose gradient stops or Material internals.
+        // iOS 14 retains solid colors and uses the semantic foreground otherwise.
+        (style as? Color) ?? .primary
     }
 }
 
@@ -94,7 +83,6 @@ public struct _MinisForegroundStyle<S: ShapeStyle>: ViewModifier {
 
 public extension View {
     /// presentationDetents — iOS 14 上 sheet 本身就接近全屏，忽略即可
-    @inlinable
     func presentationDetents(_ detents: Set<PresentationDetentCompat>) -> some View { self }
 
     func presentationDetents(_ detents: Set<PresentationDetentCompat>, selection: Binding<PresentationDetentCompat>) -> some View {
@@ -102,27 +90,21 @@ public extension View {
     }
 
     /// scrollContentBackground — iOS 14 没有配置化背景，忽略
-    @inlinable
     func scrollContentBackground(_ visibility: VisibilityCompat) -> some View { self }
 
     /// scrollDismissesKeyboard
-    @inlinable
     func scrollDismissesKeyboard(_ mode: ScrollDismissesKeyboardModeCompat) -> some View { self }
 
     /// toolbarBackground
-    @inlinable
     func toolbarBackground<S: ShapeStyle>(_ style: S, for bars: ToolbarPlacementCompat = .automatic) -> some View { self }
 
     /// symbolEffect — iOS 14 无 SF Symbols 动画
-    @inlinable
     func symbolEffect<T>(_ effect: T, options: Int = 0) -> some View { self }
 
     /// dynamicTypeSize — 交给系统自动处理
-    @inlinable
     func dynamicTypeSize(_ size: DynamicTypeSizeCompat) -> some View { self }
 
     /// sensoryFeedback — 用 UIKit 触感替代
-    @inlinable
     func sensoryFeedback<T: Equatable>(_ feedback: SensoryFeedbackCompat, trigger: T) -> some View {
         self.onChange(of: trigger) { _ in
             let g = UIImpactFeedbackGenerator(style: .light)
@@ -131,11 +113,9 @@ public extension View {
     }
 
     /// textSelection — iOS 14 上整体降级为不可选
-    @inlinable
     func textSelection(_ selection: TextSelectionCompat) -> some View { self }
 
     /// tint — 用 accentColor
-    @inlinable
     func tint(_ color: Color) -> some View { self.accentColor(color) }
 
     /// ContentUnavailableView 替代在 CompatViews.swift
