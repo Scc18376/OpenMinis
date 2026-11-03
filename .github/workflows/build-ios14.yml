@@ -150,6 +150,7 @@ jobs:
           s = s[:start] + replacement + s[end:]
           if 'private final class MinisLegacyLineRequest:' not in s:
               s += '\n' + Path('scripts/ios14_stream.swift').read_text()
+          p.chmod(p.stat().st_mode | 0o200)
           p.write_text(s)
           PY
       - name: Build original Minis for iOS 14.3
