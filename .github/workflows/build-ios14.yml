@@ -38,6 +38,24 @@ jobs:
           fi
           grep -o 'IPHONEOS_DEPLOYMENT_TARGET = [0-9.]*' src/ios/Minis.xcodeproj/project.pbxproj | sort -u
           cp src/ios/Configs/ProviderCustomization.xcconfig.example src/ios/Configs/ProviderCustomization.xcconfig
+      - name: Disable unsupported system extensions for legacy build
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('src/ios/Minis.xcodeproj/project.pbxproj')
+          s = p.read_text()
+          pattern = r'(?m)^\t{4}(?:(?:E5E000080|E5H000080|E5FP00080) /\* PBXTargetDependency \*/|E5E000060 /\* Embed Foundation Extensions \*/),\n'
+          s, count = re.subn(pattern, '', s)
+          assert count == 4, f'Expected four extension references, found {count}'
+          p.write_text(s)
+          p = Path('src/ios/MinisApp.swift')
+          s = p.read_text()
+          s = s.replace('Self.registerFileProviderDomain()', '// System Files extension is disabled in the iOS 14.3 build')
+          s = s.replace('    private static func registerFileProviderDomain() {', '    @available(iOS 16.0, *)\n    private static func registerFileProviderDomain() {')
+          p.write_text(s)
+          print('Chat, on-device Linux and in-app files remain in the original Minis target.')
+          PY
       - name: Typecheck iOS 14.3 compatibility layer
         run: |
           set -o pipefail
