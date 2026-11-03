@@ -2,92 +2,83 @@ name: Build iOS 14.3 IPA
 
 on:
   workflow_dispatch:
-    inputs:
-      skip_deps:
-        description: "跳过 native deps 编译"
-        type: boolean
-        default: true
+
+permissions:
+  contents: read
 
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: macos-15-intel
     timeout-minutes: 240
-
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 1
-
-      - name: Apply iOS 14.3 migration patch
+      - name: Toolchain
         run: |
-          if [ ! -f ios14-migration.patch ]; then
-            echo "::error::missing ios14-migration.patch"
-            exit 1
-          fi
-          git apply -v ios14-migration.patch
-          grep -o 'IPHONEOS_DEPLOYMENT_TARGET = [0-9.]*' src/ios/Minis.xcodeproj/project.pbxproj | sort -u
-          ls src/ios/Compat/
-
-      - name: Select Xcode
-        run: |
+          set -euo pipefail
           xcodebuild -version
           xcrun --sdk iphoneos --show-sdk-version
-
-      - name: Build native deps
-        if: ${{ !inputs.skip_deps }}
+          brew install meson ninja llvm libarchive pkg-config go
+          mkdir -p logs
+      - name: Apply existing iOS 14.3 migration
         run: |
-          cd deps
-          ./build_lame.sh || echo "::warning::lame failed"
-          ./build_ffmpeg.sh || echo "::warning::ffmpeg failed"
-          ./build_ish.sh
-        env:
-          BUILDCONFIGURATION: Release
-
-      - name: Provider config
-        run: |
-          cp src/ios/Configs/ProviderCustomization.xcconfig.example src/ios/Configs/ProviderCustomization.xcconfig || true
-
-      - name: Build (unsigned)
+          set -euo pipefail
+          if [ -f ios14-migration.patch ]; then
+            git apply --check ios14-migration.patch
+            git apply -v ios14-migration.patch
+          else
+            test -f src/ios/Compat/CompatCore.swift
+            test -f src/ios/Compat/CompatViews.swift
+            echo "Migration is already committed in the source tree"
+          fi
+          grep -o 'IPHONEOS_DEPLOYMENT_TARGET = [0-9.]*' src/ios/Minis.xcodeproj/project.pbxproj | sort -u
+          cp src/ios/Configs/ProviderCustomization.xcconfig.example src/ios/Configs/ProviderCustomization.xcconfig
+      - name: LAME
+        run: set -o pipefail; bash deps/build_lame.sh 2>&1 | tee logs/lame.log
+      - name: FFmpeg
+        run: set -o pipefail; bash deps/build_ffmpeg.sh 2>&1 | tee logs/ffmpeg.log
+      - name: iSH
+        run: set -o pipefail; bash deps/build_ish.sh 2>&1 | tee logs/ish.log
+      - name: Alpine rootfs
+        run: set -o pipefail; bash deps/prepare_alpine_rootfs.sh 2>&1 | tee logs/rootfs.log
+      - name: Rclone
+        run: set -o pipefail; bash deps/build_rclone_ios.sh 2>&1 | tee logs/rclone.log
+      - name: Build original Minis for iOS 14.3
         run: |
           set -o pipefail
-          xcodebuild \
-            -project src/ios/Minis.xcodeproj \
-            -scheme Minis \
-            -configuration Release \
-            -sdk iphoneos \
-            -destination 'generic/platform=iOS' \
-            -derivedDataPath build \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO \
-            ENABLE_BITCODE=NO \
-            ONLY_ACTIVE_ARCH=NO \
-            ARCHS=arm64 \
-            build 2>&1 | tee build.log | tail -300
-
-      - name: Package unsigned IPA
-        if: success()
+          xcodebuild -project src/ios/Minis.xcodeproj -scheme Minis -configuration Release -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" IPHONEOS_DEPLOYMENT_TARGET=14.3 ARCHS=arm64 ONLY_ACTIVE_ARCH=NO ENABLE_BITCODE=NO build 2>&1 | tee logs/build.log
+      - name: Package and verify unsigned IPA
         run: |
-          APP=$(find build/Build/Products/Release-iphoneos -maxdepth 1 -name '*.app' | head -1)
-          echo "APP=$APP"
+          set -euo pipefail
           mkdir -p Payload
-          cp -a "$APP" Payload/
-          python3 scripts/lower_minos.py Payload 14.3
-          brew install ldid || true
-          find Payload -type f -exec sh -c 'file "$1" | grep -q Mach-O && ldid -S "$1"' _ {} \; || true
+          cp -a build/Build/Products/Release-iphoneos/Minis.app Payload/
+          chmod 755 Payload/Minis.app/Minis
+          xcrun vtool -show-build Payload/Minis.app/Minis | tee logs/macho.txt
           zip -qry Minis-iOS14.3-unsigned.ipa Payload
-          ls -lh Minis-iOS14.3-unsigned.ipa
-
+          python3 - <<'PY'
+          import plistlib, zipfile
+          with zipfile.ZipFile('Minis-iOS14.3-unsigned.ipa') as z:
+              info = z.getinfo('Payload/Minis.app/Minis')
+              assert (info.external_attr >> 16) & 0o777 == 0o755
+              for name in z.namelist():
+                  if name.endswith('.app/Info.plist') or name.endswith('.appex/Info.plist'):
+                      p = plistlib.loads(z.read(name))
+                      version = tuple(map(int, p['MinimumOSVersion'].split('.')))
+                      assert version <= (14, 3), (name, version)
+          PY
       - uses: actions/upload-artifact@v4
         if: success()
         with:
           name: Minis-iOS14.3-unsigned
           path: Minis-iOS14.3-unsigned.ipa
-
       - uses: actions/upload-artifact@v4
-        if: failure()
+        if: always()
         with:
-          name: build-log
-          path: build.log
+          name: build-logs
+          path: logs/
           if-no-files-found: warn
