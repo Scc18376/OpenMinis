@@ -23,7 +23,7 @@ jobs:
           set -euo pipefail
           xcodebuild -version
           xcrun --sdk iphoneos --show-sdk-version
-          brew install meson ninja llvm lld libarchive pkg-config go
+          brew install meson ninja llvm lld libarchive pkg-config
           mkdir -p logs
       - name: Apply existing iOS 14.3 migration
         run: |
@@ -78,11 +78,26 @@ jobs:
           # The device emulator and Alpine rootfs remain ARM64.
           sed -i '' 's/-Dguest_arch=arm64/-Dguest_arch=x86/g' deps/prepare_alpine_rootfs.sh
           bash deps/prepare_alpine_rootfs.sh 2>&1 | tee logs/rootfs.log
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.25.5'
+          cache-dependency-path: deps/rclone-mobile/go.sum
+      - uses: actions/cache/restore@v4
+        id: rclone-cache
+        with:
+          path: deps/frameworks/Rclone.xcframework
+          key: ios14-rclone-intel-go1255-sdk18-v1
       - name: Rclone
+        if: steps.rclone-cache.outputs.cache-hit != 'true'
         run: |
           set -euo pipefail
           sed -i '' 's/version-min=16.0/version-min=14.3/g' deps/build_rclone_ios.sh
           bash deps/build_rclone_ios.sh 2>&1 | tee logs/rclone.log
+      - uses: actions/cache/save@v4
+        if: steps.rclone-cache.outputs.cache-hit != 'true'
+        with:
+          path: deps/frameworks/Rclone.xcframework
+          key: ios14-rclone-intel-go1255-sdk18-v1
       - name: Build original Minis for iOS 14.3
         run: |
           set -o pipefail
