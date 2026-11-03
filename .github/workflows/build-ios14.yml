@@ -168,10 +168,33 @@ jobs:
           xcrun vtool -show-build Payload/Minis.app/Minis | tee logs/macho.txt
           zip -qry Minis-iOS14.3-unsigned.ipa Payload
           python3 - <<'PY'
-          import plistlib, zipfile
+          import plistlib, zipfile, struct
           with zipfile.ZipFile('Minis-iOS14.3-unsigned.ipa') as z:
               info = z.getinfo('Payload/Minis.app/Minis')
               assert (info.external_attr >> 16) & 0o777 == 0o755
+              for name in z.namelist():
+                  if name.endswith('/'):
+                      continue
+                  with z.open(name) as f:
+                      head = f.read(32)
+                      if head[:4] not in (b'\xcf\xfa\xed\xfe', b'\xce\xfa\xed\xfe'):
+                          continue
+                      ncmds = struct.unpack_from('<I', head, 16)[0]
+                      sizeofcmds = struct.unpack_from('<I', head, 20)[0]
+                      commands = f.read(sizeofcmds) if head[:4] == b'\xcf\xfa\xed\xfe' else head[28:] + f.read(max(0, sizeofcmds - 4))
+                  offset = 0
+                  found = False
+                  for _ in range(ncmds):
+                      cmd, size = struct.unpack_from('<II', commands, offset)
+                      assert size >= 8 and offset + size <= len(commands), name
+                      if cmd in (0x32, 0x25):
+                          version = struct.unpack_from('<I', commands, offset + (12 if cmd == 0x32 else 8))[0]
+                          value = (version >> 16, (version >> 8) & 255, version & 255)
+                          assert value <= (14, 3, 0), (name, value)
+                          found = True
+                      offset += size
+                  assert found, ('Missing Mach-O deployment target', name)
+                  print('Verified Mach-O iOS <= 14.3:', name)
               for name in z.namelist():
                   if name.endswith('.app/Info.plist') or name.endswith('.appex/Info.plist'):
                       p = plistlib.loads(z.read(name))
