@@ -151,7 +151,6 @@ public extension Text {
 // MARK: - .task (iOS 15+)
 
 public extension View {
-    @inlinable
     func task(priority: TaskPriority = .userInitiated, _ action: @escaping @Sendable () async -> Void) -> some View {
         modifier(_MinisTaskModifier(priority: priority, action: action))
     }
@@ -176,14 +175,12 @@ struct _MinisTaskModifier: ViewModifier {
 // MARK: - .refreshable (iOS 15+)
 
 public extension View {
-    @inlinable
     func refreshable(action: @escaping @Sendable () async -> Void) -> some View { self }
 }
 
 // MARK: - swipeActions (iOS 15+)
 
 public extension View {
-    @inlinable
     func swipeActions<T: View>(edge: HorizontalEdge = .trailing, allowsFullSwipe: Bool = true,
                                @ViewBuilder content: () -> T) -> some View { self }
 }
@@ -191,7 +188,6 @@ public extension View {
 // MARK: - searchable (iOS 15+)
 
 public extension View {
-    @inlinable
     func searchable(text: Binding<String>, placement: SearchFieldPlacementCompat = .automatic,
                     prompt: String? = nil) -> some View { self }
 }
