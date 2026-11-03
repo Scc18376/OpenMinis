@@ -200,8 +200,10 @@ public extension View {
     func confirmationDialog<A: View>(_ title: String, isPresented: Binding<Bool>,
                                      titleVisibility: VisibilityCompat = .automatic,
                                      @ViewBuilder actions: () -> A) -> some View {
-        actionSheet(isPresented: isPresented) {
-            ActionSheet(title: Text(title), buttons: [.cancel()])
+        let actionContent = actions()
+        return sheet(isPresented: isPresented) {
+            _MinisLegacyDialog(title: title, actions: actionContent,
+                               message: EmptyView(), isPresented: isPresented)
         }
     }
 }
@@ -211,15 +213,22 @@ public extension View {
 public extension View {
     func alert<A: View>(_ title: String, isPresented: Binding<Bool>,
                         @ViewBuilder actions: () -> A) -> some View {
-        self.alert(isPresented: isPresented) {
-            Alert(title: Text(title), dismissButton: .default(Text("好")))
+        let actionContent = actions()
+        return sheet(isPresented: isPresented) {
+            _MinisLegacyDialog(title: title, actions: actionContent,
+                               message: EmptyView(), isPresented: isPresented)
         }
     }
 
     func alert<A: View, M: View>(_ title: String, isPresented: Binding<Bool>,
                                  @ViewBuilder actions: () -> A,
                                  @ViewBuilder message: () -> M) -> some View {
-        self.alert(title, isPresented: isPresented, actions: actions)
+        let actionContent = actions()
+        let messageContent = message()
+        return sheet(isPresented: isPresented) {
+            _MinisLegacyDialog(title: title, actions: actionContent,
+                               message: messageContent, isPresented: isPresented)
+        }
     }
 }
 
@@ -248,3 +257,23 @@ public extension Date {
     }
 }
 public enum HorizontalEdgeCompat { case leading, trailing }
+
+// Preserve the original action closures and message instead of replacing them
+// with a cancel-only alert on older systems.
+private struct _MinisLegacyDialog<Actions: View, Message: View>: View {
+    let title: String
+    let actions: Actions
+    let message: Message
+    @Binding var isPresented: Bool
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Text(title).font(.headline)
+            message
+            actions
+                .simultaneousGesture(TapGesture().onEnded { isPresented = false })
+            Button("关闭") { isPresented = false }
+        }
+        .padding(24)
+    }
+}
