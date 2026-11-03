@@ -156,7 +156,7 @@ jobs:
       - name: Build original Minis for iOS 14.3
         run: |
           set -o pipefail
-          xcodebuild -project src/ios/Minis.xcodeproj -scheme Minis -configuration Release -disableAutomaticPackageResolution -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" IPHONEOS_DEPLOYMENT_TARGET=14.3 ARCHS=arm64 ONLY_ACTIVE_ARCH=NO ENABLE_BITCODE=NO build 2>&1 | tee logs/build.log
+          xcodebuild -project src/ios/Minis.xcodeproj -scheme Minis -configuration Release -disableAutomaticPackageResolution -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" IPHONEOS_DEPLOYMENT_TARGET=14.3 ARCHS=arm64 ONLY_ACTIVE_ARCH=NO ENABLE_BITCODE=NO SWIFT_COMPILATION_MODE=incremental SWIFT_OPTIMIZATION_LEVEL=-Onone build 2>&1 | tee logs/build.log
       - name: Package and verify unsigned IPA
         run: |
           set -euo pipefail
